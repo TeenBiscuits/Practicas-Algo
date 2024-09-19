@@ -20,6 +20,11 @@ void test(){
 
 int fib1(int n){
 
+    if (n < 2) {
+    return n;
+    } else {
+        return fib1(n-1) + fib1(n-2);
+    }
 }
 
 int fib2(int n){
