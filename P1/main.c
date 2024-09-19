@@ -57,9 +57,9 @@ int fib3(int n) {
             j = i * h + j * k + t;
             i = i * k + t;
         }
-        t = (int) powf((float) h,2);
+        t = h * h;
         h = 2 * k * h + t;
-        k = (int) powf((float) k,2) + t;
+        k = k * k + t;
         n = n / 2;
     }
     return j;
