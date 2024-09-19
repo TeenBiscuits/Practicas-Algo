@@ -18,16 +18,12 @@ void test(){
     int n;
 
     puts("Test de funciones de Fibonacci");
-    printf("Valor de n:");
+    printf("Valor de n: ");
     scanf("%d",&n);
 
-    puts("Función 1: ");
-    printf("%d",fib1(n));
-    puts("Función 2: ");
-    printf("%d",fib2(n));
-    puts("Función 3: ");
-    printf("%d",fib3(n));
-
+    printf("Función 1: %d\n",fib1(n));
+    printf("Función 2: %d\n",fib2(n));
+    printf("Función 3: %d\n",fib3(n));
 }
 
 int fib1(int n){
