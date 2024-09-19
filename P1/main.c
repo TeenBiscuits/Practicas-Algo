@@ -24,9 +24,31 @@ void test(){
     printf("Valor de n: ");
     scanf("%d",&n);
 
-    printf("Función 1: %d\n",fib1(n));
-    printf("Función 2: %d\n",fib2(n));
-    printf("Función 3: %d\n",fib3(n));
+    double t1, t2, t, x, y, z;
+    t1 = microsegundos();
+    fib1(n);
+    t2 = microsegundos();
+    t = t2-t1;
+    x = t / sqrt(log(n));
+    y = t / log(n);
+    z = t / pow(n, 0.5);
+    printf("fib1%12d%15.3f%15.6f%15.6f%15.6f\n", n, t, x, y, z);
+    t1 = microsegundos();
+    fib2(n);
+    t2 = microsegundos();
+    t = t2-t1;
+    x = t / sqrt(log(n));
+    y = t / log(n);
+    z = t / pow(n, 0.5);
+    printf("fib2%12d%15.3f%15.6f%15.6f%15.6f\n", n, t, x, y, z);
+    t1 = microsegundos();
+    fib3(n);
+    t2 = microsegundos();
+    t = t2-t1;
+    x = t / sqrt(log(n));
+    y = t / log(n);
+    z = t / pow(n, 0.5);
+    printf("fib3%12d%15.3f%15.6f%15.6f%15.6f\n", n, t, x, y, z);
 }
 
 int fib1(int n){
