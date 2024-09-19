@@ -15,6 +15,18 @@ int main(void) {
 }
 
 void test(){
+    int n;
+
+    puts("Test de funciones de Fibonacci");
+    printf("Valor de n:");
+    scanf("%d",&n);
+
+    puts("Función 1: ");
+    printf("%d",fib1(n));
+    puts("Función 2: ");
+    printf("%d",fib2(n));
+    puts("Función 3: ");
+    printf("%d",fib3(n));
 
 }
 
