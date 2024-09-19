@@ -1,7 +1,9 @@
 #include <stdio.h>
-#include <math.h>
+#include <sys/time.h>
 
 void test();
+
+double microsegundos();
 
 int fib1(int n);
 
@@ -60,7 +62,12 @@ int fib3(int n) {
     }
     return j;
 }
-
+double microsegundos(){
+    struct timeval t;
+    if (gettimeofday(&t,NULL)<0)
+        return 0.0;
+    return (t.tv_usec + t.tv_sec * 1000000.0);
+}
 
 
 
