@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include <sys/time.h>
 
 void test();
@@ -55,9 +56,9 @@ int fib3(int n) {
             j = i * h + j * k + t;
             i = i * k + t;
         }
-        t = h * h;
+        t = (int) powf((float) h,2);
         h = 2 * k * h + t;
-        k = k * k + t;
+        k = (int) powf((float) k,2) + t;
         n = n / 2;
     }
     return j;
