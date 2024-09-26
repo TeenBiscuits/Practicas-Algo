@@ -1,8 +1,8 @@
+all: main.out
+	./main.out
 
-all: main.c
-	gcc -Wall -o maite.out main.c -lm
-	./maite.out
+main.out: main.c
+	gcc -Wall -o main.out main.c -lm
 
 clean: 
-	rm -f *.out
-	rm -f tiempos.txt
+	rm -f *.out tiempos.txt
