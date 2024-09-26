@@ -1,0 +1,93 @@
+ALGORITMOS - PRÁCTICA 1
+
+Pablo Portas Lopez 
+Pablo Míguez Muíño 
+Maite Liu González Vázquez
+
+1) Contexto
+En esta práctica implementamos 3 algoritmos que calculan la sucesión de
+Fibonacci y medimos sus tiempos de ejecución para unos valores de n dados.
+
+2) Datos de la máquina
+Modelo de hardware: HP Victus by HP Gaming Laptop 15-fa0xxx
+Memoria: 16.0 GiB
+Procesador: 12th Gen Intel® Core™ i5-12500H × 16
+Nombre del SO: Ubuntu 22.04.5 LTS
+Versión del Kernel: 6.8.0-45-generic
+Tipo de SO: 64 bits
+
+Unidad de tiempo utlizada: ms
+
+3) Comprobación de los algoritmos
+
+  n    fib1    fib2    fib3
+---------------------------
+  2       1       1       1
+  4       3       3       3
+  8      21      21      21
+ 16     987     987     987
+ 32 2178309 2178309 2178309
+---------------------------
+
+4) Tablas de tiempos:
+
+1. Presentación de resultados del Algoritmo 1
+
+función	       n         tiempo       t/1.1**n            t/n         t/n**2
+----------------------------------------------------------------------------
+fib1           2          0.001       0.000480       0.000222       0.000145 (*)
+fib1           4          0.002       0.001091       0.000233       0.000100 (*)
+fib1           8          0.012       0.005542       0.000253       0.000046 (*)
+fib1          16          0.546       0.118826       0.000247       0.000008 (*)
+fib1          32      12136.000     574.790581       0.002492       0.000003
+----------------------------------------------------------------------------
+                                cota subestimada  cota ajustada  cota sobreestimada
+                                                 cte = 0.000689
+
+* tiempo promedio en respectivos k = [1000000,1000000,100000,1000] ejecuciones del algoritmo
+
+1.1 Observaciones
+
+
+
+2. Presentación de resultados del Algoritmo 2
+
+función	       n         tiempo       t/n**0.8            t/n   t/(n*log(n))
+----------------------------------------------------------------------------
+fib2        1000          0.147       0.000584       0.000147       0.000021 (*)
+fib2       10000          1.461       0.000922       0.000146       0.000016 (*)
+fib2      100000         14.540       0.001454       0.000145       0.000013 (*)
+fib2     1000000       1380.000       0.021872       0.001380       0.000100
+fib2    10000000      15925.000       0.040002       0.001592       0.000099
+----------------------------------------------------------------------------
+                                cota subestimada  cota ajustada  cota sobreestimada
+                                                 cte = 0.000682
+
+* tiempo promedio en respectivos k = [10000,1000,100] ejecuciones del algoritmo
+
+2.1 Observaciones
+
+
+
+3. Presentación de resultados del Algoritmo 3
+
+función	       n         tiempo t/sqrt(log(n))       t/log(n)       t/n**0.5
+----------------------------------------------------------------------------
+fib3        1000          0.019       0.007286       0.002772       0.000606 (*)
+fib3       10000          0.028       0.009177       0.003024       0.000278 (*)
+fib3      100000          0.033       0.009590       0.002826       0.000103 (*)
+fib3     1000000          0.040       0.010702       0.002879       0.000040 (*)
+fib3    10000000          0.048       0.011869       0.002956       0.000015 (*)
+----------------------------------------------------------------------------
+                                cota subestimada  cota ajustada  cota sobreestimada
+                                                 cte = 0.002891
+
+* tiempo promedio en respectivos k = [100000] ejecuciones del algoritmo
+
+3.1 Observaciones
+
+
+
+5) Conclusión
+
+
