@@ -111,12 +111,13 @@ int fib3(int n) {
 double tiempospetit(const int n, const int alg) {
     double t = 0;
     int k;
-    for (k = 1; t < 500; k = k * 2) {
+    for (k = 1; t < 500; k = k * 10) {
         const double ta = microsegundos();
         for (int i = k; i > 0; i--) selectalgo(n, alg);
         const double tb = microsegundos();
         t = tb - ta;
     }
+    printf("(*) Dato promedio de k = %d\n",k);
     return t / (double) k;
 }
 
