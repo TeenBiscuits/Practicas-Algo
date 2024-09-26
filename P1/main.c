@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include <math.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/time.h>
+
+bool guardaraarchivo();
 
 void test();
 
@@ -17,23 +20,27 @@ int fib3(int n);
 
 int main(void) {
     // Impresión en archivo
+    if (guardaraarchivo()) {
+        // Test Function
+        test();
+    }
+    return 0;
+}
+
+bool guardaraarchivo() {
     int fd;
     char *name = "tiempos.txt";
     fd = open(name, O_WRONLY | O_CREAT, 0644);
     if (fd == -1) {
         perror("open failed");
-        return 1;
+        return false;
     }
 
     if (dup2(fd, 1) == -1) {
         perror("dup2 failed");
-        return 1;
+        return false;
     }
-
-    // Test Function
-    test();
-
-    return 0;
+    return true;
 }
 
 void test(){
