@@ -124,15 +124,15 @@ double tiempospetit(const int n, const int alg) {
 void imprimircabecerat(int algo) {
     if (algo == 1) {
         printf("función	       n         tiempo"
-            "         1.1**n              n           n**2\n");
+            "       t/1.1**n            t/n         t/n**2\n");
     }
     if (algo == 2) {
         printf("función	       n         tiempo"
-            "         n**0.8              n       n*log(n)\n");
+            "       t/n**0.8            t/n   t/(n*log(n))\n");
     }
     if (algo == 3) {
         printf("función	       n         tiempo"
-            "   sqrt(log(n))         log(n)         n**0.5\n");
+            " t/sqrt(log(n))       t/log(n)       t/n**0.5\n");
     }
     printf("---------------------------------------------"
         "-------------------------------\n");
