@@ -50,7 +50,7 @@ void test(){
     puts("Por Pablo Portas, Pablo Míguez y Maite González");
     puts("");
 
-    printf("función\t       n\t tiempo   sqrt(log(n))\t       log(n)\t      n**0.5\n");
+    printf("función\t       n         tiempo   sqrt(log(n))         log(n)         n**0.5\n");
     printf("----------------------------------------------------------------------------\n");
 
     double t1, t2, t, x, y, z;
@@ -62,6 +62,7 @@ void test(){
         fib1(n1[i]);
         t2 = microsegundos();
         t = t2-t1;
+        if(t <= 500) t = 500;
         x = t / sqrt(log(n1[i]));
         y = t / log(n1[i]);
         z = t / pow(n1[i], 0.5);
@@ -75,6 +76,7 @@ void test(){
         fib2(n2[i]);
         t2 = microsegundos();
         t = t2-t1;
+        if(t <= 500) t = 500;
         x = t / sqrt(log(n2[i]));
         y = t / log(n2[i]);
         z = t / pow(n2[i], 0.5);
@@ -83,11 +85,12 @@ void test(){
 
     // Algoritmo Fib3
     // Mediciones con valores {1000,10000,100000,1000000,10000000}
-    for(int i = 0; i < sizeof(n2); i++) {
+    for(int i = 0; i < 5; i++) {
         t1 = microsegundos();
         fib3(n2[i]);
         t2 = microsegundos();
         t = t2-t1;
+        if(t <= 500) t = 500;
         x = t / sqrt(log(n2[i]));
         y = t / log(n2[i]);
         z = t / pow(n2[i], 0.5);
