@@ -143,7 +143,7 @@ void imprimirresultados(int n, double t, int algo) {
     double x = 0, y = 0, z = 0;
     // Las funciones son en este orden
     // x = Cota subestimada
-    // y = O grande
+    // y = Cota Ajustada (O grande)
     // z = Cota sobreestimada
     if (algo == 1) {
         nombre = "fib1";
