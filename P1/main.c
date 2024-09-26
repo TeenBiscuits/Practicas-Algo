@@ -10,6 +10,8 @@ bool guardaraarchivo();
 
 void test();
 
+void comprobar();
+
 double microsegundos();
 
 int selectalgo(int n, int algo);
@@ -27,7 +29,12 @@ void imprimircabecerat(int algo);
 void imprimirresultados(int n, double t, int algo);
 
 int main(void) {
-    if (guardaraarchivo()) test();
+    if (guardaraarchivo()) {
+        printf("Algoritmos de Fibonacci   -  "
+    "Por Pablo Portas, Pablo Míguez y Maite González\n\n");
+        comprobar();
+        test();
+    }
     return 0;
 }
 
@@ -49,8 +56,6 @@ void test() {
     int n = 1;
     const int n1[5] = {2, 4, 8, 16, 32},
             n2[5] = {1000, 10000, 100000, 1000000, 10000000};
-    printf("Algoritmos de Fibonacci   -  "
-        "Por Pablo Portas, Pablo Míguez y Maite González\n\n");
     for (int alg = 1; alg <= 3; alg++) {
         imprimircabecerat(alg);
         for (int i = 0; i < 5; i++) {
@@ -66,6 +71,15 @@ void test() {
         printf("---------------------------------------------"
             "-------------------------------\n\n");
     }
+}
+
+void comprobar() {
+    printf("  n    fib1    fib2    fib3\n");
+    printf("---------------------------\n");
+    for(int i = 2; i <= 32; i = i * 2) {
+        printf("%3d%8d%8d%8d\n", i, fib1(i), fib2(i), fib3(i));
+    }
+    printf("---------------------------\n\n");
 }
 
 int selectalgo(const int n, const int algo) {
