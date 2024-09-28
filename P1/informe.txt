@@ -48,6 +48,7 @@ fib1          32      12136.000     574.790581       0.002492       0.000003 #
 * tiempo promedio en respectivos k = [1000000,1000000,100000,1000] ejecuciones del algoritmo
 
 1.1 Observaciones
+
 De n = 16 a n = 32 podemos observar un salto desproporcionado del tiempo ya que pasa de 0.546ms a 12136.000ms,
 por lo que consideramos estas dos mediciones anómalas, superiores a lo esperado. (#)
 
@@ -67,17 +68,20 @@ fib2    10000000      15925.000       0.040002       0.001592       0.000099 #
 * tiempo promedio en respectivos k = [10000,1000,100] ejecuciones del algoritmo
 
 2.1 Observaciones
+
 Entre n = 1000000 y n = 10000000 el tiempo varía de 1380.000 y 15925.000 lo que es ligeramente superior a lo esperado
-y por lo que obtenemos unas mediciones anómalas. (#)
+y por lo que obtenemos unas mediciones anómalas.
+En especial n = 1000000 el salto es desproporcionado en referencia a los otros datos.
+(#)
 
 
 3. Presentación de resultados del Algoritmo 3
 
 función	       n         tiempo t/sqrt(log(n))       t/log(n)       t/n**0.5
 ----------------------------------------------------------------------------
-fib3        1000          0.019       0.007286       0.002772       0.000606 (*) #
+fib3        1000          0.019       0.007286       0.002772       0.000606 (*)
 fib3       10000          0.028       0.009177       0.003024       0.000278 (*)
-fib3      100000          0.033       0.009590       0.002826       0.000103 (*) #
+fib3      100000          0.033       0.009590       0.002826       0.000103 (*)
 fib3     1000000          0.040       0.010702       0.002879       0.000040 (*)
 fib3    10000000          0.048       0.011869       0.002956       0.000015 (*)
 ----------------------------------------------------------------------------
@@ -88,8 +92,11 @@ fib3    10000000          0.048       0.011869       0.002956       0.000015 (*)
 
 3.1 Observaciones
 
-
+El crecimiento de tiempo de este algoritmo es mucho más predecible. Tiene un crecimiento logarítmico y
+todos los datos respaldan esta tendencia.
 
 5) Conclusión
 
+El algoritmo fib3 es claramente superior a los otros dos algoritmos. Con una velocidad sin comparación y una
+escalabilidad predecible.
 
