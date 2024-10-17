@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdbool.h>
+
+bool guardaraarchivo(const char *archivo);
 
 void ord_ins(int v[], int n);
 
@@ -20,10 +25,29 @@ void descendente(int v[], int n);
 
 void test();
 
-void test_algo(void * algoritmo(int v[], int n), int n);
+void test_algo(void algoritmo(int *, int), int n);
+
+int test_orden(int v[], int n);
 
 int main(void) {
-    test();
+    if (guardaraarchivo("tiempos.txt")) {
+        test();
+    }
+    else return EXIT_FAILURE;
+    return EXIT_SUCCESS;
+}
+
+bool guardaraarchivo(const char *archivo) {
+    int file = open(archivo, O_WRONLY | O_CREAT, 0644);
+    if (file == -1) {
+        perror("open failed");
+        return false;
+    }
+    if (dup2(file, 1) == -1) {
+        perror("dup2 failed");
+        return false;
+    }
+    return true;
 }
 
 void ord_ins(int v[], int n) {
@@ -118,7 +142,7 @@ void test() {
     test_algo(ord_rap, size);
 }
 
-void test_algo(void * algoritmo(int v[], int n), int n) {
+void test_algo(void algoritmo(int *, int), int n) {
     int v1[n], v2[n];
     inicializar_semilla();
     aleatorio(v1, n);
@@ -126,15 +150,24 @@ void test_algo(void * algoritmo(int v[], int n), int n) {
 
     printf("Ordenación con inicialización aleatoria\n");
     imprimir(v1, n);
-    printf("ordenado? 0\nordenando...\n");
+    printf("ordenado? %d\nordenando...\n",test_orden(v1,n));
     algoritmo(v1, n);
     imprimir(v1, n);
-    printf("ordenado? 1\n\n");
+    printf("ordenado? %d\nordenando...\n",test_orden(v1,n));
 
     printf("Ordenación con inicialización descendente\n");
     imprimir(v2, n);
-    printf("ordenado? 0\nordenando...\n");
+    printf("ordenado? %d\nordenando...\n",test_orden(v2,n));
     algoritmo(v2, n);
     imprimir(v2, n);
-    printf("ordenado? 1\n\n");
+    printf("ordenado? %d\nordenando...\n",test_orden(v2,n));
+
+    printf("\n");
+}
+
+int test_orden(int v[], int n) {
+    for(int i = 1; i < n; i++) {
+        if(v[i] < v[i - 1]) return 0;
+    }
+    return 1;
 }
