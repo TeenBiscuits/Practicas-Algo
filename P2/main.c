@@ -19,8 +19,8 @@ void inicializar_semilla();
 void ascendente (int v[], int n);
 
 int main(void) {
-    int n=20;
-    int v1[n] ;//= {2, 6, 3, 9, 5, 4, 1, 7, 8, 0};
+    int n = 20;
+    int v1[n];
 
     inicializar_semilla();
 
@@ -83,7 +83,7 @@ void ord_rap_aux (int v[], int iz, int dr) {
 }
 
 void ord_rap (int v[], int n) {
-    ord_rap_aux(v, 0, n-1);
+    ord_rap_aux(v, 0, n);
 }
 
 void intercambiar (int *a, int *b) {
