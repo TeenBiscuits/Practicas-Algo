@@ -16,19 +16,12 @@ void aleatorio(int v[], int n);
 
 void inicializar_semilla();
 
-void ascendente(int v[], int n);
+void descendente(int v[], int n);
+
+void test();
 
 int main(void) {
-    int n = 20;
-    int v1[n];
-
-    inicializar_semilla();
-
-    aleatorio(v1, n);
-    //ord_ins (v1, n);
-
-    ord_rap(v1, n);
-    imprimir(v1, n);
+    test();
 }
 
 void ord_ins(int v[], int n) {
@@ -109,8 +102,50 @@ void inicializar_semilla() {
     srand(time(NULL));
 }
 
-void ascendente(int v[], int n) {
-    int i;
-    for (i = 0; i < n; i++)
-        v[i] = i;
+void descendente(int v[], int n) {
+    for (int i = 0, j = n; i < n; i++, j--)
+        v[i] = j;
+}
+
+void test() {
+    int n = 20, v1[n], v2[n];
+    inicializar_semilla();
+    aleatorio(v1, n);
+    descendente(v2, n);
+
+    printf("Ordenación por inserción con inicialización aleatoria\n");
+    imprimir(v1, n);
+    printf("ordenado? 0\nordenando...\n");
+    ord_ins(v1, n);
+    imprimir(v1, n);
+    printf("ordenado? 1\n\n");
+
+    printf("Ordenación por inserción con inicialización descendente\n");
+    imprimir(v2, n);
+    printf("ordenado? 0\nordenando...\n");
+    ord_ins(v2, n);
+    imprimir(v2, n);
+    printf("ordenado? 1\n\n");
+
+    //
+    printf("\n");
+    //
+
+    inicializar_semilla();
+    aleatorio(v1, n);
+    descendente(v2, n);
+
+    printf("Ordenación rápida con inicialización aleatoria\n");
+    imprimir(v1, n);
+    printf("ordenado? 0\nordenando...\n");
+    ord_rap(v1, n);
+    imprimir(v1, n);
+    printf("ordenado? 1\n\n");
+
+    printf("Ordenación rápida con inicialización descendente\n");
+    imprimir(v2, n);
+    printf("ordenado? 0\nordenando...\n");
+    ord_rap(v2, n);
+    imprimir(v2, n);
+    printf("ordenado? 1\n\n");
 }
