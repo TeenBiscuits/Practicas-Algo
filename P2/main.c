@@ -20,6 +20,8 @@ void descendente(int v[], int n);
 
 void test();
 
+void test_algo(void * algoritmo(int v[], int n), int n);
+
 int main(void) {
     test();
 }
@@ -108,44 +110,31 @@ void descendente(int v[], int n) {
 }
 
 void test() {
-    int n = 20, v1[n], v2[n];
+    int size = 20;
+    printf("\n--- Iniciando tests de tamaño %d ---\n",size);
+    printf("\n--- Test 1 | Ordenación por inserción ---\n");
+    test_algo(ord_ins, size);
+    printf("\n--- Test 2 | Ordenación rápida ---\n");
+    test_algo(ord_rap, size);
+}
+
+void test_algo(void * algoritmo(int v[], int n), int n) {
+    int v1[n], v2[n];
     inicializar_semilla();
     aleatorio(v1, n);
     descendente(v2, n);
 
-    printf("Ordenación por inserción con inicialización aleatoria\n");
+    printf("Ordenación con inicialización aleatoria\n");
     imprimir(v1, n);
     printf("ordenado? 0\nordenando...\n");
-    ord_ins(v1, n);
-    imprimir(v1, n);
-    printf("ordenado? 1\n\n");
-
-    printf("Ordenación por inserción con inicialización descendente\n");
-    imprimir(v2, n);
-    printf("ordenado? 0\nordenando...\n");
-    ord_ins(v2, n);
-    imprimir(v2, n);
-    printf("ordenado? 1\n\n");
-
-    //
-    printf("\n");
-    //
-
-    inicializar_semilla();
-    aleatorio(v1, n);
-    descendente(v2, n);
-
-    printf("Ordenación rápida con inicialización aleatoria\n");
-    imprimir(v1, n);
-    printf("ordenado? 0\nordenando...\n");
-    ord_rap(v1, n);
+    algoritmo(v1, n);
     imprimir(v1, n);
     printf("ordenado? 1\n\n");
 
-    printf("Ordenación rápida con inicialización descendente\n");
+    printf("Ordenación con inicialización descendente\n");
     imprimir(v2, n);
     printf("ordenado? 0\nordenando...\n");
-    ord_rap(v2, n);
+    algoritmo(v2, n);
     imprimir(v2, n);
     printf("ordenado? 1\n\n");
 }
