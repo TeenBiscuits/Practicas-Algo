@@ -4,6 +4,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <time.h>
+#include <math.h>
+#define EXIT_FAILURE 1
 
 bool guardaraarchivo(const char *archivo);
 
@@ -29,12 +32,50 @@ void test_algo(void algoritmo(int *, int), int n);
 
 int test_orden(int v[], int n);
 
+double medir_tiempo(void(*algoritmo)(int[], int), int v[], int n);
+
 int main(void) {
     if (guardaraarchivo("tiempos.txt")) {
-        test();
+
+        int tamanios[] = {500, 1000, 20000, 4000, 8000, 16000, 32000};
+        int num_tamanios = sizeof(tamanios)/sizeof (tamanios[0]);
+        printf("Ordenación por inserción con inicialización desdendente\n");
+        printf("--------n------------t(n)-----------t(n)/n^1.8-----t(n)/n^2-----------t(n)/n^2.2\n");
+
+        for (int i = 0; i < num_tamanios; ++i) {
+            int n = tamanios[i];
+            int *v = malloc(n * sizeof (int));
+
+            if (v==NULL){
+                perror("Error al asignar memoria");
+                return EXIT_FAILURE;
+            }
+            //Inicializar el array en orden descendente
+            descendente(v,n);
+
+            //medir tiempo de ejecución
+            double tiempo = medir_tiempo(ord_ins,v,n);
+
+            //calcular los cocientes con las funciones teóricas
+            double tn_n1_8 = tiempo / pow(n, 1.8);
+            double tn_n2 = tiempo / pow(n, 2);
+            double tn_n2_2 = tiempo / pow(n, 2.2);
+
+
+
+
+        }
     }
     else return EXIT_FAILURE;
     return EXIT_SUCCESS;
+}
+
+double medir_tiempo(void(*algoritmo)(int[], int), int v[], int n){
+    clock_t inicio = clock();
+    inicio = clock();
+    clock_t fin = clock();
+    fin = clock();
+    return ((double)(fin-inicio)) / CLOCKS_PER_SEC;
 }
 
 bool guardaraarchivo(const char *archivo) {
@@ -171,3 +212,9 @@ int test_orden(int v[], int n) {
     }
     return 1;
 }
+
+
+
+
+
+
