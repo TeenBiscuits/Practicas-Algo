@@ -5,7 +5,11 @@ Pablo Míguez Muíño
 Maite Liu González Vázquez
 
 1) Contexto
-
+En esta práctica se implementaron y compararon dos algoritmos de ordenación: ordenación por
+inserción y ordenación rápida (QuickSort). El objetivo fue analizar el rendimiento de estos
+algoritmos midiendo los tiempos de ejecución en tres configuraciones iniciales del vector: orden
+ascendente, orden descendente y valores aleatorios. Se utilizaron cotas teóricas n^1.8, n^2 y n^2.2
+para comparar la eficiencia de los algoritmos.
 
 
 2) Datos de la máquina
@@ -19,6 +23,9 @@ Tipo de SO: 64 bits
 Unidad de tiempo utilizada: micro segundos
 
 3) Comprobación de los algoritmos
+Ordenación por inserción y ordenación rápida: Se realizaron pruebas de ordenación en tres
+configuraciones de inicialización del vector: aleatoria, descendente y ascendente. A continuación,
+se muestran los resultados de estas pruebas para verificar la correcta implementación de los algoritmos.
 
 --- Test 1 | Ordenación por inserción ---
 Ordenación con inicialización aleatoria
@@ -94,6 +101,35 @@ n               t(n)     t(n)/n^1.8       t(n)/n^2     t(n)/n^2.2
 
 
 1.1 Observaciones
+
+//Ordenación por inserción con inicialización aleatoria
+
+-Crecimiento cuadrático esperado: Los tiempos de ejecución (t(n)) crecen significativamente a medida que aumenta
+el tamaño de entrada n, lo que coincide con la complejidad teórica esperada del algoritmo de ordenación
+por inserción (𝑂(𝑛^2)).
+
+-Disminución de las cotas a medida que aumenta n:
+Para cotas teóricas como 𝑡(𝑛)/𝑛1.8t(n)/n 1 .8, 𝑡(𝑛)/𝑛2t(n)/n 2 , y 𝑡(𝑛)/𝑛2.2t(n)/n 2.2, se observa
+que los valores disminuyen a medida que n aumenta. Esto es coherente con la complejidad del
+algoritmo: a mayor tamaño, los tiempos se ajustan más a la complejidad cuadrática 𝑛^2, lo que hace
+que los cocientes se estabilicen en valores más pequeños.
+
+alores extremos: El tiempo de 1349.000 microsegundos para n = 2000 es considerablemente más alto que los
+de n = 500 y n = 1000, lo que indica un comportamiento no lineal para los tamaños pequeños. Sin embargo, a partir
+de n = 4000, el crecimiento de los tiempos parece más consistente.
+
+//Ordenación por inserción con inicialización ascendente
+
+-Eficiencia máxima: Dado que el vector ya está ordenado, los tiempos son significativamente menores comparados
+con la inicialización aleatoria o descendente, lo que refleja el mejor caso para este algoritmo 𝑂(𝑛).
+Este es el escenario ideal para la ordenación por inserción.
+
+-Estabilización rápida de las cotas: Las cotas t(n)/n^1.8, t(n)/n^2 y t(n)/n^2.2 son extremadamente pequeñas, mostrando
+que el tiempo real de ejecución es cercano a 𝑂(𝑛), como se esperaría en el caso de una lista ya ordenada.
+
+-Tiempo lineal: A medida que n aumenta, el tiempo de ejecución sigue una tendencia casi lineal, lo cual es típico del
+mejor caso para este algoritmo.
+
 
 
 
