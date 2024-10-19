@@ -4,78 +4,71 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdbool.h>
-#include <time.h>
 #include <math.h>
-#define EXIT_FAILURE 1
 
 bool guardaraarchivo(const char *archivo);
 
 void ord_ins(int v[], int n);
-
 void ord_rap_aux(int v[], int iz, int dr);
-
 void ord_rap(int v[], int n);
-
 void intercambiar(int *a, int *b);
-
 void imprimir(int v[], int n);
-
 void aleatorio(int v[], int n);
-
 void inicializar_semilla();
-
 void descendente(int v[], int n);
-
 void test();
-
 void test_algo(void algoritmo(int *, int), int n);
-
 int test_orden(int v[], int n);
-
-double medir_tiempo(void(*algoritmo)(int[], int), int v[], int n);
+double medir_tiempo(void (*algoritmo)(int[], int), int v[], int n);
 
 int main(void) {
     if (guardaraarchivo("tiempos.txt")) {
-
-        int tamanios[] = {500, 1000, 20000, 4000, 8000, 16000, 32000};
-        int num_tamanios = sizeof(tamanios)/sizeof (tamanios[0]);
-        printf("Ordenación por inserción con inicialización desdendente\n");
-        printf("--------n------------t(n)-----------t(n)/n^1.8-----t(n)/n^2-----------t(n)/n^2.2\n");
+        int tamanios[] = {500, 1000, 2000, 4000, 8000, 16000, 32000};  // Corregido el valor 20000
+        int num_tamanios = sizeof(tamanios) / sizeof(tamanios[0]);
+        printf("Ordenación por inserción con inicialización descendente\n");
+        printf("n------------t(n)--------t(n)/n^1.8------t(n)/n^2--------t(n)/n^2.2\n");
+        printf("-------------------------------------------------------------------\n");
 
         for (int i = 0; i < num_tamanios; ++i) {
             int n = tamanios[i];
-            int *v = malloc(n * sizeof (int));
+            int *v = malloc(n * sizeof(int));
 
-            if (v==NULL){
+            if (v == NULL) {
                 perror("Error al asignar memoria");
                 return EXIT_FAILURE;
             }
-            //Inicializar el array en orden descendente
-            descendente(v,n);
+            // Inicializar el array en orden descendente
+            descendente(v, n);
 
-            //medir tiempo de ejecución
-            double tiempo = medir_tiempo(ord_ins,v,n);
+            // Medir tiempo de ejecución
+            double tiempo = medir_tiempo(ord_ins, v, n);
 
-            //calcular los cocientes con las funciones teóricas
+            // Calcular los cocientes con las funciones teóricas
             double tn_n1_8 = tiempo / pow(n, 1.8);
             double tn_n2 = tiempo / pow(n, 2);
             double tn_n2_2 = tiempo / pow(n, 2.2);
 
+            // Formato para tres cifras significativas con %g
+            printf("%d \t %.3g \t %.3g \t %.3g \t %.3g\n", n, tiempo, tn_n1_8, tn_n2, tn_n2_2);
 
-
-
+            // Liberar memoria
+            free(v);
         }
+    } else {
+        return EXIT_FAILURE;
     }
-    else return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
 
-double medir_tiempo(void(*algoritmo)(int[], int), int v[], int n){
-    clock_t inicio = clock();
+double medir_tiempo(void (*algoritmo)(int[], int), int v[], int n) {
+    int repeticiones = 1000;  // Ajusta este valor según sea necesario
+    clock_t inicio, fin;
     inicio = clock();
-    clock_t fin = clock();
+    for (int i = 0; i < repeticiones; i++) {
+        algoritmo(v, n);
+    }
     fin = clock();
-    return ((double)(fin-inicio)) / CLOCKS_PER_SEC;
+    return ((double)(fin - inicio)) / (CLOCKS_PER_SEC * repeticiones);  // Promedio
 }
 
 bool guardaraarchivo(const char *archivo) {
@@ -141,12 +134,11 @@ void ord_rap_aux(int v[], int iz, int dr) {
 }
 
 void ord_rap(int v[], int n) {
-    ord_rap_aux(v, 0, n);
+    ord_rap_aux(v, 0, n - 1);  // Corregido n para QuickSort
 }
 
 void intercambiar(int *a, int *b) {
     int aux;
-
     aux = *a;
     *a = *b;
     *b = aux;
@@ -176,14 +168,14 @@ void descendente(int v[], int n) {
 
 void test() {
     int size = 20;
-    printf("\n--- Iniciando tests de tamaño %d ---\n",size);
+    printf("\n--- Iniciando tests de tamaño %d ---\n", size);
     printf("\n--- Test 1 | Ordenación por inserción ---\n");
     test_algo(ord_ins, size);
     printf("\n--- Test 2 | Ordenación rápida ---\n");
     test_algo(ord_rap, size);
 }
 
-void test_algo(void algoritmo(int *, int), int n) {
+void test_algo(void algoritmo(int *v, int n), int n) {
     int v1[n], v2[n];
     inicializar_semilla();
     aleatorio(v1, n);
@@ -191,24 +183,24 @@ void test_algo(void algoritmo(int *, int), int n) {
 
     printf("Ordenación con inicialización aleatoria\n");
     imprimir(v1, n);
-    printf("ordenado? %d\nordenando...\n",test_orden(v1,n));
+    printf("ordenado? %d\nordenando...\n", test_orden(v1, n));
     algoritmo(v1, n);
     imprimir(v1, n);
-    printf("ordenado? %d\nordenando...\n",test_orden(v1,n));
+    printf("ordenado? %d\n", test_orden(v1, n));
 
     printf("Ordenación con inicialización descendente\n");
     imprimir(v2, n);
-    printf("ordenado? %d\nordenando...\n",test_orden(v2,n));
+    printf("ordenado? %d\nordenando...\n", test_orden(v2, n));
     algoritmo(v2, n);
     imprimir(v2, n);
-    printf("ordenado? %d\nordenando...\n",test_orden(v2,n));
+    printf("ordenado? %d\n", test_orden(v2, n));
 
     printf("\n");
 }
 
 int test_orden(int v[], int n) {
-    for(int i = 1; i < n; i++) {
-        if(v[i] < v[i - 1]) return 0;
+    for (int i = 1; i < n; i++) {
+        if (v[i] < v[i - 1]) return 0;
     }
     return 1;
 }
