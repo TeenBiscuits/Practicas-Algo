@@ -1,4 +1,5 @@
 all: main.out
+	rm tiempos.txt
 	./main.out
 	cat tiempos.txt
 
