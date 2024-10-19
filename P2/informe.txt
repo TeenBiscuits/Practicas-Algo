@@ -203,7 +203,34 @@ en las cotas, lo que confirma que el algoritmo mantiene su eficiencia a lo largo
 
 //Ordenación rápida con inicialización ascendente
 
+Comportamiento similar al caso aleatorio: Aunque el vector ya está ordenado, los tiempos de ejecución y las cotas
+se comportan de manera muy similar al caso de inicialización aleatoria. Esto es porque QuickSort no es particularmente
+sensible a la ordenación previa del vector, siempre que se elija el pivote de forma aleatoria o adecuada.
+
+Tiempos de ejecución ligeramente menores: En comparación con la inicialización aleatoria, los tiempos de ejecución
+para la inicialización ascendente tienden a ser ligeramente menores. Esto podría deberse a una menor cantidad de
+intercambios o particiones durante la ordenación.
+
+Las cotas teóricas disminuyen: De manera consistente, las cotas t(n)/n^1.8, t(n)/n^2, y
+t(n) /n^2.2 se estabilizan a medida que aumenta el tamaño del vector, lo que confirma un
+comportamiento subcuadrático esperado.
 
 5) Conclusión
+La ordenación por inserción es muy eficiente cuando los datos están casi ordenados o en orden ascendente, alcanzando
+una complejidad cercana a 𝑂(𝑛), lo que la hace adecuada para conjuntos pequeños o medianos de datos ordenados. Sin
+embargo, su rendimiento se degrada rápidamente cuando los datos están completamente desordenados o en orden descendente,
+mostrando una complejidad cuadrática 𝑂(𝑛2) que la vuelve ineficaz para grandes volúmenes de datos no ordenados. Por otro
+lado, QuickSort ofrece un rendimiento mucho más robusto y versátil, con una complejidad promedio de 𝑂(𝑛 log 𝑛), siendo
+eficiente incluso en grandes conjuntos de datos, sin importar el estado inicial (ascendente, descendente o aleatorio).
+Aunque QuickSort tiene un peor caso teórico de 𝑂(𝑛^2), esto rara vez ocurre en la práctica si se usa un esquema adecuado
+de selección de pivote. En resumen, mientras la ordenación por inserción es adecuada para datos casi ordenados o de pequeño
+tamaño, QuickSort es generalmente superior por su capacidad para manejar grandes volúmenes de datos de forma rápida y consistente
+en la mayoría de los escenarios.
+
+
+
+
+
+
 
 
