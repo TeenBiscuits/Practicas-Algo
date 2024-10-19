@@ -130,7 +130,18 @@ que el tiempo real de ejecución es cercano a 𝑂(𝑛), como se esperaría en 
 -Tiempo lineal: A medida que n aumenta, el tiempo de ejecución sigue una tendencia casi lineal, lo cual es típico del
 mejor caso para este algoritmo.
 
+//Ordenación por inserción con inicialización descendente
 
+El peor caso del algoritmo: Como se esperaba, este es el peor caso para la ordenación por inserción, ya que el
+algoritmo debe mover todos los elementos al principio del vector. El crecimiento en los tiempos es exponencialmente
+mayor que en las otras dos inicializaciones.
+
+Tiempos extremadamente largos para tamaños grandes: Para n = 32000, el tiempo de ejecución es de 547098 microsegundos, lo
+que indica un crecimiento exponencialmente alto en comparación con los otros casos. Esto es consistente con el peor
+caso de 𝑂(𝑛^2), ya que el vector está en el orden completamente opuesto al que el algoritmo requiere.
+
+Las cotas t(n)/n^2 y t(n)/n^2.2 son significativamente mayores en los otros casos de inicalización, lo que subraya la
+ineficiencia del algoritmo para esta configuración
 
 
 2. Presentación de resultados de Ordenación rápida
@@ -175,6 +186,22 @@ n               t(n)     t(n)/n^1.8       t(n)/n^2     t(n)/n^2.2
 
 2.1 Observaciones
 
+//Ordenación rápida con inicialización aleatoria
+
+Crecimiento subcuadrático: A diferencia de la ordenación por inserción, QuickSort muestra
+un crecimiento mucho más suave. Los tiempos de ejecución ( t (n) ) aumentan de manera
+subcuadrática a medida que crece n, lo que es coherente con la complejidad promedio
+esperada de O(n logn).
+
+Estabilización de las cotas: Las cotas teóricas t(n) /n^1.8, t(n)/n^2, y t(n) /n^2.2 disminuyen
+gradualmente conforme n aumenta, lo que sugiere que el tiempo de ejecución tiende a
+seguir la curva de 𝑂(𝑛 log 𝑛) en lugar de 𝑂(𝑛) . Esto es un indicador positivo de la
+eficiencia de QuickSort en este escenario aleatorio
+
+Comportamiento consistente: Desde n = 500 hasta n = 32000, se observa una reducción constante
+en las cotas, lo que confirma que el algoritmo mantiene su eficiencia a lo largo de diferentes tamaños de entrada.
+
+//Ordenación rápida con inicialización ascendente
 
 
 5) Conclusión
