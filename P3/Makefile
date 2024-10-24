@@ -1,7 +1,7 @@
 all: main.out
-	#rm tiempos.txt
+	rm tiempos.txt
 	./main.out
-	#cat tiempos.txt
+	cat tiempos.txt
 
 main.out: main.c
 	gcc -Wall -o main.out main.c -lm
