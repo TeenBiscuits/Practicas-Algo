@@ -21,7 +21,7 @@ typedef struct {
 
 typedef int pos;
 typedef entrada *tabla_cerrada;
-tabla_cerrada d = malloc (38197 * sizeof(entrada));
+//tabla_cerrada d = malloc (38197 * sizeof(entrada));
 
 bool guardaraarchivo(const char *archivo);
 
@@ -49,6 +49,7 @@ int leer_sinonimos(item datos[]);
 int main(void) {
     if (guardaraarchivo("tiempos.txt")) {
         printf("<--- Práctica de Pablos & Maite --->\n");
+
     }
     else return EXIT_FAILURE;
     return EXIT_SUCCESS;
@@ -116,4 +117,25 @@ int leer_sinonimos(item datos[]) {
         return(EXIT_FAILURE);
     }
     return(i);
+}
+
+void inicializar_cerrada(tabla_cerrada *diccionario, int tam) {
+
+}
+
+pos buscar_cerrada(char *clave, tabla_cerrada diccionario, int tam,
+                    int *colisiones, unsigned int (*dispersion) (char *, int),
+                    unsigned int (*resol_colisiones) (int pos_ini, int num_intento)) {
+
+}
+
+int insertar_cerrada(char *clave, char *sinonimos,
+                    tabla_cerrada *diccionario, int tam,
+                    unsigned int (*dispersion)(char *, int),
+                    unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
+
+}
+
+void mostrar_cerrada(tabla_cerrada diccionario, int tam) {
+
 }
