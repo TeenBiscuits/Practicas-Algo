@@ -14,6 +14,11 @@ typedef struct entrada_ {
     char sinonimos [LONGITUD_SINONIMOS];
 } entrada;
 
+typedef struct {
+    char clave [LONGITUD_CLAVE];
+    char sinonimos [LONGITUD_SINONIMOS];
+} item;
+
 typedef int pos;
 typedef entrada *tabla_cerrada;
 tabla_cerrada d = malloc (38197 * sizeof(entrada));
@@ -38,6 +43,8 @@ int insertar_cerrada(char *clave, char *sinonimos,
 void mostrar_cerrada(tabla_cerrada diccionario, int tam);
 
 int ndispersion(char *clave, int tamTabla);
+
+int leer_sinonimos(item datos[]);
 
 int main(void) {
     if (guardaraarchivo("tiempos.txt")) {
@@ -83,4 +90,30 @@ int ndispersion(char *clave, int tamTabla) {
     if (strcmp(clave, "JOSE")==0) return 7;
     if (strcmp(clave, "OLGA")==0) return 7;
     return 6;
+}
+
+int leer_sinonimos(item datos[]) {
+    char c;
+    int i, j;
+    FILE *archivo;
+    if ((archivo = fopen("sinonimos.txt", "r")) == NULL) {
+        printf("Error al abrir ’sinonimos.txt’\n");
+        return(EXIT_FAILURE);
+    }
+    for (i = 0; fscanf(archivo, "%s", datos[i].clave) != EOF; i++) {
+        if ((c = fgetc(archivo)) != '\t') {
+            printf("Error al leer el tabulador\n");
+            return(EXIT_FAILURE);
+        }
+        for (j = 0; (c = fgetc(archivo)) != '\n'; j++) {
+            if (j < LONGITUD_SINONIMOS - 1)
+                datos[i].sinonimos[j] = c;
+        }
+        datos[i].sinonimos[MIN(j, (LONGITUD_SINONIMOS - 1)))] = '\0';
+    }
+    if (fclose(archivo) != 0) {
+        printf("Error al cerrar el fichero\n");
+        return(EXIT_FAILURE);
+    }
+    return(i);
 }
