@@ -1,95 +1,36 @@
+// Creado por Pablo P. Pablo M. Maite G.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
-#define MIN(X,Y) ((X) < (Y) ? (X) : (Y)
-#define LONGITUD_CLAVE 30
-#define LONGITUD_SINONIMOS 300
+#include <sys/time.h>
 
-typedef struct entrada_ {
-    int ocupada;
-    char clave [LONGITUD_CLAVE];
-    char sinonimos [LONGITUD_SINONIMOS];
-} entrada;
-
-typedef struct {
-    char clave [LONGITUD_CLAVE];
-    char sinonimos [LONGITUD_SINONIMOS];
-} item;
-
-typedef int pos;
-typedef entrada *tabla_cerrada;
-//tabla_cerrada d = malloc (38197 * sizeof(entrada));
-
-bool guardaraarchivo(const char *archivo);
-
-unsigned int dispersionA(char *clave, int tamTabla);
-
-unsigned int dispersionB(char *clave, int tamTabla);
-
-void inicializar_cerrada(tabla_cerrada *diccionario, int tam);
-
-pos buscar_cerrada(char *clave, tabla_cerrada diccionario, int tam,
-                    int *colisiones, unsigned int (*dispersion) (char *, int),
-                    unsigned int (*resol_colisiones) (int pos_ini, int num_intento));
-
-int insertar_cerrada(char *clave, char *sinonimos,
-                    tabla_cerrada *diccionario, int tam,
-                    unsigned int (*dispersion)(char *, int),
-                    unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
-
-void mostrar_cerrada(tabla_cerrada diccionario, int tam);
+#include "tablas.h"
 
 int ndispersion(char *clave, int tamTabla);
 
 int leer_sinonimos(item datos[]);
 
+void test_t_lineal();
+
+void test_t_cuadratica();
+
+void test();
+
+double microsegundos();
+
 int main(void) {
-    if (guardaraarchivo("tiempos.txt")) {
-        printf("<--- Práctica de Pablos & Maite --->\n");
-
-    }
-    else return EXIT_FAILURE;
-    return EXIT_SUCCESS;
-}
-
-bool guardaraarchivo(const char *archivo) {
-    int file = open(archivo, O_WRONLY | O_CREAT, 0644);
-    if (file == -1) {
-        perror("open failed");
-        return false;
-    }
-    if (dup2(file, 1) == -1) {
-        perror("dup2 failed");
-        return false;
-    }
-    return true;
-}
-
-unsigned int dispersionA(char *clave, int tamTabla) {
-    int i, n = MIN(8, strlen(clave)));
-    unsigned int valor = clave[0];
-    for (i = 1; i < n; i++) {
-        valor += clave[i];
-    }
-    return valor % tamTabla;
-}
-
-unsigned int dispersionB(char *clave, int tamTabla) {
-    int i, n = MIN(8, strlen(clave)));
-    unsigned int valor = clave[0];
-    for (i = 1; i < n; i++) {
-        valor = (valor <<5) + clave[i];
-    }
-    return valor % tamTabla;
+    printf("<--- Práctica de Pablos & Maite --->\n");
+    test();
 }
 
 int ndispersion(char *clave, int tamTabla) {
-    if (strcmp(clave, "ANA")==0) return 7;
-    if (strcmp(clave, "JOSE")==0) return 7;
-    if (strcmp(clave, "OLGA")==0) return 7;
+    if (strcmp(clave, "ANA") == 0) return 7;
+    if (strcmp(clave, "JOSE") == 0) return 7;
+    if (strcmp(clave, "OLGA") == 0) return 7;
     return 6;
 }
 
@@ -99,12 +40,12 @@ int leer_sinonimos(item datos[]) {
     FILE *archivo;
     if ((archivo = fopen("sinonimos.txt", "r")) == NULL) {
         printf("Error al abrir ’sinonimos.txt’\n");
-        return(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
     for (i = 0; fscanf(archivo, "%s", datos[i].clave) != EOF; i++) {
         if ((c = fgetc(archivo)) != '\t') {
             printf("Error al leer el tabulador\n");
-            return(EXIT_FAILURE);
+            return (EXIT_FAILURE);
         }
         for (j = 0; (c = fgetc(archivo)) != '\n'; j++) {
             if (j < LONGITUD_SINONIMOS - 1)
@@ -114,28 +55,67 @@ int leer_sinonimos(item datos[]) {
     }
     if (fclose(archivo) != 0) {
         printf("Error al cerrar el fichero\n");
-        return(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
-    return(i);
-}
-
-void inicializar_cerrada(tabla_cerrada *diccionario, int tam) {
-
-}
-
-pos buscar_cerrada(char *clave, tabla_cerrada diccionario, int tam,
-                    int *colisiones, unsigned int (*dispersion) (char *, int),
-                    unsigned int (*resol_colisiones) (int pos_ini, int num_intento)) {
-
-}
-
-int insertar_cerrada(char *clave, char *sinonimos,
-                    tabla_cerrada *diccionario, int tam,
-                    unsigned int (*dispersion)(char *, int),
-                    unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
-
+    return (i);
 }
 
 void mostrar_cerrada(tabla_cerrada diccionario, int tam) {
 
+}
+
+void test_t_cuadratica() {
+}
+
+void test_t_lineal() {
+    tabla_cerrada tabla = malloc(11 * sizeof(entrada));
+    char claves[][7] = {
+        "ANA", "LUIS", "JOSE", "OLGA", "ROSA",
+        "IVAN", "CARLOS"
+    };
+    int i = 0;
+    item elem;
+    pos posicion;
+    int colis;
+    int contadorcol = 0;
+
+    inicializar_cerrada(&tabla, 11);
+
+    // INSERTAR LOS ELEMENTOS EN LA TABLA
+    for (i = 0; i < 6; i++) {
+        strcpy(elem.clave, claves[i]);
+        strcpy(elem.sinonimos, "");
+        colis = insertar_cerrada(elem.clave, elem.sinonimos, &tabla, 11,
+                                 ndispersion, rc_lineal);
+        contadorcol += colis;
+    }
+
+    printf("Tabla cerrada lineal\n");
+    printf("{\n");
+    mostrar_cerrada(tabla, 11);
+    printf("}\n");
+    printf(" numero total de colisiones: %d\n\n", contadorcol);
+    // BUSCAR LOS ELEMENTOS EN LA TABLA
+    for (i = 0; i < 6 + 1; i++) {
+        posicion = buscar_cerrada(claves[i], tabla, 11, ndispersion, rc_lineal);
+        if (tabla[posicion].ocupada)
+            printf("Al buscar: %s, encontro: %s", claves[i],
+                   tabla[posicion].clave);
+        else printf("No encontro: %s", claves[i]);
+        printf("\n");
+    }
+    printf("\n");
+
+    free(tabla);
+}
+
+void test() {
+    test_t_lineal();
+    test_t_cuadratica();
+}
+
+double microsegundos() {
+    struct timeval t;
+    if (gettimeofday(&t,NULL) < 0) return 0.0;
+    return (t.tv_usec + t.tv_sec * 1000000.0);
 }

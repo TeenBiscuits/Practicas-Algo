@@ -1,10 +1,17 @@
-all: main.out
+# Creado por Pablo P. Pablo M. Maite G.
+
+all: main.o
+
+run: main.o
 	rm tiempos.txt
-	./main.out
+	./main.out > tiempos.txt
 	cat tiempos.txt
 
-main.out: main.c
-	gcc -Wall -o main.out main.c -lm
+main.o: main.c tablas.c
+	gcc -Wall -o main.o main.c tablas.o -lm
+
+tablas.o: tablas.c
+	gcc -Wall -o tablas.o tablas.c -lm
 
 clean: 
-	rm -f *.out tiempos.txt
+	rm -f *.o tiempos.txt
