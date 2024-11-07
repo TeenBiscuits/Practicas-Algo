@@ -1,17 +1,16 @@
 # Creado por Pablo P. Pablo M. Maite G.
 
-all: main.o
+all: p3.o
 
-run: main.o
-	rm tiempos.txt
-	./main.out > tiempos.txt
+run: p3.o
+	./p3.o > tiempos.txt
 	cat tiempos.txt
 
-main.o: main.c tablas.c
-	gcc -Wall -o main.o main.c tablas.o -lm
+p3.o: main.c tablas.o
+	gcc -Wall -o p3.o main.c tablas.o -lm
 
 tablas.o: tablas.c
-	gcc -Wall -o tablas.o tablas.c -lm
+	gcc -Wall -c -o tablas.o tablas.c -lm
 
 clean: 
 	rm -f *.o tiempos.txt

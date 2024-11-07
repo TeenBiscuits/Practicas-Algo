@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <math.h>
 
 #include "tablas.h"
 
@@ -38,20 +39,61 @@ void inicializar_cerrada(tabla_cerrada *diccionario, int tam) {
 pos buscar_cerrada(char *clave, tabla_cerrada diccionario, int tam, int *colisiones,
                    unsigned int (*dispersion)(char *, int),
                    unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
+
+        int i = 0;
+        int x = dispersion(clave, tam);
+        int posAct = x;
+
+        while (diccionario[posAct].ocupada &&
+        strcmp(diccionario[posAct].clave, clave)){
+            i++;
+            posAct = resol_colisiones(x,i) % tam;
+        }
+        *colisiones = i;
+        return posAct;
+
 }
 
 int insertar_cerrada(char *clave, char *sinonimos, tabla_cerrada *diccionario, int tam,
                      unsigned int (*dispersion)(char *, int),
                      unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
+    int i = 0;
+    int x = dispersion(clave, tam);
+    int posAct = x;
+
+    while ((*diccionario)[posAct].ocupada &&
+    strcmp((*diccionario)[posAct].clave, clave)){
+        i++;
+        posAct = resol_colisiones(x,i) % tam;
+    }
+
+    if(!((*diccionario)[posAct].ocupada)) {
+        strcpy((*diccionario)[posAct].clave, clave);
+        strcpy((*diccionario)[posAct].sinonimos, sinonimos);
+        (*diccionario)[posAct].ocupada = 1;
+    }
+    return i;
 }
 
 void mostrar_cerrada(tabla_cerrada diccionario, int tam) {
     int i = 0;
 
     for (i = 0; i < tam; i++) {
-        printf("%2d-", i);
+        printf("%2d - ", i);
         if (diccionario[i].ocupada)
             printf("(%s)", diccionario[i].clave);
         printf("\n");
     }
+}
+
+unsigned int resol_lineal (int pos_ini, int num_intentos) {
+    int posAct;
+    posAct = pos_ini + num_intentos;
+    return posAct;
+}
+
+unsigned int resol_cuadratica (int pos_ini, int num_intentos) {
+    int posAct;
+    posAct = pos_ini + powf(num_intentos,2);
+    return posAct;
 }
