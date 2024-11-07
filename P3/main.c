@@ -24,11 +24,15 @@ void test();
 
 void tiempos();
 
+void analizar();
+
 double microsegundos();
 
 int main(void) {
     printf("<--- Práctica de Pablos & Maite --->\n");
+    printf("<--- TESTS --->\n");
     test();
+    printf("<--- TIEMPOS --->\n");
     tiempos();
     return 0;
 }
@@ -207,8 +211,30 @@ void test() {
 }
 
 void tiempos() {
-    item sinonimos[19062];
+    int totalSinonimos = 19062;
+    int sizeDiccionario = 38197;
+    tabla_cerrada diccionario = malloc(sizeDiccionario * sizeof(entrada));
+    item sinonimos[totalSinonimos];
     leer_sinonimos(sinonimos);
+
+    // Inicializo un diccionario, calculo los tiempos, sobreescribo el diccionario, repito y finalmente libero memoria
+
+    /*
+    inicializar_cerrada(&diccionario, sizeDiccionario);
+    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionA, explora_lineal);
+    inicializar_cerrada(&diccionario, sizeDiccionario);
+    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionA, explora_cuadratica);
+    inicializar_cerrada(&diccionario, sizeDiccionario);
+    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionA, explora_doble);
+    inicializar_cerrada(&diccionario, sizeDiccionario);
+    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionB, explora_lineal);
+    inicializar_cerrada(&diccionario, sizeDiccionario);
+    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionB, explora_cuadratica);
+    inicializar_cerrada(&diccionario, sizeDiccionario);
+    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionA, explora_doble);
+    */
+
+    free(diccionario);
 }
 
 double microsegundos() {
