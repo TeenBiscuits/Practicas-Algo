@@ -18,6 +18,8 @@ void test_t_lineal();
 
 void test_t_cuadratica();
 
+void test_t_doble();
+
 void test();
 
 void tiempos();
@@ -83,7 +85,7 @@ void test_t_cuadratica() {
         strcpy(elem.clave, claves[i]);
         strcpy(elem.sinonimos, "");
         colis = insertar_cerrada(elem.clave, elem.sinonimos, &tabla, 11,
-                                 ndispersion, resol_cuadratica);
+                                 ndispersion, explora_cuadratica);
         contadorcol += colis;
     }
 
@@ -92,10 +94,11 @@ void test_t_cuadratica() {
     mostrar_cerrada(tabla, 11);
     printf("}\n");
     printf("Numero total de colisiones al insertar los elementos: %d\n\n", contadorcol);
+
     // BUSCAR TODOS LOS ELEMENTOS EN LA TABLA
     for (i = 0; i < 6 + 1; i++) {
         colis = 0;
-        posicion = buscar_cerrada(claves[i], tabla, 11, &colis, ndispersion, resol_cuadratica);
+        posicion = buscar_cerrada(claves[i], tabla, 11, &colis, ndispersion, explora_cuadratica);
         if (tabla[posicion].ocupada)
             printf("Al buscar: %s, encuentro: %s, colisiones: %d", claves[i], tabla[posicion].clave, colis);
         else printf("No encuentro: %s, colisiones: %d", claves[i], colis);
@@ -125,7 +128,7 @@ void test_t_lineal() {
         strcpy(elem.clave, claves[i]);
         strcpy(elem.sinonimos, "");
         colis = insertar_cerrada(elem.clave, elem.sinonimos, &tabla, 11,
-                                 ndispersion, resol_lineal);
+                                 ndispersion, explora_lineal);
         contadorcol += colis;
     }
 
@@ -134,10 +137,59 @@ void test_t_lineal() {
     mostrar_cerrada(tabla, 11);
     printf("}\n");
     printf("Numero total de colisiones al insertar los elementos: %d\n\n", contadorcol);
+
     // BUSCAR TODOS LOS ELEMENTOS EN LA TABLA
     for (i = 0; i < 6 + 1; i++) {
         colis = 0;
-        posicion = buscar_cerrada(claves[i], tabla, 11, &colis, ndispersion, resol_lineal);
+        posicion = buscar_cerrada(claves[i], tabla, 11, &colis, ndispersion, explora_lineal);
+        if (tabla[posicion].ocupada)
+            printf("Al buscar: %s, encuentro: %s, colisiones: %d", claves[i], tabla[posicion].clave, colis);
+        else printf("No encuentro: %s, colisiones: %d", claves[i], colis);
+        printf("\n");
+    }
+    printf("\n");
+
+    free(tabla);
+}
+
+void test_t_doble() {
+    // NOTA A TENER EN CUENTA EN ESTE TEST, HOLA PROFE SI ME LEES DURANTE LA DEFENSA
+    // EN EL TEST DE LA TABLA CERRADA DOBLE SE UTILIZA UNA EXPLORACIÓN DOBLE CUYO
+    // MÓDULO EN VEZ DE SER EL DADO POR LA PRÁCTICA (10007) USA 5 QUE ES EL DEL EJEMPLO
+    // DE LAS TRANSPARENCIAS, ASI SE PUEDE COMPROBAR QUE ESTA BIEN IMPLEMENTADO :)
+
+    tabla_cerrada tabla = malloc(11 * sizeof(entrada));
+    char claves[][7] = {
+        "ANA", "LUIS", "JOSE", "OLGA", "ROSA",
+        "IVAN", "CARLOS"
+    };
+    int i = 0;
+    item elem;
+    pos posicion;
+    int colis;
+    int contadorcol = 0;
+
+    inicializar_cerrada(&tabla, 11);
+
+    // INSERTAR LOS ELEMENTOS EN LA TABLA ( MENOS A CARLOS :( )
+    for (i = 0; i < 6; i++) {
+        strcpy(elem.clave, claves[i]);
+        strcpy(elem.sinonimos, "");
+        colis = insertar_cerrada(elem.clave, elem.sinonimos, &tabla, 11,
+                                 ndispersion, explora_doble_test_only);
+        contadorcol += colis;
+    }
+
+    printf("***TABLA CERRADA DOBLE\n");
+    printf("{\n");
+    mostrar_cerrada(tabla, 11);
+    printf("}\n");
+    printf("Número total de colisiones al insertar los elementos: %d\n\n", contadorcol);
+
+    // BUSCAR TODOS LOS ELEMENTOS EN LA TABLA
+    for (i = 0; i < 6 + 1; i++) {
+        colis = 0;
+        posicion = buscar_cerrada(claves[i], tabla, 11, &colis, ndispersion, explora_doble_test_only);
         if (tabla[posicion].ocupada)
             printf("Al buscar: %s, encuentro: %s, colisiones: %d", claves[i], tabla[posicion].clave, colis);
         else printf("No encuentro: %s, colisiones: %d", claves[i], colis);
@@ -151,6 +203,7 @@ void test_t_lineal() {
 void test() {
     test_t_lineal();
     test_t_cuadratica();
+    test_t_doble();
 }
 
 void tiempos() {

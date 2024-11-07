@@ -38,8 +38,12 @@ int insertar_cerrada(char *clave, char *sinonimos, tabla_cerrada *diccionario, i
 
 void mostrar_cerrada(tabla_cerrada diccionario, int tam);
 
-unsigned int resol_lineal (int pos_ini, int num_intentos);
+unsigned int explora_lineal(int pos_ini, int num_intentos);
 
-unsigned int resol_cuadratica (int pos_ini, int num_intentos);
+unsigned int explora_cuadratica(int pos_ini, int num_intentos);
+
+unsigned int explora_doble(int pos_ini, int num_intentos);
+
+unsigned int explora_doble_test_only(int pos_ini, int num_intentos);
 
 #endif //TABLAS_H

@@ -39,19 +39,17 @@ void inicializar_cerrada(tabla_cerrada *diccionario, int tam) {
 pos buscar_cerrada(char *clave, tabla_cerrada diccionario, int tam, int *colisiones,
                    unsigned int (*dispersion)(char *, int),
                    unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
+    int i = 0;
+    int x = dispersion(clave, tam);
+    int posAct = x;
 
-        int i = 0;
-        int x = dispersion(clave, tam);
-        int posAct = x;
-
-        while (diccionario[posAct].ocupada &&
-        strcmp(diccionario[posAct].clave, clave)){
-            i++;
-            posAct = resol_colisiones(x,i) % tam;
-        }
-        *colisiones = i;
-        return posAct;
-
+    while (diccionario[posAct].ocupada &&
+           strcmp(diccionario[posAct].clave, clave)) {
+        i++;
+        posAct = resol_colisiones(x, i) % tam;
+    }
+    *colisiones = i;
+    return posAct;
 }
 
 int insertar_cerrada(char *clave, char *sinonimos, tabla_cerrada *diccionario, int tam,
@@ -62,12 +60,12 @@ int insertar_cerrada(char *clave, char *sinonimos, tabla_cerrada *diccionario, i
     int posAct = x;
 
     while ((*diccionario)[posAct].ocupada &&
-    strcmp((*diccionario)[posAct].clave, clave)){
+           strcmp((*diccionario)[posAct].clave, clave)) {
         i++;
-        posAct = resol_colisiones(x,i) % tam;
+        posAct = resol_colisiones(x, i) % tam;
     }
 
-    if(!((*diccionario)[posAct].ocupada)) {
+    if (!((*diccionario)[posAct].ocupada)) {
         strcpy((*diccionario)[posAct].clave, clave);
         strcpy((*diccionario)[posAct].sinonimos, sinonimos);
         (*diccionario)[posAct].ocupada = 1;
@@ -86,14 +84,26 @@ void mostrar_cerrada(tabla_cerrada diccionario, int tam) {
     }
 }
 
-unsigned int resol_lineal (int pos_ini, int num_intentos) {
+unsigned int explora_lineal(int pos_ini, int num_intentos) {
     int posAct;
     posAct = pos_ini + num_intentos;
     return posAct;
 }
 
-unsigned int resol_cuadratica (int pos_ini, int num_intentos) {
+unsigned int explora_cuadratica(int pos_ini, int num_intentos) {
     int posAct;
-    posAct = pos_ini + powf(num_intentos,2);
+    posAct = pos_ini + powf(num_intentos, 2);
+    return posAct;
+}
+
+unsigned int explora_doble(int pos_ini, int num_intentos) {
+    int posAct;
+    posAct = pos_ini + (10007 - pos_ini % 10007) * num_intentos;
+    return posAct;
+}
+
+unsigned int explora_doble_test_only(int pos_ini, int num_intentos) {
+    int posAct;
+    posAct = pos_ini + (5 - pos_ini % 5) * num_intentos;
     return posAct;
 }
