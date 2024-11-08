@@ -72,7 +72,7 @@ int leer_sinonimos(item datos[]) {
 
 void test_t_cuadratica() {
     tabla_cerrada tabla = malloc(11 * sizeof(entrada));
-    char claves[][7] = {
+    char *claves[7] = {
         "ANA", "LUIS", "JOSE", "OLGA", "ROSA",
         "IVAN", "CARLOS"
     };
@@ -115,7 +115,7 @@ void test_t_cuadratica() {
 
 void test_t_lineal() {
     tabla_cerrada tabla = malloc(11 * sizeof(entrada));
-    char claves[][7] = {
+    char *claves[7] = {
         "ANA", "LUIS", "JOSE", "OLGA", "ROSA",
         "IVAN", "CARLOS"
     };
@@ -163,7 +163,7 @@ void test_t_doble() {
     // DE LAS TRANSPARENCIAS, ASI SE PUEDE COMPROBAR QUE ESTA BIEN IMPLEMENTADO :)
 
     tabla_cerrada tabla = malloc(11 * sizeof(entrada));
-    char claves[][7] = {
+    char *claves[7] = {
         "ANA", "LUIS", "JOSE", "OLGA", "ROSA",
         "IVAN", "CARLOS"
     };
