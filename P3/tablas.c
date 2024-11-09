@@ -28,6 +28,13 @@ unsigned int dispersionB(char *clave, int tamTabla) {
     return valor % tamTabla;
 }
 
+unsigned int ndispersion(char *clave, int tamTabla) {
+    if (strcmp(clave, "ANA") == 0) return 7;
+    if (strcmp(clave, "JOSE") == 0) return 7;
+    if (strcmp(clave, "OLGA") == 0) return 7;
+    return 6;
+}
+
 void inicializar_cerrada(tabla_cerrada *diccionario, int tam) {
     int i = 0;
     // Se recorre toda la "tabla" marcando cada elemento como no ocupado
