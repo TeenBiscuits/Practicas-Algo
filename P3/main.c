@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <math.h>
 #include <sys/time.h>
 #include <time.h>
 
@@ -25,7 +26,9 @@ void test();
 
 void tiempos();
 
-void analizar();
+void realizar_busquedas(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos, int sizeDiccionario,
+                        unsigned int (*dispersion)(char *, int),
+                        unsigned int (*resol_colisiones)(int, int), int n);
 
 double microsegundos();
 
@@ -218,76 +221,60 @@ void tiempos() {
     item sinonimos[totalSinonimos];
     leer_sinonimos(sinonimos);
 
-    // Inicializo un diccionario, calculo los tiempos, sobreescribo el diccionario, repito y finalmente libero memoria
+    // Inserción y conteo de colisiones
+    inicializar_cerrada(&diccionario, sizeDiccionario);
+    int totalColisiones = 0;
+    for (int i = 0; i < totalSinonimos; i++) {
+        totalColisiones += insertar_cerrada(sinonimos[i].clave, sinonimos[i].sinonimos, &diccionario, sizeDiccionario, dispersionB, explora_cuadratica);
+    }
+    printf("*** Dispersión cerrada cuadrática con dispersión B ***\n");
+    printf("Insertando 19062 elementos... Número total de colisiones: %d\n", totalColisiones);
 
-    /*
-    inicializar_cerrada(&diccionario, sizeDiccionario);
-    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionA, explora_lineal);
-    inicializar_cerrada(&diccionario, sizeDiccionario);
-    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionA, explora_cuadratica);
-    inicializar_cerrada(&diccionario, sizeDiccionario);
-    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionA, explora_doble);
-    inicializar_cerrada(&diccionario, sizeDiccionario);
-    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionB, explora_lineal);
-    inicializar_cerrada(&diccionario, sizeDiccionario);
-    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionB, explora_cuadratica);
-    inicializar_cerrada(&diccionario, sizeDiccionario);
-    analizar(&diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionA, explora_doble);
-    */
+    // Imprimir encabezado de la tabla
+    printf("Buscando n elementos...\n");
+    printf("n       t(n)       t(n)/n^0.8   t(n)/n       t(n)/n*log(n)\n");
+
+    // Realizar búsquedas para diferentes valores de n
+    int tamanos[] = {125, 250, 500, 1000, 2000, 4000, 8000, 16000};
+    int num_tamanos = sizeof(tamanos) / sizeof(tamanos[0]);
+    for (int i = 0; i < num_tamanos; i++) {
+        realizar_busquedas(diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionB, explora_cuadratica, tamanos[i]);
+    }
 
     free(diccionario);
 }
 
-void realizar_busquedas_aleatorias(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos, int sizeDiccionario){
-    int numBusquedas = 10;
+void realizar_busquedas(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos, int sizeDiccionario,
+                        unsigned int (*dispersion)(char *, int),
+                        unsigned int (*resol_colisiones)(int, int), int n) {
     int colisiones, posicion;
-
-    srand(time(NULL));
-    printf("Resultados de las busquedas aleatorias:\n");
-    for (int i = 0; i < numBusquedas; i++) {
-        int indiceAleatorio = rand() % totalSinonimos; // Índice aleatorio en el rango de sinonimos
-
-        colisiones = 0;
-        posicion = buscar_cerrada(sinonimos[indiceAleatorio].clave, diccionario, sizeDiccionario, &colisiones, dispersionA, explora_lineal);
-
-        if (diccionario[posicion].ocupada) {
-            printf("Búsqueda de %s: encontrado con %d colisiones\n", sinonimos[indiceAleatorio].clave, colisiones);
-        } else {
-            printf("Búsqueda de %s: no encontrado, colisiones: %d\n", sinonimos[indiceAleatorio].clave, colisiones);
-        }
-    }
-}
-
-void analizar(tabla_cerrada *diccionario, item sinonimos[],int totalSinonimos, int sizeDiccionario,
-              unsigned int (*dispersion) (char *, int),
-              unsigned int (*resol_colisiones) (int, int)){
-    int i, colisiones, totalColisiones = 0, repeticiones = 1;
     double tiempoInicio, tiempoFin, tiempoTotal;
+    int repeticiones = 1;
 
-    do{
-        totalColisiones = 0; //inicializo ocntador de colisiones y tiempo
+    do {
         tiempoInicio = microsegundos();
 
-        for (i = 0; i < totalSinonimos; i++) { //inserto cada sinónimo en la tabla y cuenta colisiones
-            colisiones = insertar_cerrada(sinonimos[i].clave, sinonimos[i].sinonimos,
-                                          diccionario, sizeDiccionario, dispersion, resol_colisiones);
-            totalColisiones += colisiones;
+        // Realizar las búsquedas
+        for (int r = 0; r < repeticiones; r++) {
+            for (int i = 0; i < n; i++) {
+                int indiceAleatorio = rand() % totalSinonimos; // Seleccionar clave aleatoria
+                posicion = buscar_cerrada(sinonimos[indiceAleatorio].clave, diccionario, sizeDiccionario, &colisiones, dispersion, resol_colisiones);
+            }
         }
 
-        //Calculo tiempo total para las repeticiones actuales
         tiempoFin = microsegundos();
-        tiempoTotal = (tiempoFin-tiempoInicio)/repeticiones;
+        tiempoTotal = (tiempoFin - tiempoInicio) / repeticiones;
 
-        if(tiempoTotal<500){
-        repeticiones *=10;//Aumenta las repeticiones para obtener un tiempo mayor
+        if (tiempoTotal < 500) {
+            repeticiones *= 10;
         }
-    } while (tiempoTotal<500); //Repite si el tiempo e menor a 500 microsegundos
-    printf("Función de dispersión: %s, Método de exploración: %s\n",
-           "dispersionA", "exploracion_lineal"); // Ajusta según la combinación
-    printf("Tiempo promedio de inserción: %f microsegundos\n", tiempoTotal);
-    printf("Número total de colisiones: %d\n\n", totalColisiones);
+    } while (tiempoTotal < 500);
 
+    double cociente_n_08 = tiempoTotal / pow(n, 0.8);
+    double cociente_n = tiempoTotal / n;
+    double cociente_n_log_n = tiempoTotal / (n * log(n));
 
+    printf("%-8d %-10.3f %-10.5f %-10.5f %-10.5f\n", n, tiempoTotal, cociente_n_08, cociente_n, cociente_n_log_n);
 }
 
 double microsegundos() {
