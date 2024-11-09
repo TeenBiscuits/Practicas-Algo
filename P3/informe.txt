@@ -5,6 +5,7 @@ Pablo Míguez Muíño
 Maite Liu González Vázquez
 
 1) Contexto
+
 En esta práctica estudiamos el número de colisiones que se producen cuando se insertan los datos del fichero de 19062
 elementos proporcionado. El estudio se realiza para dos funciones de dispersión dadas (dispersión A y dispersión B) y
 para tres estrategias de resolución de colisiones implementadas distintas (lineal, cuadrática y exploración doble).
@@ -26,115 +27,38 @@ Unidad de tiempo utilizada: micro segundos
 
 3) Colisiones
 
-3.1 - Dispersión A con resolución lineal
+3.1 - Dispersión A con exploración lineal
 
 Produce 172,623,183 colisiones, la mayor cantidad entre todas las combinaciones. Esto indica que la dispersión
 A no es adecuada para el método lineal, generando una acumulación significativa de colisiones.
 
-3.2 - Dispersión A con resolución cuadrática
+3.2 - Dispersión A con exploración cuadrática
 
 Reduce las colisiones a 2,106,581, un número mucho menor que el método lineal, gracias a la exploración cuadrática que
 distribuye mejor las claves en la tabla.
 
-3.3 - Dispersión A con resolución doble
+3.3 - Dispersión A con exploración doble
 
 Genera 1,451,531 colisiones, la menor cantidad con dispersión A. La exploración doble es más efectiva al dispersar las
 colisiones, evitando clusters largos.
 
-3.4 - Dispersión B con resolución lineal
+3.4 - Dispersión B con exploración lineal
 
 Registra solo 16,965 colisiones, lo que demuestra que dispersión B es mucho más adecuada para la resolución
 lineal, reduciendo drásticamente las colisiones.
 
-3.5 - Dispersión B con resolución cuadrática
+3.5 - Dispersión B con exploración cuadrática
 
 Minimiza las colisiones a 13,366, el valor más bajo entre todas las combinaciones, indicando que dispersión B junto con
 resolución cuadrática es la opción más eficiente.
 
-3.6 - Dispersión B con resolución doble
+3.6 - Dispersión B con exploración doble
 
 Presenta 19,401 colisiones, ligeramente superior al método cuadrático, pero aún eficaz para mantener baja la cantidad
 de colisiones
 
 4) Estudio de los resultados
 
-(*) //Resultado de buscar n palabras 1000 veces
-
-<--- Práctica de Pablos & Maite --->
-<--- TESTS --->
-***TABLA CERRADA LINEAL
-{
- 0 - (IVAN)
- 1 -
- 2 -
- 3 -
- 4 -
- 5 -
- 6 - (LUIS)
- 7 - (ANA)
- 8 - (JOSE)
- 9 - (OLGA)
-10 - (ROSA)
-}
-Número total de colisiones al insertar los elementos: 12
-
-Al buscar: ANA, encuentro: ANA, colisiones: 0
-Al buscar: LUIS, encuentro: LUIS, colisiones: 0
-Al buscar: JOSE, encuentro: JOSE, colisiones: 1
-Al buscar: OLGA, encuentro: OLGA, colisiones: 2
-Al buscar: ROSA, encuentro: ROSA, colisiones: 4
-Al buscar: IVAN, encuentro: IVAN, colisiones: 5
-No encuentro: CARLOS, colisiones: 6
-
-***TABLA CERRADA CUADRÁTICA
-{
- 0 - (OLGA)
- 1 -
- 2 -
- 3 -
- 4 - (IVAN)
- 5 -
- 6 - (LUIS)
- 7 - (ANA)
- 8 - (JOSE)
- 9 -
-10 - (ROSA)
-}
-Número total de colisiones al insertar los elementos: 8
-
-Al buscar: ANA, encuentro: ANA, colisiones: 0
-Al buscar: LUIS, encuentro: LUIS, colisiones: 0
-Al buscar: JOSE, encuentro: JOSE, colisiones: 1
-Al buscar: OLGA, encuentro: OLGA, colisiones: 2
-Al buscar: ROSA, encuentro: ROSA, colisiones: 2
-Al buscar: IVAN, encuentro: IVAN, colisiones: 3
-No encuentro: CARLOS, colisiones: 5
-
-***TABLA CERRADA DOBLE
-{
- 0 - (IVAN)
- 1 -
- 2 - (OLGA)
- 3 - (ROSA)
- 4 -
- 5 -
- 6 - (LUIS)
- 7 - (ANA)
- 8 -
- 9 -
-10 - (JOSE)
-}
-Número total de colisiones al insertar los elementos: 9
-
-Al buscar: ANA, encuentro: ANA, colisiones: 0
-Al buscar: LUIS, encuentro: LUIS, colisiones: 0
-Al buscar: JOSE, encuentro: JOSE, colisiones: 1
-Al buscar: OLGA, encuentro: OLGA, colisiones: 2
-Al buscar: ROSA, encuentro: ROSA, colisiones: 2
-Al buscar: IVAN, encuentro: IVAN, colisiones: 4
-No encuentro: CARLOS, colisiones: 5
-
-<--- TIEMPOS --->
 ***Dispersion cerrada lineal con dispersión A
 Insertando 19062 elementos... Número total de colisiones: 172623183
 Buscando n elementos...
@@ -171,6 +95,7 @@ Buscando n elementos...
     16000        31163.000        13.500295         1.947688         0.201200
 
 Cota ajustada: 1.9610
+(*) Promedio de realizar n búsquedas 1000 veces
 
 La dispersión cuadrática reduce las colisiones comparado con la lineal, aunque no lo suficiente para que la cota
 subestimada (t(n)/n) sea representativa. La cota ajustada (t(n)/(n*log(n))) se acerca al tiempo real, y la cota
@@ -192,6 +117,7 @@ Buscando n elementos...
     16000        13919.000         6.029927         0.869938         0.089866
 
  Cota ajustada:0.8377
+(*) Promedio de realizar n búsquedas 1000 veces
 
 tiempo real. La cota ajustada (t(n)/(n*log(n))) también es bastante precisa, mientras que la cota sobrestimada
 (t(n)/n^{0.8}) se alinea mejor en grandes valores de n.
@@ -213,6 +139,7 @@ Buscando n elementos...
     16000         1167.000         0.505563         0.072938         0.007535
 
 Cota ajustada: 0.0767
+(*) Promedio de realizar n búsquedas 1000 veces
 
 Aquí, las colisiones son bajas, y la cota subestimada (t(n)/n) se ajusta bien al tiempo real. La cota ajustada
 (t(n)/(n*log(n))) también representa con precisión los tiempos de búsqueda, mientras que la cota sobrestimada
@@ -235,6 +162,7 @@ Buscando n elementos...
     16000         1341.000         0.580942         0.083812         0.008658
 
 Cota ajustada: 0.0874
+(*) Promedio de realizar n búsquedas 1000 veces
 
 Aquí, las colisiones son bajas, y la cota subestimada (t(n)/n) se ajusta bien al tiempo real. La cota ajustada
 (t(n)/(n*log(n))) también representa con precisión los tiempos de búsqueda, mientras que la cota sobrestimada
@@ -257,6 +185,7 @@ Buscando n elementos...
     16000         1342.000         0.581375         0.083875         0.008664
 
 Cota ajustada: 0.0846
+(*) Promedio de realizar n búsquedas 1000 veces
 
 Con pocas colisiones, la cota subestimada (t(n)/n) es casi exacta. La cota ajustada (t(n)/(n*log(n)))
 también refleja muy bien los tiempos reales, y la cota sobrestimada (t(n)/n^{0.8}) es apenas superior, mostrando gran
