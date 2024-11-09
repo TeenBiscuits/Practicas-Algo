@@ -15,6 +15,15 @@ Finalmente se analizan los tiempos para la busqueda de n elementos.
 
 2) Datos de la máquina
 
+Modelo de hardware: HP Victus by HP Gaming Laptop 15-fa0xxx
+Memoria: 16.0 GiB
+Procesador: 12th Gen Intel®️ Core™️ i5-12500H × 16
+Nombre del SO: Ubuntu 22.04.5 LTS
+Versión del Kernel: 6.8.0-45-generic
+Tipo de SO: 64 bits
+
+Unidad de tiempo utilizada: micro segundos
+
 3) Colisiones
 
 4) Estudio de los resultados
