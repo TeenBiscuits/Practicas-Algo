@@ -16,19 +16,20 @@ unsigned int ndispersion(char *clave, int tamTabla);
 
 int leer_sinonimos(item datos[]);
 
-void test_t_lineal();
-
-void test_t_cuadratica();
-
-void test_t_doble();
+void test_tabla(unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
 
 void test();
 
 void tiempos();
 
-void realizar_busquedas(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos, int sizeDiccionario,
-                        unsigned int (*dispersion)(char *, int),
-                        unsigned int (*resol_colisiones)(int, int), int n);
+void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
+              int sizeDiccionario, unsigned int (*dispersion)(char *, int),
+              unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
+
+void print_cabecerat(unsigned int (*dispersion)(char *, int),
+                     unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
+
+void print_fila(int n, double t);
 
 double microsegundos();
 
@@ -74,7 +75,7 @@ int leer_sinonimos(item datos[]) {
     return (i);
 }
 
-void test_t_cuadratica() {
+void test_tabla(unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
     tabla_cerrada tabla = malloc(11 * sizeof(entrada));
     char *claves[7] = {
         "ANA", "LUIS", "JOSE", "OLGA", "ROSA",
@@ -93,113 +94,24 @@ void test_t_cuadratica() {
         strcpy(elem.clave, claves[i]);
         strcpy(elem.sinonimos, "");
         colis = insertar_cerrada(elem.clave, elem.sinonimos, &tabla, 11,
-                                 ndispersion, explora_cuadratica);
+                                 ndispersion, resol_colisiones);
         contadorcol += colis;
     }
 
-    printf("***TABLA CERRADA CUADRÁTICA\n");
     printf("{\n");
     mostrar_cerrada(tabla, 11);
     printf("}\n");
-    printf("Numero total de colisiones al insertar los elementos: %d\n\n", contadorcol);
+    printf("Número total de colisiones al insertar los elementos: %d\n\n",
+           contadorcol);
 
     // BUSCAR TODOS LOS ELEMENTOS EN LA TABLA
     for (i = 0; i < 6 + 1; i++) {
         colis = 0;
-        posicion = buscar_cerrada(claves[i], tabla, 11, &colis, ndispersion, explora_cuadratica);
+        posicion = buscar_cerrada(claves[i], tabla, 11, &colis,
+                                  ndispersion, resol_colisiones);
         if (tabla[posicion].ocupada)
-            printf("Al buscar: %s, encuentro: %s, colisiones: %d", claves[i], tabla[posicion].clave, colis);
-        else printf("No encuentro: %s, colisiones: %d", claves[i], colis);
-        printf("\n");
-    }
-    printf("\n");
-
-    free(tabla);
-}
-
-void test_t_lineal() {
-    tabla_cerrada tabla = malloc(11 * sizeof(entrada));
-    char *claves[7] = {
-        "ANA", "LUIS", "JOSE", "OLGA", "ROSA",
-        "IVAN", "CARLOS"
-    };
-    int i = 0;
-    item elem;
-    pos posicion;
-    int colis;
-    int contadorcol = 0;
-
-    inicializar_cerrada(&tabla, 11);
-
-    // INSERTAR LOS ELEMENTOS EN LA TABLA ( MENOS A CARLOS :( )
-    for (i = 0; i < 6; i++) {
-        strcpy(elem.clave, claves[i]);
-        strcpy(elem.sinonimos, "");
-        colis = insertar_cerrada(elem.clave, elem.sinonimos, &tabla, 11,
-                                 ndispersion, explora_lineal);
-        contadorcol += colis;
-    }
-
-    printf("***TABLA CERRADA LINEAL\n");
-    printf("{\n");
-    mostrar_cerrada(tabla, 11);
-    printf("}\n");
-    printf("Numero total de colisiones al insertar los elementos: %d\n\n", contadorcol);
-
-    // BUSCAR TODOS LOS ELEMENTOS EN LA TABLA
-    for (i = 0; i < 6 + 1; i++) {
-        colis = 0;
-        posicion = buscar_cerrada(claves[i], tabla, 11, &colis, ndispersion, explora_lineal);
-        if (tabla[posicion].ocupada)
-            printf("Al buscar: %s, encuentro: %s, colisiones: %d", claves[i], tabla[posicion].clave, colis);
-        else printf("No encuentro: %s, colisiones: %d", claves[i], colis);
-        printf("\n");
-    }
-    printf("\n");
-
-    free(tabla);
-}
-
-void test_t_doble() {
-    // NOTA A TENER EN CUENTA EN ESTE TEST, HOLA PROFE SI ME LEES DURANTE LA DEFENSA
-    // EN EL TEST DE LA TABLA CERRADA DOBLE SE UTILIZA UNA EXPLORACIÓN DOBLE CUYO
-    // MÓDULO EN VEZ DE SER EL DADO POR LA PRÁCTICA (10007) USA 5 QUE ES EL DEL EJEMPLO
-    // DE LAS TRANSPARENCIAS, ASI SE PUEDE COMPROBAR QUE ESTA BIEN IMPLEMENTADO :)
-
-    tabla_cerrada tabla = malloc(11 * sizeof(entrada));
-    char *claves[7] = {
-        "ANA", "LUIS", "JOSE", "OLGA", "ROSA",
-        "IVAN", "CARLOS"
-    };
-    int i = 0;
-    item elem;
-    pos posicion;
-    int colis;
-    int contadorcol = 0;
-
-    inicializar_cerrada(&tabla, 11);
-
-    // INSERTAR LOS ELEMENTOS EN LA TABLA ( MENOS A CARLOS :( )
-    for (i = 0; i < 6; i++) {
-        strcpy(elem.clave, claves[i]);
-        strcpy(elem.sinonimos, "");
-        colis = insertar_cerrada(elem.clave, elem.sinonimos, &tabla, 11,
-                                 ndispersion, explora_doble_test_only);
-        contadorcol += colis;
-    }
-
-    printf("***TABLA CERRADA DOBLE\n");
-    printf("{\n");
-    mostrar_cerrada(tabla, 11);
-    printf("}\n");
-    printf("Número total de colisiones al insertar los elementos: %d\n\n", contadorcol);
-
-    // BUSCAR TODOS LOS ELEMENTOS EN LA TABLA
-    for (i = 0; i < 6 + 1; i++) {
-        colis = 0;
-        posicion = buscar_cerrada(claves[i], tabla, 11, &colis, ndispersion, explora_doble_test_only);
-        if (tabla[posicion].ocupada)
-            printf("Al buscar: %s, encuentro: %s, colisiones: %d", claves[i], tabla[posicion].clave, colis);
+            printf("Al buscar: %s, encuentro: %s, colisiones: %d",
+                   claves[i], tabla[posicion].clave, colis);
         else printf("No encuentro: %s, colisiones: %d", claves[i], colis);
         printf("\n");
     }
@@ -209,9 +121,16 @@ void test_t_doble() {
 }
 
 void test() {
-    test_t_lineal();
-    test_t_cuadratica();
-    test_t_doble();
+    printf("***TABLA CERRADA LINEAL\n");
+    test_tabla(explora_lineal);
+    printf("***TABLA CERRADA CUADRÁTICA\n");
+    test_tabla(explora_cuadratica);
+    // NOTA A TENER EN CUENTA EN ESTE TEST, HOLA PROFE SI ME LEES DURANTE LA DEFENSA
+    // EN EL TEST DE LA TABLA CERRADA DOBLE SE UTILIZA UNA EXPLORACIÓN DOBLE CUYO
+    // MÓDULO EN VEZ DE SER EL DADO POR LA PRÁCTICA (10007) USA 5 QUE ES EL DEL EJEMPLO
+    // DE LAS TRANSPARENCIAS, ASI SE PUEDE COMPROBAR QUE ESTA BIEN IMPLEMENTADO :)
+    printf("***TABLA CERRADA DOBLE\n");
+    test_tabla(explora_doble_test_only);
 }
 
 void tiempos() {
@@ -220,62 +139,104 @@ void tiempos() {
     tabla_cerrada diccionario = malloc(sizeDiccionario * sizeof(entrada));
     item sinonimos[totalSinonimos];
     leer_sinonimos(sinonimos);
+    srand(time(NULL));
 
-    // Inserción y conteo de colisiones
-    inicializar_cerrada(&diccionario, sizeDiccionario);
-    int totalColisiones = 0;
-    for (int i = 0; i < totalSinonimos; i++) {
-        totalColisiones += insertar_cerrada(sinonimos[i].clave, sinonimos[i].sinonimos, &diccionario, sizeDiccionario, dispersionB, explora_cuadratica);
-    }
-    printf("*** Dispersión cerrada cuadrática con dispersión B ***\n");
-    printf("Insertando 19062 elementos... Número total de colisiones: %d\n", totalColisiones);
-
-    // Imprimir encabezado de la tabla
-    printf("Buscando n elementos...\n");
-    printf("n       t(n)       t(n)/n^0.8   t(n)/n       t(n)/n*log(n)\n");
-
-    // Realizar búsquedas para diferentes valores de n
-    int tamanos[] = {125, 250, 500, 1000, 2000, 4000, 8000, 16000};
-    int num_tamanos = sizeof(tamanos) / sizeof(tamanos[0]);
-    for (int i = 0; i < num_tamanos; i++) {
-        realizar_busquedas(diccionario, sinonimos, totalSinonimos, sizeDiccionario, dispersionB, explora_cuadratica, tamanos[i]);
-    }
+    analizar(diccionario, sinonimos, totalSinonimos, sizeDiccionario,
+             dispersionA, explora_lineal);
+    analizar(diccionario, sinonimos, totalSinonimos, sizeDiccionario,
+             dispersionA, explora_cuadratica);
+    analizar(diccionario, sinonimos, totalSinonimos, sizeDiccionario,
+             dispersionA, explora_doble);
+    analizar(diccionario, sinonimos, totalSinonimos, sizeDiccionario,
+             dispersionB, explora_lineal);
+    analizar(diccionario, sinonimos, totalSinonimos, sizeDiccionario,
+             dispersionB, explora_cuadratica);
+    analizar(diccionario, sinonimos, totalSinonimos, sizeDiccionario,
+             dispersionB, explora_doble);
 
     free(diccionario);
 }
 
-void realizar_busquedas(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos, int sizeDiccionario,
-                        unsigned int (*dispersion)(char *, int),
-                        unsigned int (*resol_colisiones)(int, int), int n) {
-    int colisiones, posicion;
-    double tiempoInicio, tiempoFin, tiempoTotal;
-    int repeticiones = 1;
+void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
+              int sizeDiccionario, unsigned int (*dispersion)(char *, int),
+              unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
+    int i, j, q, colis = 0, ran, otrascolis = 0;
+    int valoresn[8] = {125, 250, 500, 1000, 2000, 4000, 8000, 16000};
+    double inicio = 0, fin = 0, t = 0;
 
-    do {
-        tiempoInicio = microsegundos();
+    print_cabecerat(dispersion, resol_colisiones);
 
-        // Realizar las búsquedas
-        for (int r = 0; r < repeticiones; r++) {
-            for (int i = 0; i < n; i++) {
-                int indiceAleatorio = rand() % totalSinonimos; // Seleccionar clave aleatoria
-                posicion = buscar_cerrada(sinonimos[indiceAleatorio].clave, diccionario, sizeDiccionario, &colisiones, dispersion, resol_colisiones);
+    inicializar_cerrada(&diccionario, sizeDiccionario); // Inicializamos el diccionario
+
+    printf("Insertando %d elementos... ", totalSinonimos);
+    for (i = 0; i < totalSinonimos; i++)
+        colis += insertar_cerrada(sinonimos[i].clave, sinonimos[i].sinonimos,
+                                  &diccionario, sizeDiccionario, dispersion, resol_colisiones);
+    printf("Número total de colisiones: %d\n", colis);
+
+    printf("Buscando n elementos...\n        n             t(n)       "
+        "t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))\n");
+
+    for (i = 0; i < sizeof valoresn / sizeof valoresn[0]; i++) {
+        inicio = microsegundos();
+        for (j = 0; j < valoresn[i]; j++) {
+            ran = rand() % (totalSinonimos - 1);
+            buscar_cerrada(sinonimos[ran].clave, diccionario, sizeDiccionario, &otrascolis, dispersion,
+                           resol_colisiones);
+        }
+        fin = microsegundos();
+        t = (fin - inicio);
+
+        if (t < 500) {
+            // VERSIÓN MEJORADA DE TIEMPOS PETIT
+            inicio = microsegundos();
+            for (j = 0; j < 1000; j++) {
+                for (q = 0; q < valoresn[i]; q++) {
+                    ran = rand() % (totalSinonimos - 1);
+                    buscar_cerrada(sinonimos[ran].clave, diccionario, sizeDiccionario,
+                                   &otrascolis, dispersion, resol_colisiones);
+                }
             }
-        }
+            fin = microsegundos();
+            t = (fin - inicio) / 1000;
+            printf("(*)");
+        } else printf("   ");
 
-        tiempoFin = microsegundos();
-        tiempoTotal = (tiempoFin - tiempoInicio) / repeticiones;
+        print_fila(valoresn[i], t);
+    }
 
-        if (tiempoTotal < 500) {
-            repeticiones *= 10;
-        }
-    } while (tiempoTotal < 500);
-
-    double cociente_n_08 = tiempoTotal / pow(n, 0.8);
-    double cociente_n = tiempoTotal / n;
-    double cociente_n_log_n = tiempoTotal / (n * log(n));
-
-    printf("%-8d %-10.3f %-10.5f %-10.5f %-10.5f\n", n, tiempoTotal, cociente_n_08, cociente_n, cociente_n_log_n);
+    printf("\n");
 }
+
+void print_cabecerat(unsigned int (*dispersion)(char *, int),
+                     unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
+    if (resol_colisiones == explora_lineal)
+        printf("***Dispersion cerrada lineal ");
+    else if (resol_colisiones == explora_cuadratica)
+        printf("***Dispersion cerrada cuadrática ");
+    else if (resol_colisiones == explora_doble)
+        printf("***Dispersion cerrada doble ");
+    else printf("***Dispersión cerrada desconocida ");
+
+    if (dispersion == dispersionA)
+        printf("con dispersión A");
+    else if (dispersion == dispersionB)
+        printf("con dispersión B");
+    else printf("con dispersion desconocida");
+
+    printf("\n");
+}
+
+void print_fila(int n, double t) {
+    double x, y, z;
+
+    x = t / pow(n, 0.8);
+    y = t / n;
+    z = t / (n * log(n));
+
+    printf("%6d%17.3f%17.6f%17.6f%17.6f\n", n, t, x, y, z);
+}
+
 
 double microsegundos() {
     struct timeval t;
