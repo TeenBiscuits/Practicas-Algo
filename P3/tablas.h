@@ -26,6 +26,8 @@ unsigned int dispersionA(char *clave, int tamTabla);
 
 unsigned int dispersionB(char *clave, int tamTabla);
 
+unsigned int ndispersion(char *clave, int tamTabla);
+
 void inicializar_cerrada(tabla_cerrada *diccionario, int tam);
 
 pos buscar_cerrada(char *clave, tabla_cerrada diccionario, int tam, int *colisiones,
