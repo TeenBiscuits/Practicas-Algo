@@ -160,8 +160,7 @@ void tiempos() {
 void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
               int sizeDiccionario, unsigned int (*dispersion)(char *, int),
               unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
-    int i, j, q, colis = 0, ran, otrascolis = 0;
-    int valoresn[8] = {125, 250, 500, 1000, 2000, 4000, 8000, 16000};
+    int i, j, q, colis = 0, ran, otrascolis = 0, n = 125;
     double inicio = 0, fin = 0, t = 0;
 
     print_cabecerat(dispersion, resol_colisiones);
@@ -177,9 +176,9 @@ void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
     printf("Buscando n elementos...\n        n             t(n)       "
         "t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))\n");
 
-    for (i = 0; i < sizeof valoresn / sizeof valoresn[0]; i++) {
+    for (i = 0; i < 8; i++, n = n * 2) {
         inicio = microsegundos();
-        for (j = 0; j < valoresn[i]; j++) {
+        for (j = 0; j < n; j++) {
             ran = rand() % (totalSinonimos - 1);
             buscar_cerrada(sinonimos[ran].clave, diccionario, sizeDiccionario, &otrascolis, dispersion,
                            resol_colisiones);
@@ -191,7 +190,7 @@ void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
             // VERSIÓN MEJORADA DE TIEMPOS PETIT
             inicio = microsegundos();
             for (j = 0; j < 1000; j++) {
-                for (q = 0; q < valoresn[i]; q++) {
+                for (q = 0; q < n; q++) {
                     ran = rand() % (totalSinonimos - 1);
                     buscar_cerrada(sinonimos[ran].clave, diccionario, sizeDiccionario,
                                    &otrascolis, dispersion, resol_colisiones);
@@ -202,7 +201,7 @@ void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
             printf("(*)");
         } else printf("   ");
 
-        print_fila(valoresn[i], t);
+        print_fila(n, t);
     }
 
     printf("\n");
