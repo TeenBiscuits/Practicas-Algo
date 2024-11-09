@@ -237,6 +237,58 @@ void tiempos() {
     free(diccionario);
 }
 
+void realizar_busquedas_aleatorias(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos, int sizeDiccionario){
+    int numBusquedas = 10;
+    int colisiones, posicion;
+
+    srand(time(NULL));
+    printf("Resultados de las busquedas aleatorias:\n");
+    for (int i = 0; i < numBusquedas; i++) {
+        int indiceAleatorio = rand() % totalSinonimos; // Índice aleatorio en el rango de sinonimos
+
+        colisiones = 0;
+        posicion = buscar_cerrada(sinonimos[indiceAleatorio].clave, diccionario, sizeDiccionario, &colisiones, dispersionA, explora_lineal);
+
+        if (diccionario[posicion].ocupada) {
+            printf("Búsqueda de %s: encontrado con %d colisiones\n", sinonimos[indiceAleatorio].clave, colisiones);
+        } else {
+            printf("Búsqueda de %s: no encontrado, colisiones: %d\n", sinonimos[indiceAleatorio].clave, colisiones);
+        }
+    }
+}
+
+void analizar(tabla_cerrada *diccionario, item sinonimos[],int totalSinonimos, int sizeDiccionario,
+              unsigned int (*dispersion) (char *, int),
+              unsigned int (*resol_colisiones) (int, int)){
+    int i, colisiones, totalColisiones = 0, repeticiones = 1;
+    double tiempoInicio, tiempoFin, tiempoTotal;
+
+    do{
+        totalColisiones = 0; //inicializo ocntador de colisiones y tiempo
+        tiempoInicio = microsegundos();
+
+        for (i = 0; i < totalSinonimos; i++) { //inserto cada sinónimo en la tabla y cuenta colisiones
+            colisiones = insertar_cerrada(sinonimos[i].clave, sinonimos[i].sinonimos,
+                                          diccionario, sizeDiccionario, dispersion, resol_colisiones);
+            totalColisiones += colisiones;
+        }
+
+        //Calculo tiempo total para las repeticiones actuales
+        tiempoFin = microsegundos();
+        tiempoTotal = (tiempoFin-tiempoInicio)/repeticiones;
+
+        if(tiempoTotal<500){
+        repeticiones *=10;//Aumenta las repeticiones para obtener un tiempo mayor
+        }
+    } while (tiempoTotal<500); //Repite si el tiempo e menor a 500 microsegundos
+    printf("Función de dispersión: %s, Método de exploración: %s\n",
+           "dispersionA", "exploracion_lineal"); // Ajusta según la combinación
+    printf("Tiempo promedio de inserción: %f microsegundos\n", tiempoTotal);
+    printf("Número total de colisiones: %d\n\n", totalColisiones);
+
+
+}
+
 double microsegundos() {
     struct timeval t;
     if (gettimeofday(&t,NULL) < 0) return 0.0;

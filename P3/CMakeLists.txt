@@ -4,4 +4,4 @@ project(P3 C)
 set(CMAKE_C_STANDARD 99)
 
 add_executable(P3 main.c
-                tablas.c)
+        tablas.c)
