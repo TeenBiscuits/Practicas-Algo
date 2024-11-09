@@ -24,7 +24,7 @@ void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
               int sizeDiccionario, unsigned int (*dispersion)(char *, int),
               unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
 
-void n_busquedas(n, tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
+void n_busquedas(int n, tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
                  int sizeDiccionario, unsigned int (*dispersion)(char *, int),
                  unsigned int (*resol_colisiones)(int pos_ini, int num_intento));
 
@@ -153,7 +153,7 @@ void tiempos() {
 void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
               int sizeDiccionario, unsigned int (*dispersion)(char *, int),
               unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
-    int i, j, q, colis = 0, n = 125;
+    int i, q, colis = 0, n = 125;
     double inicio = 0, fin = 0, t = 0;
 
     print_cabecerat(dispersion, resol_colisiones);
@@ -194,7 +194,7 @@ void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
     printf("\n");
 }
 
-void n_busquedas(n, tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
+void n_busquedas(int n, tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
                  int sizeDiccionario, unsigned int (*dispersion)(char *, int),
                  unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
     int ran, j, otrascolis = 0;
