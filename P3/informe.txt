@@ -1,0 +1,22 @@
+ALGORITMOS- PRÁCTICA 3
+
+Pablo Portas Lopez
+Pablo Míguez Muíño
+Maite Liu González Vázquez
+
+1) Contexto
+En esta práctica estudiamos el número de colisiones que se producen cuando se insertan los datos del fichero de 19062
+elementos proporcionado. El estudio se realiza para dos funciones de dispersión dadas (dispersión A y dispersión B) y
+para tres estrategias de resolución de colisiones implementadas distintas (lineal, cuadrática y exploración doble).
+Tras la comprobación del correcto funcionamineto de las funciones implementadas, se realiza un estudio de las
+colisiones producidas al insertar los datos del fichero 'sinonimos.txt' con las funciones de dispersión y la técnicas
+de resolución de colisiones implementadas.
+Finalmente se analizan los tiempos para la busqueda de n elementos.
+
+2) Datos de la máquina
+
+3) Colisiones
+
+4) Estudio de los resultados
+
+5) Conclusión
