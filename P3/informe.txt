@@ -19,4 +19,157 @@ Finalmente se analizan los tiempos para la busqueda de n elementos.
 
 4) Estudio de los resultados
 
+<--- Práctica de Pablos & Maite --->
+<--- TESTS --->
+***TABLA CERRADA LINEAL
+{
+ 0 - (IVAN)
+ 1 -
+ 2 -
+ 3 -
+ 4 -
+ 5 -
+ 6 - (LUIS)
+ 7 - (ANA)
+ 8 - (JOSE)
+ 9 - (OLGA)
+10 - (ROSA)
+}
+Número total de colisiones al insertar los elementos: 12
+
+Al buscar: ANA, encuentro: ANA, colisiones: 0
+Al buscar: LUIS, encuentro: LUIS, colisiones: 0
+Al buscar: JOSE, encuentro: JOSE, colisiones: 1
+Al buscar: OLGA, encuentro: OLGA, colisiones: 2
+Al buscar: ROSA, encuentro: ROSA, colisiones: 4
+Al buscar: IVAN, encuentro: IVAN, colisiones: 5
+No encuentro: CARLOS, colisiones: 6
+
+***TABLA CERRADA CUADRÁTICA
+{
+ 0 - (OLGA)
+ 1 -
+ 2 -
+ 3 -
+ 4 - (IVAN)
+ 5 -
+ 6 - (LUIS)
+ 7 - (ANA)
+ 8 - (JOSE)
+ 9 -
+10 - (ROSA)
+}
+Número total de colisiones al insertar los elementos: 8
+
+Al buscar: ANA, encuentro: ANA, colisiones: 0
+Al buscar: LUIS, encuentro: LUIS, colisiones: 0
+Al buscar: JOSE, encuentro: JOSE, colisiones: 1
+Al buscar: OLGA, encuentro: OLGA, colisiones: 2
+Al buscar: ROSA, encuentro: ROSA, colisiones: 2
+Al buscar: IVAN, encuentro: IVAN, colisiones: 3
+No encuentro: CARLOS, colisiones: 5
+
+***TABLA CERRADA DOBLE
+{
+ 0 - (IVAN)
+ 1 -
+ 2 - (OLGA)
+ 3 - (ROSA)
+ 4 -
+ 5 -
+ 6 - (LUIS)
+ 7 - (ANA)
+ 8 -
+ 9 -
+10 - (JOSE)
+}
+Número total de colisiones al insertar los elementos: 9
+
+Al buscar: ANA, encuentro: ANA, colisiones: 0
+Al buscar: LUIS, encuentro: LUIS, colisiones: 0
+Al buscar: JOSE, encuentro: JOSE, colisiones: 1
+Al buscar: OLGA, encuentro: OLGA, colisiones: 2
+Al buscar: ROSA, encuentro: ROSA, colisiones: 2
+Al buscar: IVAN, encuentro: IVAN, colisiones: 4
+No encuentro: CARLOS, colisiones: 5
+
+<--- TIEMPOS --->
+***Dispersion cerrada lineal con dispersión A
+Insertando 19062 elementos... Número total de colisiones: 172623183
+Buscando n elementos...
+        n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
+      125         4708.000        98.925543        37.664000         7.800653
+      250         9189.000       110.896093        36.756000         6.656934
+      500        18577.000       128.765518        37.154000         5.978494
+     1000        37506.000       149.314075        37.506000         5.429550
+     2000        71578.000       163.664905        35.789000         4.708520
+     4000       150194.000       197.244359        37.548500         4.527161
+     8000       300251.000       226.470935        37.531375         4.176094
+    16000       601946.000       260.772354        37.621625         3.886393
+
+***Dispersion cerrada cuadrática con dispersión A
+Insertando 19062 elementos... Número total de colisiones: 2106581
+Buscando n elementos...
+        n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
+(*)   125          247.856         5.208005         1.982848         0.410671
+(*)   250          493.211         5.952244         1.972844         0.357305
+      500          975.000         6.758162         1.950000         0.313777
+     1000         1970.000         7.842711         1.970000         0.285187
+     2000         3913.000         8.947173         1.956500         0.257404
+     4000         7803.000        10.247398         1.950750         0.235199
+     8000        15590.000        11.759101         1.948750         0.216836
+    16000        31163.000        13.500295         1.947688         0.201200
+
+***Dispersion cerrada doble con dispersión A
+Insertando 19062 elementos... Número total de colisiones: 1451531
+Buscando n elementos...
+        n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
+(*)   125          106.119         2.229796         0.848952         0.175828
+(*)   250          213.074         2.571452         0.852296         0.154361
+(*)   500          424.255         2.940702         0.848510         0.136535
+     1000          852.000         3.391873         0.852000         0.123340
+     2000         1665.000         3.807065         0.832500         0.109526
+     4000         3499.000         4.595110         0.874750         0.105467
+     8000         7151.000         5.393799         0.893875         0.099461
+    16000        13919.000         6.029927         0.869938         0.089866
+
+***Dispersion cerrada lineal con dispersión B
+Insertando 19062 elementos... Número total de colisiones: 16965
+Buscando n elementos...
+        n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
+(*)   125            9.971         0.209513         0.079768         0.016521
+(*)   250           20.289         0.244855         0.081156         0.014698
+(*)   500           38.162         0.264518         0.076324         0.012281
+(*)  1000           76.217         0.303425         0.076217         0.011034
+(*)  2000          153.137         0.350152         0.076568         0.010074
+(*)  4000          309.416         0.406345         0.077354         0.009326
+     8000          588.000         0.443512         0.073500         0.008178
+    16000         1167.000         0.505563         0.072938         0.007535
+
+***Dispersion cerrada cuadrática con dispersión B
+Insertando 19062 elementos... Número total de colisiones: 13366
+Buscando n elementos...
+        n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
+(*)   125           11.145         0.234181         0.089160         0.018466
+(*)   250           21.918         0.264514         0.087672         0.015878
+(*)   500           42.852         0.297026         0.085704         0.013791
+(*)  1000           87.826         0.349642         0.087826         0.012714
+(*)  2000          173.520         0.396758         0.086760         0.011414
+(*)  4000          359.006         0.471470         0.089751         0.010821
+     8000          699.000         0.527236         0.087375         0.009722
+    16000         1341.000         0.580942         0.083812         0.008658
+
+***Dispersion cerrada doble con dispersión B
+Insertando 19062 elementos... Número total de colisiones: 19401
+Buscando n elementos...
+        n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
+(*)   125           10.484         0.220292         0.083872         0.017371
+(*)   250           20.871         0.251879         0.083484         0.015120
+(*)   500           43.280         0.299993         0.086560         0.013928
+(*)  1000           81.920         0.326129         0.081920         0.011859
+(*)  2000          169.780         0.388206         0.084890         0.011168
+(*)  4000          346.541         0.455100         0.086635         0.010445
+     8000          683.000         0.515168         0.085375         0.009500
+    16000         1342.000         0.581375         0.083875         0.008664
+
 5) Conclusión
