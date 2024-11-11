@@ -3,4 +3,5 @@ Prácticas del trio dinámico formado por las bestis v.2.0 pablo &amp; pablo and
 
 - [P1: La sucesión de Fibonacci](/P1/)
 - [P2: Ordenación por inserción y ordenación rápida](/P2/)
+- [P3: Diccionario de datos](/P3/)
 
