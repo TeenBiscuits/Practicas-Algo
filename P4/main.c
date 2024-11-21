@@ -41,14 +41,6 @@ void insertarMonticulo(pmonticulo m, int x) {
     }
 }
 
-void intercambiar(int *a, int *b) {
-    int aux;
-
-    aux = *a;
-    *a = *b;
-    *b = aux;
-}
-
 void flotar(pmonticulo m, int i) {
     int temp;
 
