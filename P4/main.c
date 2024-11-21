@@ -20,8 +20,6 @@ int consultarMenor(const pmonticulo m);
 
 void crearMonticulo(pmonticulo m, int v [], int n);
 
-void intercambiar(int *a, int *b);
-
 void flotar(pmonticulo m, int i);
 
 void hundir(pmonticulo m, int i);
@@ -52,10 +50,14 @@ void intercambiar(int *a, int *b) {
 }
 
 void flotar(pmonticulo m, int i) {
-    while (i > 1 && m -> vector[(i + 1) / 2] < m -> vector[i + 1]) {
-        intercambiar(&(m -> vector[(i + 1) / 2]), &(m -> vector[i + 1]));
-        m -> vector[i + 1];
-        i = i / 2;
+    int temp;
+
+    while (i > 0 && m -> vector[(i - 1) / 2] < m -> vector[i]) {
+        temp = m -> vector[(i - 1) / 2];
+        m -> vector[(1 - 1) / 2] = m -> vector[i];
+        m -> vector[i] = temp;
+
+        i = (i - 1) / 2;
     }
 }
 
@@ -72,19 +74,25 @@ void crearMonticulo(pmonticulo m, int v[], int n) {
 }
 
 void hundir(pmonticulo m, int i) {
-    int hijoIzq = 2 * i;
-    int hijoDer = 2 * i + 1;
-    int j = i;
+    int hijoIzq, hijoDer, j, temp;
 
     do {
+         hijoIzq = 2 * i;
+         hijoDer = 2 * i + 1;
+         j = i;
+
         if (hijoDer <= m -> tamano_monticulo && m -> vector[hijoDer] > m -> vector[i])
             i = hijoDer;
 
         if (hijoIzq <= m -> tamano_monticulo && m -> vector[hijoIzq] > m -> vector[i])
             i = hijoIzq;
 
-        intercambiar(&(m -> vector[j]), &(m -> vector[i]));
-    } while (j == i);
+        if (j != i) {
+            temp = m -> vector[j];
+            m -> vector[j] = m -> vector[i];
+            m -> vector[i] = temp;
+        }
+    } while (j != i);
 }
 
 void quitarMenor(pmonticulo m) {
