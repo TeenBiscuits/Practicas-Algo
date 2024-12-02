@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <sys/time.h>
 
 #define TAM 256000
 
@@ -25,24 +28,17 @@ void hundir(pmonticulo m, int i);
 
 void ordenarPorMonticulos(int v[], int n);
 
+void inicializarVectorAleatorio(int v[], int n, int min, int max);
+
+void comprobar();
+
+double microsegundos();
+
 int main() {
-    struct monticulo heap;
-    iniMonticulo(&heap);
+    printf("ORDENACION POR MONTICULOS\n");
+    comprobar();
 
-    int valores[] = {15, 11, 17, 5, 3};
-    int n = sizeof(valores) / sizeof(valores[0]);
-
-    crearMonticulo(&heap, valores, n);
-    printf("Menor elemento: %d\n", consultarMenor(&heap));
-    quitarMenor(&heap);
-    printf("Menor elemento tras eliminar: %d\n", consultarMenor(&heap));
-
-    ordenarPorMonticulos(valores, n);
-    printf("Vector ordenado:\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d ", valores[i]);
-    }
-    printf("\n");
+    return 0;
 }
 
 void iniMonticulo(pmonticulo m) {
@@ -127,5 +123,42 @@ void ordenarPorMonticulos(int v[], int n) {
         v[i] = consultarMenor(&heap);
         quitarMenor(&heap);
     }
+}
+
+void inicializarVectorAleatorio(int v[], int n, int min, int max) {
+    srand(time(NULL));
+
+    for (int i = 0; i < n; i++)
+        v[i] = min + rand() % (max - min + 1);
+}
+
+void comprobar() {
+    struct monticulo M;
+    int n = 10, min = 1, max = 1000;
+    int vector[n];
+
+    inicializarVectorAleatorio(vector, n, min, max);
+    printf("Vector a ordenar: ");
+    for (int i = 0; i < n; i++)
+        printf("%d ", vector[i]);
+    printf("\n");
+
+    crearMonticulo(&M, vector, n);
+
+    printf("Menor elemento: %d\n", consultarMenor(&M));
+    quitarMenor(&M);
+    printf("Menor elemento tras eliminar: %d\n", consultarMenor(&M));
+
+    ordenarPorMonticulos(vector, n);
+    printf("Vector ordenado: ");
+    for (int i = 0; i < n; i++)
+        printf("%d ", vector[i]);
+    printf("\n");
+}
+
+double microsegundos() {
+    struct timeval t;
+    if (gettimeofday(&t,NULL) < 0) return 0.0;
+    return (t.tv_usec + t.tv_sec * 1000000.0);
 }
 
