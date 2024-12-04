@@ -9,12 +9,16 @@ file: p4.o
 	./p4.o > tiempos.txt
 	cat tiempos.txt
 
-leaks:
-	gcc -Wall -g -O0 -o  p4.o main.c -lm
+leaks: monticulos.c main.c
+	gcc -Wall -g -O0 -o monticulos.o monticulos.c
+	gcc -Wall -g -O0 -o p4.o main.c monticulos.o -lm
 	valgrind --leak-check=full --show-reachable=yes ./p4.o
 
-p4.o: main.c
-	gcc -Wall -o p4.o main.c -lm
+monticulos.o: monticulos.c
+	gcc -Wall -c -o monticulos.o monticulos.c
+
+p4.o: main.c monticulos.o
+	gcc -Wall -o p4.o main.c monticulos.o -lm
 
 clean: 
 	rm -f *.o tiempos.txt
