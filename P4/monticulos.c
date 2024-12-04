@@ -76,4 +76,3 @@ int consultarMenor(const pmonticulo m) {
     }
     return m->vector[0];
 }
-

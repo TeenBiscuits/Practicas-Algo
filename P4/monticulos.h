@@ -18,7 +18,7 @@ void insertarMonticulo(pmonticulo m, int x);
 
 void quitarMenor(pmonticulo m);
 
-int consultarMenor(pmonticulo m);
+int consultarMenor(const pmonticulo m);
 
 void crearMonticulo(pmonticulo m, int v[], int n);
 
