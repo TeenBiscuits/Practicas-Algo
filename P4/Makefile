@@ -14,7 +14,7 @@ leaks:
 	valgrind --leak-check=full --show-reachable=yes ./p4.o
 
 p4.o: main.c
-	gcc -Wall -o p4.o main.c tablas.o -lm
+	gcc -Wall -o p4.o main.c -lm
 
 clean: 
 	rm -f *.o tiempos.txt
