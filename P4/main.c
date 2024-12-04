@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <sys/time.h>
+#include <stdbool.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #define TAM 256000
 
@@ -11,6 +14,9 @@ struct monticulo {
 };
 
 typedef struct monticulo * pmonticulo;
+
+
+bool guardararchivo();
 
 void iniMonticulo(pmonticulo m);
 
@@ -28,16 +34,24 @@ void hundir(pmonticulo m, int i);
 
 void ordenarPorMonticulos(int v[], int n);
 
-void inicializarVectorAleatorio(int v[], int n, int min, int max);
+void inicializarVectorAleatorio(int v[], int n);
 
 void comprobar();
+
+void tiempos();
+
+void selectfuncion(const int n, const int funcion);
+
+void print_cabecerat();
 
 double microsegundos();
 
 int main() {
-    printf("ORDENACION POR MONTICULOS\n");
-    comprobar();
-
+    if (guardararchivo()) {
+        printf("<--- Práctica de Pablos & Maite --->\n");
+        printf("<--- ORDENACIÓN POR MONTÍCULOS --->\n");
+        comprobar();
+    }
     return 0;
 }
 
@@ -115,21 +129,36 @@ int consultarMenor(const pmonticulo m) {
 }
 
 void ordenarPorMonticulos(int v[], int n) {
-    struct monticulo heap;
-    iniMonticulo(&heap);
+    struct monticulo M;
+    iniMonticulo(&M);
 
-    crearMonticulo(&heap, v, n);
+    crearMonticulo(&M, v, n);
     for (int i = 0; i < n; i++) {
-        v[i] = consultarMenor(&heap);
-        quitarMenor(&heap);
+        v[i] = consultarMenor(&M);
+        quitarMenor(&M);
     }
 }
 
-void inicializarVectorAleatorio(int v[], int n, int min, int max) {
-    srand(time(NULL));
+bool guardararchivo() {
+    const char *name = "tiempos.txt";
+    const int fd = open(name, O_WRONLY | O_CREAT, 0644);
+    if (fd == -1) {
+        perror("open failed");
+        return false;
+    }
+    if (dup2(fd, 1) == -1) {
+        perror("dup2 failed");
+        return false;
+    }
+    return true;
+}
 
-    for (int i = 0; i < n; i++)
-        v[i] = min + rand() % (max - min + 1);
+void inicializarVectorAleatorio(int v[], int n) {
+    srand(time(NULL));
+    int i, m = 2 * n + 1;
+
+    for  (i = 0; i < n; i++)
+        v[i] = (rand() % m) - n;
 }
 
 void comprobar() {
@@ -137,7 +166,7 @@ void comprobar() {
     int n = 10, min = 1, max = 1000;
     int vector[n];
 
-    inicializarVectorAleatorio(vector, n, min, max);
+    inicializarVectorAleatorio(vector, n);
     printf("Vector a ordenar: ");
     for (int i = 0; i < n; i++)
         printf("%d ", vector[i]);
@@ -154,6 +183,33 @@ void comprobar() {
     for (int i = 0; i < n; i++)
         printf("%d ", vector[i]);
     printf("\n");
+}
+
+void selectfuncion(int v[], int n, int funcion) {
+    struct monticulo monticulo;
+    pmonticulo m = &monticulo;
+    iniMonticulo(m);
+    int x;
+
+    switch (funcion) {
+        case 1:
+            insertarMonticulo(m, x);
+        break;
+        case 2:
+            crearMonticulo(m, v, n);
+        break;
+        case 3:
+            ordenarPorMonticulos(v, n);
+        break;
+    }
+}
+
+void imprimir_cabecerat() {
+
+}
+void tiempos() {
+    const int n[8] = {1000, 5000, 10000, 25000, 50000, 100000, 200000, 256000};
+    int inicio = 0, final = 0;
 }
 
 double microsegundos() {
