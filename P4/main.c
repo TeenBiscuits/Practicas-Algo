@@ -187,6 +187,7 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
     if (inicializarvector == inicializarVectorAscendente) printf("ORDENAR VECTOR ASCENDENTE\n");
     if (inicializarvector == inicializarVectorDescentende) printf("ORDENAR VECTOR DESCENDENTE\n");
 
+    // MAÑANA AÑADIR COTAS
     printf("Ordenando n elementos...\n        n             t(n)          t(n)/n\n");
 
     for (i = 0; i < 9; i++, n = n * 2) {
