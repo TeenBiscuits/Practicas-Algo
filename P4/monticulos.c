@@ -3,6 +3,7 @@
 #include "monticulos.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 void iniMonticulo(pmonticulo m) {
     m->ultimo = -1;
