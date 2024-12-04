@@ -33,14 +33,23 @@ void ordenarPorMonticulos(int v[], int n);
 
 void inicializarVectorAleatorio(int v[], int n);
 
+void print_vector(int v[], int n);
+
 void comprobar();
+
+void test(int n, void (*inicializarvector)(int *v, int n));
+
+void tiempos();
 
 double microsegundos();
 
 int main() {
+    srand(time(NULL));
+
     printf("<--- Práctica de Pablos & Maite --->\n");
     printf("<--- ORDENACIÓN POR MONTÍCULOS --->\n");
     comprobar();
+    tiempos();
     return 0;
 }
 
@@ -49,7 +58,7 @@ void iniMonticulo(pmonticulo m) {
 }
 
 void insertarMonticulo(pmonticulo m, int x) {
-    if (m->ultimo == TAM - 1) printf("Error, monticulo lleno\n");
+    if (m->ultimo == TAM - 1) printf("Error, montículo lleno\n");
     else {
         m->ultimo++;
         m->vector[m->ultimo] = x;
@@ -128,24 +137,37 @@ void ordenarPorMonticulos(int v[], int n) {
     }
 }
 
-void inicializarVectorAleatorio(int v[], int n) {
-    srand(time(NULL));
-    int i, m = 2 * n + 1;
-
-    for (i = 0; i < n; i++)
-        v[i] = (rand() % m) - n;
+void print_vector(int v[], int n) {
+    for (int i = 0; i < n; i++)
+        printf("%d ", v[i]);
+    printf("\n");
 }
 
-void comprobar() {
+void inicializarVectorAleatorio(int v[], int n) {
+    int i, m = 2 * n + 1;
+
+    for (i = 0; i < n; i++) v[i] = (rand() % m) - n;
+}
+
+void inicializarVectorAscendente(int v[], int n) {
+    int i;
+    for (i = 0; i < n; i++) v[i] = i;
+}
+
+void inicializarVectorDescentende(int v[], int n) {
+    int i, j;
+
+    for (i = 0, j = n; i < n; i++, j--)
+        v[i] = j;
+}
+
+void test(int n, void (*inicializarvector)(int *v, int n)) {
     struct monticulo M;
-    int n = 10;
     int vector[n];
 
-    inicializarVectorAleatorio(vector, n);
+    inicializarvector(vector, n);
     printf("Vector a ordenar: ");
-    for (int i = 0; i < n; i++)
-        printf("%d ", vector[i]);
-    printf("\n");
+    print_vector(vector, n);
 
     crearMonticulo(&M, vector, n);
 
@@ -155,9 +177,23 @@ void comprobar() {
 
     ordenarPorMonticulos(vector, n);
     printf("Vector ordenado: ");
-    for (int i = 0; i < n; i++)
-        printf("%d ", vector[i]);
-    printf("\n");
+    print_vector(vector, n);
+}
+
+void comprobar() {
+    int n = 10;
+    printf("\n<----------- Comprobación ----------->\n");
+
+    printf("[ Aleatorio ]\n");
+    test(n, inicializarVectorAleatorio);
+    printf("[ Ascendente ]\n");
+    test(n, inicializarVectorAscendente);
+    printf("[ Descendente ]\n");
+    test(n, inicializarVectorDescentende);
+}
+
+void tiempos() {
+    printf("\n     [ Tablas de Tiempos ]\n\n");
 }
 
 double microsegundos() {
