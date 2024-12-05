@@ -184,8 +184,8 @@ void tiemposCrear() {
 
 void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
     int i, q, n = 1000, v[TAM];;
-    double inicio = 0, fin = 0, t = 0;
-    float x[8], sumx = 0;
+    double inicio = 0, fin = 0, t = 0, t1 = 0, t2 = 0;
+    float x[8], sumx = 0, y, z;
 
     if (inicializarvector == inicializarVectorAleatorio)
         printf("ORDENAR VECTOR ALEATORIO\n");
@@ -195,8 +195,8 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
         printf("ORDENAR VECTOR DESCENDENTE\n");
 
     // MAÑANA AÑADIR COTAS
-    printf("Ordenando n elementos...\n        n      "
-           "       t(n)          t(n)/n\n");
+    printf("Ordenando n elementos...\n        n             t(n)"
+           "      t(n)/log(n)     t(n)/(n*log(n))       t(n)/n^2\n");
 
     for (i = 0; i < 9; i++, n = n * 2) {
         inicializarvector(v, n);
@@ -207,18 +207,29 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
 
         if (t < 500) {
             inicio = microsegundos();
-            for (q = 0; q < 1000; q++) ordenarPorMonticulos(v, n);
+            for (q = 0; q < 1000; q++) {
+                inicializarvector(v, n);
+                ordenarPorMonticulos(v, n);
+            }
             fin = microsegundos();
-            t = (fin - inicio) / 1000;
+            t1 = fin - inicio;
+            inicio = microsegundos();
+            for (q = 0; q < 1000; q++) inicializarvector(v, n);
+            fin = microsegundos();
+            t2 = fin - inicio;
+            t = (t1 - t2) / 1000;
             printf("(*)");
         } else printf("   ");
 
 
-        x[i] = t / n;
-        printf("%6d%17.3f%17.6f\n", n, t, x[i]);
+        y = t / log(n);
+        x[i] = t / (n*log(n));
+        z = t / powf(n,2);
+        printf("%6d%17.3f%17.6f%17.6f%18.9f\n", n, t, y, x[i], z);
     }
     for (i = 0; i < 8; i++) sumx += x[i];
-    printf("%32scte: %1.6f", "", sumx / 8);
+    printf("%29scota subestimada    cota ajustada  cota sobreestimada\n","");
+    printf("%49scte: %1.6f", "", sumx / 8);
     printf("\n\n");
 }
 
