@@ -78,7 +78,6 @@ void inicializarVectorAscendente(int v[], int n) {
 
 void inicializarVectorDescentende(int v[], int n) {
     int i, j;
-
     for (i = 0, j = n; i < n; i++, j--)
         v[i] = j;
 }
@@ -109,7 +108,8 @@ void tiemposInsertar() {
     struct monticulo M;
 
     printf("insertarMontículo(...)\n");
-    printf("Insertado n elementos...\n        n             t(n)      t(n)/(n*log(n))\n");
+    printf("Insertado n elementos...\n        n        "
+           "     t(n)      t(n)/(n*log(n))\n");
 
     for (i = 0; i < 9; i++, n = n * 2) {
         inicio = microsegundos();
@@ -151,7 +151,8 @@ void tiemposCrear() {
     struct monticulo M;
 
     printf("crearMonticulo(...)\n");
-    printf("Creando montículos de n elementos...\n        n             t(n)          t(n)/n\n");
+    printf("Creando montículos de n elementos...\n        n        "
+           "     t(n)          t(n)/n\n");
 
     for (i = 0; i < 9; i++, n = n * 2) {
         inicializarVectorAleatorio(v, n);
@@ -186,12 +187,16 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
     double inicio = 0, fin = 0, t = 0;
     float x[8], sumx = 0;
 
-    if (inicializarvector == inicializarVectorAleatorio) printf("ORDENAR VECTOR ALEATORIO\n");
-    if (inicializarvector == inicializarVectorAscendente) printf("ORDENAR VECTOR ASCENDENTE\n");
-    if (inicializarvector == inicializarVectorDescentende) printf("ORDENAR VECTOR DESCENDENTE\n");
+    if (inicializarvector == inicializarVectorAleatorio)
+        printf("ORDENAR VECTOR ALEATORIO\n");
+    if (inicializarvector == inicializarVectorAscendente)
+        printf("ORDENAR VECTOR ASCENDENTE\n");
+    if (inicializarvector == inicializarVectorDescentende)
+        printf("ORDENAR VECTOR DESCENDENTE\n");
 
     // MAÑANA AÑADIR COTAS
-    printf("Ordenando n elementos...\n        n             t(n)          t(n)/n\n");
+    printf("Ordenando n elementos...\n        n      "
+           "       t(n)          t(n)/n\n");
 
     for (i = 0; i < 9; i++, n = n * 2) {
         inicializarvector(v, n);
