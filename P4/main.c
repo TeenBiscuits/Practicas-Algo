@@ -47,24 +47,27 @@ int main() {
 
 void ordenarPorMonticulos(int v[], int n) {
     struct monticulo M;
+    int i;
+
     iniMonticulo(&M);
 
     crearMonticulo(&M, v, n);
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         v[i] = consultarMenor(&M);
         quitarMenor(&M);
     }
 }
 
 void print_vector(int v[], int n) {
-    for (int i = 0; i < n; i++)
+    int i;
+
+    for (i = 0; i < n; i++)
         printf("%d ", v[i]);
     printf("\n");
 }
 
 void inicializarVectorAleatorio(int v[], int n) {
     int i, m = 2 * n + 1;
-
     for (i = 0; i < n; i++) v[i] = (rand() % m) - n;
 }
 

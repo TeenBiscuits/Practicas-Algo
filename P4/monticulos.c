@@ -30,13 +30,15 @@ void flotar(pmonticulo m, int i) {
 }
 
 void crearMonticulo(pmonticulo m, int v[], int n) {
-    for (int i = 0; i < n; i++)
+    int i, j;
+
+    for (i = 0; i < n; i++)
         m->vector[i] = v[i];
 
     m->ultimo = n - 1;
 
-    for (int i = (m->ultimo - 1) / 2; i >= 0; i--)
-        hundir(m, i);
+    for (j = (m->ultimo - 1) / 2; j >= 0; j--)
+        hundir(m, j);
 }
 
 void hundir(pmonticulo m, int i) {
