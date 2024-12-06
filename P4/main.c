@@ -177,7 +177,7 @@ void tiemposCrear() {
 }
 
 void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
-    int i, q, n = 1000, v[TAM];;
+    int i, q, n = 1000, k = 1000, v[TAM];;
     double inicio = 0, fin = 0, t = 0, t1 = 0, t2 = 0;
     float x, y, z;
 
@@ -188,7 +188,6 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
     if (inicializarvector == inicializarVectorDescentende)
         printf("ORDENAR VECTOR DESCENDENTE\n");
 
-    // MAÑANA AÑADIR COTAS
     printf("Ordenando n elementos...\n        n             t(n)"
         "      t(n)/log(n)     t(n)/(n*log(n))       t(n)/n^2\n");
 
@@ -201,17 +200,17 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
 
         if (t < 500) {
             inicio = microsegundos();
-            for (q = 0; q < 1000; q++) {
+            for (q = 0; q < k; q++) {
                 inicializarvector(v, n);
                 ordenarPorMonticulos(v, n);
             }
             fin = microsegundos();
             t1 = fin - inicio;
             inicio = microsegundos();
-            for (q = 0; q < 1000; q++) inicializarvector(v, n);
+            for (q = 0; q < k; q++) inicializarvector(v, n);
             fin = microsegundos();
             t2 = fin - inicio;
-            t = (t1 - t2) / 1000;
+            t = (t1 - t2) / k;
             printf("(*)");
         } else printf("   ");
 
