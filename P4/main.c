@@ -104,12 +104,12 @@ void test(int n, void (*inicializarvector)(int *v, int n)) {
 void tiemposInsertar() {
     int i, j, q, p, n = 1000;
     double inicio = 0, fin = 0, t = 0;
-    float x[8], sumx = 0;
+    float x;
     struct monticulo M;
 
     printf("insertarMontículo(...)\n");
     printf("Insertado n elementos...\n        n        "
-           "     t(n)      t(n)/(n*log(n))\n");
+        "     t(n)      t(n)/(n*log(n))\n");
 
     for (i = 0; i < 9; i++, n = n * 2) {
         inicio = microsegundos();
@@ -136,23 +136,21 @@ void tiemposInsertar() {
         } else printf("   ");
 
 
-        x[i] = t / (n * log(n));
-        printf("%6d%17.3f%17.6f\n", n, t, x[i]);
+        x = t / (n * log(n));
+        printf("%6d%17.3f%17.6f\n", n, t, x);
     }
-    for (i = 0; i < 8; i++) sumx += x[i];
-    printf("%32scte: %1.6f", "", sumx / 8);
-    printf("\n\n");
+    printf("\n");
 }
 
 void tiemposCrear() {
     int i, q, n = 1000, v[TAM];;
     double inicio = 0, fin = 0, t = 0;
-    float x[8], sumx = 0;
+    float x;
     struct monticulo M;
 
     printf("crearMonticulo(...)\n");
     printf("Creando montículos de n elementos...\n        n        "
-           "     t(n)          t(n)/n\n");
+        "     t(n)          t(n)/n\n");
 
     for (i = 0; i < 9; i++, n = n * 2) {
         inicializarVectorAleatorio(v, n);
@@ -172,20 +170,16 @@ void tiemposCrear() {
             t = (fin - inicio) / 1000;
             printf("(*)");
         } else printf("   ");
-
-
-        x[i] = t / n;
-        printf("%6d%17.3f%17.6f\n", n, t, x[i]);
+        x = t / n;
+        printf("%6d%17.3f%17.6f\n", n, t, x);
     }
-    for (i = 0; i < 8; i++) sumx += x[i];
-    printf("%32scte: %1.6f", "", sumx / 8);
-    printf("\n\n");
+    printf("\n");
 }
 
 void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
     int i, q, n = 1000, v[TAM];;
     double inicio = 0, fin = 0, t = 0, t1 = 0, t2 = 0;
-    float x[8], sumx = 0, y, z;
+    float x, y, z;
 
     if (inicializarvector == inicializarVectorAleatorio)
         printf("ORDENAR VECTOR ALEATORIO\n");
@@ -196,7 +190,7 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
 
     // MAÑANA AÑADIR COTAS
     printf("Ordenando n elementos...\n        n             t(n)"
-           "      t(n)/log(n)     t(n)/(n*log(n))       t(n)/n^2\n");
+        "      t(n)/log(n)     t(n)/(n*log(n))       t(n)/n^2\n");
 
     for (i = 0; i < 9; i++, n = n * 2) {
         inicializarvector(v, n);
@@ -222,15 +216,12 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
         } else printf("   ");
 
 
-        y = t / log(n);
-        x[i] = t / (n*log(n));
-        z = t / powf(n,2);
-        printf("%6d%17.3f%17.6f%17.6f%18.9f\n", n, t, y, x[i], z);
+        x = t / log(n);
+        y = t / (n * log(n));
+        z = t / powf(n, 2);
+        printf("%6d%17.3f%17.6f%17.6f%18.9f\n", n, t, x, y, z);
     }
-    for (i = 0; i < 8; i++) sumx += x[i];
-    printf("%29scota subestimada    cota ajustada  cota sobreestimada\n","");
-    printf("%49scte: %1.6f", "", sumx / 8);
-    printf("\n\n");
+    printf("\n");
 }
 
 void comprobar() {
@@ -246,7 +237,7 @@ void comprobar() {
 }
 
 void tiempos() {
-    printf("\n     [ Tablas de Tiempos ]\n\n");
+    printf("\n<----------- Tablas de Tiempos ----------->\n\n");
 
     tiemposInsertar();
     tiemposCrear();
