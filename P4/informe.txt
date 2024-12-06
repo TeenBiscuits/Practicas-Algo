@@ -1,0 +1,124 @@
+ALGORITMOS - PRÁCTICA 4
+
+Pablo Portas Lopez
+Pablo Míguez Muíño
+Maite Liu González Vázquez
+
+1) Contexto
+
+En esta práctica implementamos una serie de operaciones relacionadas con los
+montículos y la ordenación por montículos. Luego realizamos un test para verificar
+el correcto funcionamiento de las mismas y estudiamos la complejidad computacional
+para tres casos diferentes: vector ordenado ascendentemente, vector ordenado descendentemente
+y vector aleatorio.
+
+Además también verificamos que la complejidad empírica para las funciones insertarMontículo y
+crearMonticulo son respectivamente O(nlogn) y O(n).
+
+2) Datos de la máquina
+
+Modelo de hardware: HP Victus by HP Gaming Laptop 15-fa0xxx
+Memoria: 16.0 GiB
+Procesador: 12th Gen Intel® Core™ i5-12500H × 16
+Nombre del SO: Ubuntu 22.04.5 LTS
+Versión del Kernel: 6.8.0-45-generic
+Tipo de SO: 64 bits
+
+Unidad de tiempo utlizada: ms
+
+3) Comprobación de los algoritmos
+
+[ Aleatorio ]
+Vector a ordenar: -2 -4 -8 -6 -3 4 0 4 -3 -9
+Menor elemento: -9
+Menor elemento tras eliminar: -8
+Vector ordenado: -9 -8 -6 -4 -3 -3 -2 0 4 4
+
+[ Ascendente ]
+Vector a ordenar: 0 1 2 3 4 5 6 7 8 9
+Menor elemento: 0
+Menor elemento tras eliminar: 1
+Vector ordenado: 0 1 2 3 4 5 6 7 8 9
+
+[ Descendente ]
+Vector a ordenar: 10 9 8 7 6 5 4 3 2 1
+Menor elemento: 1
+Menor elemento tras eliminar: 2
+Vector ordenado: 1 2 3 4 5 6 7 8 9 10
+
+4) Tablas de tiempos
+
+insertarMontículo(...)
+Insertado n elementos...
+        n             t(n)      t(n)/(n*log(n))
+(*)  1000           24.474         0.003543
+(*)  2000           46.592         0.003065
+(*)  4000           93.312         0.002813
+(*)  8000          185.481         0.002580
+(*) 16000          377.644         0.002438
+    32000          774.000         0.002332
+    64000         1429.000         0.002018
+   128000         2769.000         0.001840
+   256000         5928.000         0.001860
+                                cte: 0.002578
+
+crearMonticulo(...)
+Creando montículos de n elementos...
+        n             t(n)          t(n)/n
+(*)  1000            4.718         0.004718
+(*)  2000           10.063         0.005032
+(*)  4000           20.878         0.005220
+(*)  8000           60.802         0.007600
+(*) 16000          149.535         0.009346
+(*) 32000          325.714         0.010179
+    64000          675.000         0.010547
+   128000         1316.000         0.010281
+   256000         2641.000         0.010316
+                                cte: 0.007865
+
+
+
+ORDENAR VECTOR ASCENDENTE
+Ordenando n elementos...
+        n             t(n)      t(n)/log(n)     t(n)/(n*log(n))       t(n)/n^2
+(*)  1000           45.316         6.560163         0.006560       0.000045316
+(*)  2000          120.510        15.854696         0.007927       0.000030127
+(*)  4000          268.521        32.375137         0.008094       0.000016783
+     8000          550.000        61.198170         0.007650       0.000008594
+    16000         1281.000       132.330002         0.008271       0.000005004
+    32000         2722.000       262.399597         0.008200       0.000002658
+    64000         5390.000       487.049438         0.007610       0.000001316
+   128000        10906.000       927.397888         0.007245       0.000000666
+   256000        23226.000      1865.102783         0.007286       0.000000354
+                             cota subestimada    cota ajustada  cota sobreestimada
+                                                 cte: 0.007695
+
+ORDENAR VECTOR DESCENDENTE
+Ordenando n elementos...
+        n             t(n)      t(n)/log(n)     t(n)/(n*log(n))       t(n)/n^2
+(*)  1000           51.409         7.442215         0.007442       0.000051409
+(*)  2000          126.011        16.578426         0.008289       0.000031503
+(*)  4000          270.883        32.659920         0.008165       0.000016930
+     8000          579.000        64.424980         0.008053       0.000009047
+    16000         1204.000       124.375748         0.007773       0.000004703
+    32000         2684.000       258.736420         0.008086       0.000002621
+    64000         5472.000       494.459106         0.007726       0.000001336
+   128000        10744.000       913.622131         0.007138       0.000000656
+   256000        23655.000      1899.552490         0.007420       0.000000361
+                             cota subestimada    cota ajustada  cota sobreestimada
+                                                 cte: 0.007834
+
+ORDENAR VECTOR ALEATORIO
+Ordenando n elementos...
+        n             t(n)      t(n)/log(n)     t(n)/(n*log(n))       t(n)/n^2
+(*)  1000           76.066        11.011682         0.011012       0.000076066
+(*)  2000          170.564        22.439966         0.011220       0.000042641
+(*)  4000          367.587        44.319363         0.011080       0.000022974
+     8000          764.000        85.009819         0.010626       0.000011937
+    16000         1799.000       185.840500         0.011615       0.000007027
+    32000         3664.000       353.208008         0.011038       0.000003578
+    64000         7835.000       707.983765         0.011062       0.000001913
+   128000        16615.000      1412.865845         0.011038       0.000001014
+   256000        35554.000      2855.070312         0.011153       0.000000543
+                             cota subestimada    cota ajustada  cota sobreestimada
+                                                 cte: 0.011086
