@@ -211,7 +211,7 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
             t = (t1 - t2) / k;
             printf("(*)");
         } else printf("   ");
-        
+
         x = t / log(n);
         y = t / (n * log(n));
         z = t / powf(n, 2);
