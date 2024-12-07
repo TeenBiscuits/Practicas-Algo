@@ -10,7 +10,10 @@ void iniMonticulo(pmonticulo m) {
 }
 
 void insertarMonticulo(pmonticulo m, int x) {
-    if (m->ultimo == TAM - 1) printf("Error, montículo lleno\n");
+    if (m->ultimo == TAM - 1) {
+        printf("Error, montículo lleno\n");
+        exit(1);
+    }
     else {
         m->ultimo++;
         m->vector[m->ultimo] = x;
