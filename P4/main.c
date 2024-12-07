@@ -187,7 +187,6 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
         printf("ORDENAR VECTOR ASCENDENTE\n");
     if (inicializarvector == inicializarVectorDescentende)
         printf("ORDENAR VECTOR DESCENDENTE\n");
-
     printf("Ordenando n elementos...\n        n             t(n)"
         "      t(n)/log(n)     t(n)/(n*log(n))       t(n)/n^2\n");
 
@@ -197,7 +196,6 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
         ordenarPorMonticulos(v, n);
         fin = microsegundos();
         t = (fin - inicio);
-
         if (t < 500) {
             inicio = microsegundos();
             for (q = 0; q < k; q++) {
@@ -213,8 +211,7 @@ void tiemposOrdenar(void (*inicializarvector)(int *v, int n)) {
             t = (t1 - t2) / k;
             printf("(*)");
         } else printf("   ");
-
-
+        
         x = t / log(n);
         y = t / (n * log(n));
         z = t / powf(n, 2);
