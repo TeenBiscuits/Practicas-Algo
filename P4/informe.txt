@@ -12,7 +12,7 @@ el correcto funcionamiento de las mismas y estudiamos la complejidad computacion
 para tres casos diferentes: vector ordenado ascendentemente, vector ordenado descendentemente
 y vector aleatorio.
 
-Además también verificamos que la complejidad empírica para las funciones insertarMontículo y
+Además, también tratamos de verificar que la complejidad empírica para las funciones insertarMontículo y
 crearMonticulo son respectivamente O(nlogn) y O(n).
 
 2) Datos de la máquina
@@ -27,6 +27,12 @@ Tipo de SO: 64 bits
 Unidad de tiempo utlizada: ms
 
 3) Comprobación de los algoritmos
+
+Se comprueba la correcta implementación de las operaciones relacionadas con montículos.
+Dados tres vectores diferentes, se crea un montículo y se extrae el menor elemento,
+luego comprobamos que el segundo menor pasa a ser el menor. Con esto confirmamos el correcto
+funcionamiento de las operaciones básicas de los montículos. Luego revisamos que el algoritmo
+de ordenación por montículos funciona en los tres casos.
 
 [ Aleatorio ]
 Vector a ordenar: -2 -4 -8 -6 -3 4 0 4 -3 -9
@@ -46,21 +52,32 @@ Menor elemento: 1
 Menor elemento tras eliminar: 2
 Vector ordenado: 1 2 3 4 5 6 7 8 9 10
 
-4) Tablas de tiempos
+4) Demostración empírica de insertarMontículo y crearMontículo
 
 insertarMontículo(...)
 Insertado n elementos...
         n             t(n)      t(n)/(n*log(n))
-(*)  1000           24.474         0.003543
-(*)  2000           46.592         0.003065
-(*)  4000           93.312         0.002813
-(*)  8000          185.481         0.002580
-(*) 16000          377.644         0.002438
-    32000          774.000         0.002332
-    64000         1429.000         0.002018
-   128000         2769.000         0.001840
-   256000         5928.000         0.001860
-                                cte: 0.002578
+(*)  1000           24.474         0.003543     <|
+(*)  2000           46.592         0.003065      | Diferencia de 0,000730
+(*)  4000           93.312         0.002813     <|
+(*)  8000          185.481         0.002580     <|
+(*) 16000          377.644         0.002438      | Diferencia de 0,000248
+    32000          774.000         0.002332     <|
+    64000         1429.000         0.002018     <|
+   128000         2769.000         0.001840      | Diferencia de 0,000158
+   256000         5928.000         0.001860     <|
+                              promedio: 0.002578
+                                 cte: 0.00190
+
+(*) Promedio de realizar 1000 ejecuciones del algoritmo
+
+Tratamos demostrar que la inserción se ejecuta en un tiempo O(n*log(n)). Al
+estudiar la convergencia podríamos pensar que esta tiende a 0, pero
+esta tendencia es leve y se estabiliza con el crecimiento de n. Esto
+se hace más evidente apoyándonos en las diferencias que indicamos entre
+cada tres pares de datos. Vemos que la tendencia final es hacia una
+constante que aproximamos en 0.0019. Podemos afirmar entonces que insertar
+tiene una complejidad O(n*log(n)).
 
 crearMonticulo(...)
 Creando montículos de n elementos...
@@ -74,14 +91,22 @@ Creando montículos de n elementos...
     64000          675.000         0.010547
    128000         1316.000         0.010281
    256000         2641.000         0.010316
-                                cte: 0.007865
+                                 cte: 0.01013
 
-(*) Promedio de realizar k ejecuciones del algoritmo
+(*) Promedio de realizar 1000 ejecuciones del algoritmo
+
+Tratamos de demostrar que creación del montículo se ejecuta en un tiempo
+O(n). Al estudiar la convergencia vemos una leve tendencia de crecimiento,
+pero rápido vemos que con el crecimiento de n se estabiliza alrededor de una
+constante que aproximamos en 0.01013. Por lo tanto, podemos afirmar que n es una
+cota ajustada y asimismo la creación de montículo se ejecuta en un tiempo O(n).
+
+5) Cálculo empírico de la complejidad de Ordenar por Montículos
 
 ORDENAR VECTOR ASCENDENTE
 Ordenando n elementos...
         n             t(n)      t(n)/log(n)     t(n)/(n*log(n))       t(n)/n^2
-(*)  1000           45.316         6.560163         0.006560       0.000045316  (#)
+(*)  1000           45.316         6.560163         0.006560       0.000045316
 (*)  2000          120.510        15.854696         0.007927       0.000030127
 (*)  4000          268.521        32.375137         0.008094       0.000016783
      8000          550.000        61.198170         0.007650       0.000008594
@@ -92,8 +117,6 @@ Ordenando n elementos...
    256000        23226.000      1865.102783         0.007286       0.000000354
                              cota subestimada    cota ajustada  cota sobreestimada
                                                  cte: 0.007695
-
-(*) Promedio de realizar k ejecuciones del algoritmo
 
 ORDENAR VECTOR DESCENDENTE
 Ordenando n elementos...
@@ -110,10 +133,6 @@ Ordenando n elementos...
                              cota subestimada    cota ajustada  cota sobreestimada
                                                  cte: 0.007834
 
-(*) Promedio de realizar k ejecuciones del algoritmo
-
-Observaciones:
-
 ORDENAR VECTOR ALEATORIO
 Ordenando n elementos...
         n             t(n)      t(n)/log(n)     t(n)/(n*log(n))       t(n)/n^2
@@ -129,8 +148,49 @@ Ordenando n elementos...
                              cota subestimada    cota ajustada  cota sobreestimada
                                                  cte: 0.011086
 
-(*) Promedio de realizar k ejecuciones del algoritmo
+(*) Promedio de realizar 1000 ejecuciones del algoritmo
 
-5) Conclusión
+Para calcular la complejidad de Ordenar Mónticulos propusimos tres cotas
+(con funciones características) y analizamos sus convergencias, los resultados
+fueron "iguales" en las tres situaciones iniciales:
+ - log(n)           Cota subestimada
+ - n*log(n)         Cota ajustada ( #)
+ - n^2              Cota sobreestimada (##)
+
+(##) A destacar que es tal su tendencia a 0 que hubo que aumentar los decimales que
+    mostrábamos por pantalla para poder mostrar tres cifras significativas.
+
+( #)  En las tres situaciones podemos afirmar claramente que n*log(n) es la cota ajustada.
+    Todas tienen a una constante que hemos aproximado bajo las respectivas tablas. En la
+    los vectores ya ordenados (ascendente y descendente), los tiempos fueron muy similares.
+    Las fluctuaciones en los valores eran menores a dos milésimas, manteniéndose constantes.
+    Pero en la tercera situación, el vector aleatorio las diferencias fueron menores a la
+    milésima, mostrando una clara tendencia a la constante 0.011.
+
+Con estos datos podemos afirmar con grán seguridad que el algoritmo de ordenación por montículos
+tiene una complejidad O(n*log(n)).
+
+6) Conclusión
+
 Podemos concluir que el algoritmo de ordenación por montículos es muy estable para las tres
-situaciones iniciales. Con las mismas cotas para los tres casos obtenemos resultados muy similares.
+situaciones iniciales. Con las mismas cotas para los tres casos obtenemos resultados prácticamente
+idénticos. Un algoritmo de ordenación con una complejidad O(n*log(n)) en cualquier situación es un
+gran algoritmo de ordenación.
+
+Supera de lejos a ordenamiento por inserción que tiene una complejidad de O(n^2). Su verdadero rival
+es Quicksort (ordenación rápida).
+
+Ordenación por montículos en su peor caso es O(n*log(n)) mientras que Quicksort es O(n^2). No es un
+punto a favor muy fuerte porque es bien sabido que Quicksort muy rara vez tiene su peor caso. Pero
+es un dato a considerar, ya que ser en promedio el más rápido no te hace ser siempre el más rápido.
+
+Si la estabilidad en el rendimiento fuera el factor más importante ordenación por montículos es el
+claro vencedor.
+
+Aunque debemos considerar que requiere de la creación de un montículo previo, frente a Quicksort
+que puede operar directamente sobre el vector. Pero eso no hace a ordenación por montículo más costoso
+en memoria, ya que Quicksort es recursivo, lo cual hace a ordenación por montículo una buena elección
+en un sistema en la que la memoria sea muy limitada y evitar un stack overflow.
+
+Aunque en la práctica Quicksort sea el claro vencedor Heapsort (Ordenación por montículos) también tiene
+sus casos de uso.
