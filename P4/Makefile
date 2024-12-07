@@ -10,7 +10,7 @@ file: p4.o
 	cat tiempos.txt
 
 leaks: monticulos.c main.c
-	gcc -Wall -g -O0 -o monticulos.o monticulos.c
+	gcc -Wall -g -O0 -c -o monticulos.o monticulos.c
 	gcc -Wall -g -O0 -o p4.o main.c monticulos.o -lm
 	valgrind --leak-check=full --show-reachable=yes ./p4.o
 
