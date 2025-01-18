@@ -63,14 +63,9 @@ int insertar_cerrada(char *clave, char *sinonimos, tabla_cerrada *diccionario, i
                      unsigned int (*dispersion)(char *, int),
                      unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
     int i = 0;
-    int x = dispersion(clave, tam);
-    int posAct = x;
+    int posAct;
 
-    while ((*diccionario)[posAct].ocupada &&
-           strcmp((*diccionario)[posAct].clave, clave)) {
-        i++;
-        posAct = resol_colisiones(x, i) % tam;
-    }
+    posAct = buscar_cerrada(clave, *diccionario, tam, &i, dispersion, resol_colisiones);
 
     if (!((*diccionario)[posAct].ocupada)) {
         strcpy((*diccionario)[posAct].clave, clave);

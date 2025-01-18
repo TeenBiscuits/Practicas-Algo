@@ -9,10 +9,10 @@ Maite Liu González Vázquez
 En esta práctica estudiamos el número de colisiones que se producen cuando se insertan los datos del fichero de 19062
 elementos proporcionado. El estudio se realiza para dos funciones de dispersión dadas (dispersión A y dispersión B) y
 para tres estrategias de resolución de colisiones implementadas distintas (lineal, cuadrática y exploración doble).
-Tras la comprobación del correcto funcionamineto de las funciones implementadas, se realiza un estudio de las
-colisiones producidas al insertar los datos del fichero 'sinonimos.txt' con las funciones de dispersión y la técnicas
+Tras la comprobación del correcto funcionamiento de las funciones implementadas, se realiza un estudio de las
+colisiones producidas al insertar los datos del fichero 'sinonimos.txt' con las funciones de dispersión y las técnicas
 de resolución de colisiones implementadas.
-Finalmente se analizan los tiempos para la busqueda de n elementos.
+Finalmente, se analizan los tiempos para la busqueda de n elementos.
 
 2) Datos de la máquina
 
@@ -60,7 +60,7 @@ de colisiones
 4) Estudio de los resultados
 
 ***Dispersion cerrada lineal con dispersión A
-Insertando 19062 elementos... Número total de colisiones: 172623183
+Insertando 19062 elementos... Número total de colisiones: 172,623,183
 Buscando n elementos...
         n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
       125         4708.000        98.925543        37.664000         7.800653
@@ -71,18 +71,16 @@ Buscando n elementos...
      4000       150194.000       197.244359        37.548500         4.527161
      8000       300251.000       226.470935        37.531375         4.176094
     16000       601946.000       260.772354        37.621625         3.886393
+                               cota subestimada  cota ajustada  cota sobreestimada
+                                                 cte = 37.1963
 
-Cota ajustada: 37.1963
-
-Esta configuración presenta muchas colisiones, por lo que la cota subestimada (t(n)/n) es demasiado baja. La cota
-ajustada (t(n)/(n*log(n))) se aproxima mejor, pero sigue siendo insuficiente para reflejar el impacto de tantas
-colisiones. La cota sobrestimada (t(n)/n^{0.8}) se alinea más con el tiempo real para n grande, aunque inicialmente
-sobrestima.
+Ofrece unos tiempos de búsqueda tremendamente altos, además de un número de colisiones desorbitado (172 MILLONES).
+Esta es la combinación más ineficiente en comparación con la siguiente es x19 veces más lenta.
 
 ------------------------------------------------------------------------------------------------------------------------
 
 ***Dispersion cerrada cuadrática con dispersión A
-Insertando 19062 elementos... Número total de colisiones: 2106581
+Insertando 19062 elementos... Número total de colisiones: 2,106,581
 Buscando n elementos...
         n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
 (*)   125          247.856         5.208005         1.982848         0.410671
@@ -93,18 +91,18 @@ Buscando n elementos...
      4000         7803.000        10.247398         1.950750         0.235199
      8000        15590.000        11.759101         1.948750         0.216836
     16000        31163.000        13.500295         1.947688         0.201200
+                               cota subestimada  cota ajustada  cota sobreestimada
+                                                  cte: 1.9610
 
-Cota ajustada: 1.9610
 (*) Promedio de realizar n búsquedas 1000 veces
 
-La dispersión cuadrática reduce las colisiones comparado con la lineal, aunque no lo suficiente para que la cota
-subestimada (t(n)/n) sea representativa. La cota ajustada (t(n)/(n*log(n))) se acerca al tiempo real, y la cota
-sobrestimada (t(n)/n^{0.8}) es ligeramente alta, indicando un mejor manejo de colisiones.
+Presenta unos tiempos de búsqueda mucho más bajos que la anterior, así como notablemente más bajas son el número de
+colisiones que se producen al insertar.
 
 ------------------------------------------------------------------------------------------------------------------------
 
 ***Dispersion cerrada doble con dispersión A
-Insertando 19062 elementos... Número total de colisiones: 1451531
+Insertando 19062 elementos... Número total de colisiones: 1,451,531
 Buscando n elementos...
         n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
 (*)   125          106.119         2.229796         0.848952         0.175828
@@ -115,18 +113,19 @@ Buscando n elementos...
      4000         3499.000         4.595110         0.874750         0.105467
      8000         7151.000         5.393799         0.893875         0.099461
     16000        13919.000         6.029927         0.869938         0.089866
+                               cota subestimada  cota ajustada  cota sobreestimada
+                                                  cte:0.8377
 
- Cota ajustada:0.8377
 (*) Promedio de realizar n búsquedas 1000 veces
 
-tiempo real. La cota ajustada (t(n)/(n*log(n))) también es bastante precisa, mientras que la cota sobrestimada
-(t(n)/n^{0.8}) se alinea mejor en grandes valores de n.
+En comparación con la anterior estamos dividiendo los tiempos y colisiones a la mitad. Lo cual lo hace la dispersión
+doble la mejor elección para la dispersión A.
 
 ------------------------------------------------------------------------------------------------------------------------
 
 
 ***Dispersion cerrada lineal con dispersión B
-Insertando 19062 elementos... Número total de colisiones: 16965
+Insertando 19062 elementos... Número total de colisiones: 16,965
 Buscando n elementos...
         n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
 (*)   125            9.971         0.209513         0.079768         0.016521
@@ -137,19 +136,19 @@ Buscando n elementos...
 (*)  4000          309.416         0.406345         0.077354         0.009326
      8000          588.000         0.443512         0.073500         0.008178
     16000         1167.000         0.505563         0.072938         0.007535
+                               cota subestimada  cota ajustada  cota sobreestimada
+                                                  cte: 0.0767
 
-Cota ajustada: 0.0767
 (*) Promedio de realizar n búsquedas 1000 veces
 
-Aquí, las colisiones son bajas, y la cota subestimada (t(n)/n) se ajusta bien al tiempo real. La cota ajustada
-(t(n)/(n*log(n))) también representa con precisión los tiempos de búsqueda, mientras que la cota sobrestimada
-(t(n)/n^{0.8}) es ligeramente superior al tiempo real, pero aceptable.
-
+La mejora de tiempos es considerable un rendimiento de 11 veces más rápido con respecto al anterior. En cuanto
+a las colisiones pasamos de 1 Millón a "solo" 16 mil. Si no consideráramos los siguientes casos podríamos decir, sin duda,
+que esta es la combinación más rápida.
 
 ------------------------------------------------------------------------------------------------------------------------
 
 ***Dispersion cerrada cuadrática con dispersión B
-Insertando 19062 elementos... Número total de colisiones: 13366
+Insertando 19062 elementos... Número total de colisiones: 13,366
 Buscando n elementos...
         n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
 (*)   125           11.145         0.234181         0.089160         0.018466
@@ -160,19 +159,19 @@ Buscando n elementos...
 (*)  4000          359.006         0.471470         0.089751         0.010821
      8000          699.000         0.527236         0.087375         0.009722
     16000         1341.000         0.580942         0.083812         0.008658
+                               cota subestimada  cota ajustada  cota sobreestimada
+                                                  cte: 0.0874
 
-Cota ajustada: 0.0874
 (*) Promedio de realizar n búsquedas 1000 veces
 
-Aquí, las colisiones son bajas, y la cota subestimada (t(n)/n) se ajusta bien al tiempo real. La cota ajustada
-(t(n)/(n*log(n))) también representa con precisión los tiempos de búsqueda, mientras que la cota sobrestimada
-(t(n)/n^{0.8}) es ligeramente superior al tiempo real, pero aceptable.
+Por 3 mil colisiones esta combinación tiene el menor número de colisiones. En cuanto al rendimiento, la velocidad
+de esta combinación es poco más lenta que la anterior, aprox. x1.15 veces.
 
 
 ------------------------------------------------------------------------------------------------------------------------
 
 ***Dispersion cerrada doble con dispersión B
-Insertando 19062 elementos... Número total de colisiones: 19401
+Insertando 19062 elementos... Número total de colisiones: 19,401
 Buscando n elementos...
         n             t(n)       t(n)/n^0.8           t(n)/n  t(n)/(n*log(n))
 (*)   125           10.484         0.220292         0.083872         0.017371
@@ -183,24 +182,23 @@ Buscando n elementos...
 (*)  4000          346.541         0.455100         0.086635         0.010445
      8000          683.000         0.515168         0.085375         0.009500
     16000         1342.000         0.581375         0.083875         0.008664
+                               cota subestimada  cota ajustada  cota sobreestimada
+                                                  cte: 0.0846
 
-Cota ajustada: 0.0846
 (*) Promedio de realizar n búsquedas 1000 veces
 
-Con pocas colisiones, la cota subestimada (t(n)/n) es casi exacta. La cota ajustada (t(n)/(n*log(n)))
-también refleja muy bien los tiempos reales, y la cota sobrestimada (t(n)/n^{0.8}) es apenas superior, mostrando gran
-eficiencia en la búsqueda.
+Vemos un empeoramiento, sigue siendo mejor que cualquier combinación de la dispersión A, pero en este caso la doble
+es la peor dispersión de B.
 
 ------------------------------------------------------------------------------------------------------------------------
 
 
 5) Conclusión
 
-En resumen, el número de colisiones afecta directamente la velocidad de búsqueda en las tablas de dispersión. Las
-configuraciones con dispersión A generan muchas colisiones, lo que ralentiza las búsquedas y hace que solo las cotas
-más altas logren acercarse al tiempo real. En cambio, dispersión B mejora la distribución de los datos, reduciendo
-colisiones y logrando que los tiempos de búsqueda se ajusten mejor a las cotas teóricas. Además, los métodos de
-exploración cuadrática y doble son más eficientes que el lineal, ya que manejan las colisiones de forma más efectiva.
-En general, la combinación de dispersión B con exploración doble resulta ser la mejor opción, con búsquedas rápidas y
-tiempos estables, lo que demuestra la importancia de elegir bien la función de hash para lograr un rendimiento óptimo
-en tablas de dispersión.
+Si comparamos ahora lo que provoca estas mejoras, parece que en este orden desciende el rendimiento: doble, cuadrática
+y lineal; según cambiamos el método de resolución de colisiones. Pero estas diferencias se difuminan con el cambio de la
+dispersión de A a B. Parece evidente que una buena función de dispersión es mucho más importante que uno u otro método
+de resolución de colisiones.
+
+Comparando todos estos casos podemos afirmar que la Dispersion cerrada lineal con dispersión B es la que ofrece un
+mejor rendimiento.

@@ -5,3 +5,5 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(P3 main.c
         tablas.c)
+
+target_link_libraries(P3 m)

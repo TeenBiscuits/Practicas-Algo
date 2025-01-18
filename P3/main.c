@@ -153,8 +153,8 @@ void tiempos() {
 void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
               int sizeDiccionario, unsigned int (*dispersion)(char *, int),
               unsigned int (*resol_colisiones)(int pos_ini, int num_intento)) {
-    int i, q, colis = 0, n = 125;
-    double inicio = 0, fin = 0, t = 0;
+    int i, q, j, colis = 0, n = 125, ran = 0;
+    double inicio = 0, fin = 0, t = 0, taa = 0, tab = 0;
 
     print_cabecerat(dispersion, resol_colisiones);
 
@@ -174,7 +174,10 @@ void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
         n_busquedas(n, diccionario, sinonimos, totalSinonimos,
                     sizeDiccionario, dispersion, resol_colisiones);
         fin = microsegundos();
-        t = (fin - inicio);
+        taa = microsegundos();
+        for (j = 0; j < n; j++) ran = rand() % (totalSinonimos);
+        tab = microsegundos();
+        t = ((fin - inicio) - (tab - taa));
 
         if (t < 500) {
             // VERSIÓN MEJORADA DE TIEMPOS PETIT
@@ -184,13 +187,19 @@ void analizar(tabla_cerrada diccionario, item sinonimos[], int totalSinonimos,
                             sizeDiccionario, dispersion, resol_colisiones);
             }
             fin = microsegundos();
-            t = (fin - inicio) / 1000;
+            taa = microsegundos();
+            for (q = 0; q < 1000; q++) {
+                for (j = 0; j < n; j++) ran = rand() % (totalSinonimos);
+            }
+            tab = microsegundos();
+            t = ((fin - inicio) - (tab - taa)) / 1000;
             printf("(*)");
         } else printf("   ");
 
         print_fila(n, t);
     }
-
+    if (ran > 0) {
+    } // Esta línea existe con un único propósito, evitar un warning
     printf("\n");
 }
 
@@ -200,7 +209,7 @@ void n_busquedas(int n, tabla_cerrada diccionario, item sinonimos[], int totalSi
     int ran, j, otrascolis = 0;
 
     for (j = 0; j < n; j++) {
-        ran = rand() % (totalSinonimos - 1);
+        ran = rand() % (totalSinonimos);
         buscar_cerrada(sinonimos[ran].clave, diccionario, sizeDiccionario, &otrascolis, dispersion,
                        resol_colisiones);
     }
