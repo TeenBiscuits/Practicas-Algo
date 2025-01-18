@@ -3,7 +3,7 @@
 Prácticas de la asignatura de Algoritmos, curso 2024/25, GEI-UDC. Por Pablo Portas López, Pablo Míguez Muiño y Maite González Vázquez.
 
 >[!NOTE]
-> Las prácticas cuentan con la nota original de cuando fueron evaluadas (por dejar constancia), pero todas han sido corregidas para el examen final de la asignatura.
+> Las prácticas cuentan con la nota original de cuando fueron evaluadas (por dejar constancia), pero **todas han sido corregidas** para el examen final de la asignatura.
 >
 > _PD: No te asustes si ves un 2._
 
