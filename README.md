@@ -38,7 +38,7 @@ La forma correcta de ejecutar las prácticas es mediante el ``Makefile`` en un s
     ```bash
     make leaks
     ```
-- Para **limpiar** los ejecutables y `tiempos.txt` de la práctica:
+- Para **borrar** los ejecutables y `tiempos.txt` de la práctica:
     ```bash
     make clean
     ```
