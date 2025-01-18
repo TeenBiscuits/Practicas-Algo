@@ -1,3 +1,5 @@
+# Creado por Pablo P. Pablo M. Maite G.
+
 all: main.out
 	rm tiempos.txt
 	./main.out

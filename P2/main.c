@@ -1,3 +1,5 @@
+// Creado por Pablo P. Pablo M. Maite G.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

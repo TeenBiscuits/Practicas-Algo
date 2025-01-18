@@ -1,3 +1,5 @@
+# Creado por Pablo P. Pablo M. Maite G.
+
 all: main.out
 	./main.out
 	cat tiempos.txt
