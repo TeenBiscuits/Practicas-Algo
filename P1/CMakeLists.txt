@@ -4,3 +4,5 @@ project(P1 C)
 set(CMAKE_C_STANDARD 99)
 
 add_executable(P1 main.c)
+
+target_link_libraries(P1 m)
