@@ -2,21 +2,13 @@
 
 #include <stdio.h>
 #include <math.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <fcntl.h>
 #include <sys/time.h>
-
-bool guardaraarchivo();
-
-void test();
 
 void comprobar();
 
-double microsegundos();
-
-int selectalgo(int n, int algo);
+void test(int algo(int n));
 
 int fib1(int n);
 
@@ -24,71 +16,56 @@ int fib2(int n);
 
 int fib3(int n);
 
-double tiempospetit(int n, int alg);
+double tiempospetit(int n, int algo(int n));
 
-void imprimircabecerat(int algo);
+void imprimircabecerat(int algo(int n));
 
-void imprimirresultados(int n, double t, int algo);
+void imprimirresultados(int n, double t, int algo(int n));
+
+double microsegundos();
 
 int main(void) {
-    if (guardaraarchivo()) {
-        printf("Algoritmos de Fibonacci   -  "
-    "Por Pablo Portas, Pablo Míguez y Maite González\n\n");
-        comprobar();
-        test();
-    }
+    printf("Algoritmos de Fibonacci   -  "
+        "Por Pablo Portas, Pablo Míguez y Maite González\n\n");
+    comprobar();
+    test(fib1);
+    test(fib2);
+    test(fib3);
     return 0;
-}
-
-bool guardaraarchivo() {
-    const char *name = "tiempos.txt";
-    const int fd = open(name, O_WRONLY | O_CREAT, 0644);
-    if (fd == -1) {
-        perror("open failed");
-        return false;
-    }
-    if (dup2(fd, 1) == -1) {
-        perror("dup2 failed");
-        return false;
-    }
-    return true;
-}
-
-void test() {
-    int n = 1;
-    const int n1[5] = {2, 4, 8, 16, 32},
-            n2[5] = {1000, 10000, 100000, 1000000, 10000000};
-    for (int alg = 1; alg <= 3; alg++) {
-        imprimircabecerat(alg);
-        for (int i = 0; i < 5; i++) {
-            if (alg == 1) n = n1[i];
-            else n = n2[i];
-            const double t1 = microsegundos();
-            selectalgo(n, alg);
-            const double t2 = microsegundos();
-            double t = t2 - t1;
-            if (t <= 500) t = tiempospetit(n, alg);
-            imprimirresultados(n, t, alg);
-        }
-        printf("---------------------------------------------"
-            "-------------------------------\n\n");
-    }
 }
 
 void comprobar() {
+    int i;
     printf("  n    fib1    fib2    fib3\n");
     printf("---------------------------\n");
-    for(int i = 2; i <= 32; i = i * 2) {
+    for (i = 2; i <= 32; i = i * 2)
         printf("%3d%8d%8d%8d\n", i, fib1(i), fib2(i), fib3(i));
-    }
     printf("---------------------------\n\n");
 }
 
-int selectalgo(const int n, const int algo) {
-    if (algo == 1) return fib1(n);
-    if (algo == 2) return fib2(n);
-    if (algo == 3) return fib3(n);
-    return 0;
+void test(int algo(int n)) {
+    int n, i;
+    double t, t1, t2;
+    const int n1[5] = {2, 4, 8, 16, 32},
+            n2[5] = {1000, 10000, 100000, 1000000, 10000000};
+
+    imprimircabecerat(algo);
+    for (i = 0; i < 5; i++) {
+        if (algo == fib1) n = n1[i];
+        else n = n2[i];
+
+        t1 = microsegundos();
+        algo(n);
+        t2 = microsegundos();
+        t = t2 - t1;
+
+        if (t <= 500) t = tiempospetit(n, algo);
+        else printf("   ");
+
+        imprimirresultados(n, t, algo);
+    }
+    printf("---------------------------------------------"
+        "-----------------------------------\n\n");
 }
 
 int fib1(const int n) {
@@ -100,8 +77,8 @@ int fib1(const int n) {
 }
 
 int fib2(const int n) {
-    int i = 1, j = 0;
-    for (int k = 0; k < n; ++k) {
+    int i = 1, j = 0, k;
+    for (k = 0; k < n; ++k) {
         j = i + j;
         i = j - i;
     }
@@ -116,70 +93,64 @@ int fib3(int n) {
             j = i * h + j * k + t;
             i = i * k + t;
         }
-        t = (int) powf((float) h, 2);
+        t = h * h;
         h = 2 * k * h + t;
-        k = (int) powf((float) k, 2) + t;
+        k = k * k + t;
         n = n / 2;
     }
     return j;
 }
 
-double tiempospetit(const int n, const int alg) {
-    double t = 0;
-    int k;
-    for (k = 1; t < 500; k = k * 10) {
-        const double ta = microsegundos();
-        for (int i = k; i > 0; i--) selectalgo(n, alg);
-        const double tb = microsegundos();
-        t = tb - ta;
-    }
-    printf("(*) Dato promedio de k = %d\n",k);
+double tiempospetit(const int n, int algo(int n)) {
+    double t = 0, ta = 0, tb = 0;
+    int k = 10000, i;
+
+    ta = microsegundos();
+    for (i = 0; i <= k; i++) algo(n);
+    tb = microsegundos();
+    t = tb - ta;
+
+    printf("(*)");
     return t / (double) k;
 }
 
-void imprimircabecerat(int algo) {
-    if (algo == 1) {
-        printf("función	       n         tiempo"
-            "       t/1.1**n            t/n         t/n**2\n");
-    }
-    if (algo == 2) {
-        printf("función	       n         tiempo"
-            "       t/n**0.8            t/n   t/(n*log(n))\n");
-    }
-    if (algo == 3) {
-        printf("función	       n         tiempo"
-            " t/sqrt(log(n))       t/log(n)       t/n**0.5\n");
-    }
+void imprimircabecerat(int algo(int n)) {
+    if (algo == fib1)
+        printf("función	          n         tiempo"
+            "        t/1.1**n            t/n         t/n**2\n");
+    if (algo == fib2)
+        printf("función	          n         tiempo"
+            "        t/n**0.8            t/n   t/(n*log(n))\n");
+    if (algo == fib3)
+        printf("función	          n         tiempo"
+            "  t/sqrt(log(n))       t/log(n)       t/n**0.5\n");
     printf("---------------------------------------------"
-        "-------------------------------\n");
+        "-----------------------------------\n");
 }
 
-void imprimirresultados(int n, double t, int algo) {
-    char *nombre = "fib";
+void imprimirresultados(int n, double t, int algo(int n)) {
+    char *nombre = "fib0";
     double x = 0, y = 0, z = 0;
-    // Las funciones son en este orden
-    // x = Cota subestimada
-    // y = Cota Ajustada (O grande)
-    // z = Cota sobreestimada
-    if (algo == 1) {
+
+    if (algo == fib1) {
         nombre = "fib1";
         x = t / pow(1.1, n);
         y = t / pow((1 + sqrt(5)) / 2, n);
         z = t / pow(2, n);
     }
-    if (algo == 2) {
+    if (algo == fib2) {
         nombre = "fib2";
         x = t / pow(n, 0.8);
         y = t / n;
         z = t / (n * log(n));
     }
-    if (algo == 3) {
+    if (algo == fib3) {
         nombre = "fib3";
         x = t / sqrt(log(n));
         y = t / log(n);
         z = t / pow(n, 0.5);
     }
-    printf("%s%12d%15.3f%15.6f%15.6f%15.6f\n", nombre, n, t, x, y, z);
+    printf(" %s%11d%15.5f%16.6f%15.6f%15.8f\n", nombre, n, t, x, y, z);
 }
 
 double microsegundos() {

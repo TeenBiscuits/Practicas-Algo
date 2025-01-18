@@ -9,6 +9,9 @@ En esta práctica implementamos 3 algoritmos que calculan la sucesión de
 Fibonacci y, tras comprobar que los tres funcionan correctamente,
 medimos sus tiempos de ejecución para unos valores de n dados.
 
+Con esto tratamos de realizar una comprobación empírica de las complejidades
+teóricas de los tres algoritmos.
+
 2) Datos de la máquina
 Modelo de hardware: HP Victus by HP Gaming Laptop 15-fa0xxx
 Memoria: 16.0 GiB
@@ -17,7 +20,7 @@ Nombre del SO: Ubuntu 22.04.5 LTS
 Versión del Kernel: 6.8.0-45-generic
 Tipo de SO: 64 bits
 
-Unidad de tiempo utlizada: ms
+Unidad de tiempo utilizada: microsegundos
 
 3) Comprobación de los algoritmos
 
@@ -34,66 +37,69 @@ Unidad de tiempo utlizada: ms
 
 1. Presentación de resultados del Algoritmo 1
 
-función	       n         tiempo       t/1.1**n            t/n         t/n**2
-----------------------------------------------------------------------------
-fib1           2          0.001       0.000480       0.000222       0.000145 (*)
-fib1           4          0.002       0.001091       0.000233       0.000100 (*)
-fib1           8          0.012       0.005542       0.000253       0.000046 (*)
-fib1          16          0.546       0.118826       0.000247       0.000008 (*) #
-fib1          32      12136.000     574.790581       0.002492       0.000003 #
-----------------------------------------------------------------------------
-                                cota subestimada  cota ajustada  cota sobreestimada
-                                                 cte = 0.000689
+función	          n         tiempo        t/1.1**n            t/n         t/n**2
+--------------------------------------------------------------------------------
+(*) fib1          2        0.01050        0.008678       0.004011     0.00262500
+(*) fib1          4        0.03450        0.023564       0.005033     0.00215625
+(*) fib1          8        0.24150        0.112662       0.005141     0.00094336
+(*) fib1         16       10.26290        2.233506       0.004650     0.00015660
+    fib1         32    14079.00000      666.815803       0.002890     0.00000328 #
+--------------------------------------------------------------------------------
+                                    cota subestimada  cota ajustada  cota sobreestimada
+                                                     cte = 0.0047087
 
-* tiempo promedio en respectivos k = [1000000,1000000,100000,1000] ejecuciones del algoritmo
+(*) tiempo promedio en respectivos k = 10000 ejecuciones del algoritmo
 
 1.1 Observaciones
 
-De n = 16 a n = 32 podemos observar un salto desproporcionado del tiempo ya que pasa de 0.546ms a 12136.000ms,
-por lo que consideramos estas dos mediciones anómalas, superiores a lo esperado. (#)
+En n = 32 podemos observar un salto desproporcionado del tiempo, ya que pasamos de 10.263 a 14079.000,
+por lo que consideramos esta medición anómala. (#)
+
+A excepción del dato anómalo podemos afirmar una complejidad lineal. Rondando la constante que indicamos.
 
 2. Presentación de resultados del Algoritmo 2
 
-función	       n         tiempo       t/n**0.8            t/n   t/(n*log(n))
-----------------------------------------------------------------------------
-fib2        1000          0.147       0.000584       0.000147       0.000021 (*)
-fib2       10000          1.461       0.000922       0.000146       0.000016 (*)
-fib2      100000         14.540       0.001454       0.000145       0.000013 (*)
-fib2     1000000       1380.000       0.021872       0.001380       0.000100 #
-fib2    10000000      15925.000       0.040002       0.001592       0.000099 #
-----------------------------------------------------------------------------
-                                cota subestimada  cota ajustada  cota sobreestimada
-                                                 cte = 0.000682
+función	          n         tiempo        t/n**0.8            t/n   t/(n*log(n))
+--------------------------------------------------------------------------------
+(*) fib2       1000        1.38700        0.005522       0.001387     0.00020079
+(*) fib2      10000       14.90780        0.009406       0.001491     0.00016186
+(*) fib2     100000      166.89960        0.016690       0.001669     0.00014497
+    fib2    1000000     1689.00000        0.026769       0.001689     0.00012225
+    fib2   10000000    15028.00000        0.037749       0.001503     0.00009324
+--------------------------------------------------------------------------------
+                                    cota subestimada  cota ajustada  cota sobreestimada
+                                                     cte = 0.0015478
 
-* tiempo promedio en respectivos k = [10000,1000,100] ejecuciones del algoritmo
+(*) tiempo promedio en respectivos k = 10000 ejecuciones del algoritmo
 
 2.1 Observaciones
 
-Entre n = 1000000 y n = 10000000 el tiempo varía de 1380.000 y 15925.000 lo que es ligeramente superior a lo esperado
-y por lo que obtenemos unas mediciones anómalas.
-En especial n = 1000000 el salto es desproporcionado en referencia a los otros datos.
-(#)
+Al contario que en el algoritmo 1 vemos una mayor continuidad en los datos que nos devuelve
+el algoritmo 2. Sin detectar ningún dato anómalo.
+
+Al principio podemos ver que la cota ajustada aumenta, pero se estabiliza cuando n crece,
+cercano a la constante que indicamos.
 
 
 3. Presentación de resultados del Algoritmo 3
 
-función	       n         tiempo t/sqrt(log(n))       t/log(n)       t/n**0.5
-----------------------------------------------------------------------------
-fib3        1000          0.019       0.007286       0.002772       0.000606 (*)
-fib3       10000          0.028       0.009177       0.003024       0.000278 (*)
-fib3      100000          0.033       0.009590       0.002826       0.000103 (*)
-fib3     1000000          0.040       0.010702       0.002879       0.000040 (*)
-fib3    10000000          0.048       0.011869       0.002956       0.000015 (*)
-----------------------------------------------------------------------------
-                                cota subestimada  cota ajustada  cota sobreestimada
-                                                 cte = 0.002891
+función	          n         tiempo  t/sqrt(log(n))       t/log(n)       t/n**0.5
+--------------------------------------------------------------------------------
+(*) fib3       1000        0.02930        0.011148       0.004242     0.00092655
+(*) fib3      10000        0.03770        0.012422       0.004093     0.00037700
+(*) fib3     100000        0.04700        0.013852       0.004082     0.00014863
+(*) fib3    1000000        0.06040        0.016250       0.004372     0.00006040
+(*) fib3   10000000        0.07030        0.017510       0.004362     0.00002223
+--------------------------------------------------------------------------------
+                                    cota subestimada  cota ajustada  cota sobreestimada
+                                                     cte = 0.0042302
 
-* tiempo promedio en respectivos k = [100000] ejecuciones del algoritmo
+(*) tiempo promedio en respectivos k = 10000 ejecuciones del algoritmo
 
 3.1 Observaciones
 
 El crecimiento de tiempo de este algoritmo es mucho más predecible. Tiene un crecimiento logarítmico y
-todos los datos respaldan esta tendencia.
+todos los datos respaldan esta tendencia. Con una constante clara, que hemos indicado.
 
 5) Conclusión
 
