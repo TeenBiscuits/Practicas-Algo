@@ -8,8 +8,7 @@ Maite Liu González Vázquez
 En esta práctica se implementaron y compararon dos algoritmos de ordenación: ordenación por
 inserción y ordenación rápida (QuickSort). El objetivo fue analizar el rendimiento de estos
 algoritmos midiendo los tiempos de ejecución en tres configuraciones iniciales del vector: orden
-ascendente, orden descendente y valores aleatorios. Se utilizaron cotas teóricas n^1.8, n^2 y n^2.2
-para comparar la eficiencia de los algoritmos.
+ascendente, orden descendente y valores aleatorios.
 
 
 2) Datos de la máquina
@@ -22,6 +21,7 @@ Tipo de SO: 64 bits
 
 Unidad de tiempo utilizada: micro segundos
 
+
 3) Comprobación de los algoritmos
 Ordenación por inserción y ordenación rápida: Se realizaron pruebas de ordenación en tres
 configuraciones de inicialización del vector: aleatoria, descendente y ascendente. A continuación,
@@ -29,208 +29,155 @@ se muestran los resultados de estas pruebas para verificar la correcta implement
 
 --- Test 1 | Ordenación por inserción ---
 Ordenación con inicialización aleatoria
--6 15 4 -6 -1 18 -18 12 -9 19 -7 19 -9 17 -4 17 15 14 -4 8
-¿Ordenado? 0
-Ordenando...
--18 -9 -9 -7 -6 -6 -4 -4 -1 4 8 12 14 15 15 17 17 18 19 19
+[ 17 -1 -16 20 9 20 8 17 -14 -3 12 -8 17 2 8 0 18 18 -3 13 ]
+¿Ordenado? 0 - Ordenando...
+[ -16 -14 -8 -3 -3 -1 0 2 8 8 9 12 13 17 17 17 18 18 20 20 ]
 ¿Ordenado? 1
-Ordenando...
 Ordenación con inicialización descendente
-20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
-¿Ordenado? 0
-Ordenando...
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+[ 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 ]
+¿Ordenado? 0 - Ordenando...
+[ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 ]
 ¿Ordenado? 1
-
 
 --- Test 2 | Ordenación rápida ---
 Ordenación con inicialización aleatoria
--6 15 4 -6 -1 18 -18 12 -9 19 -7 19 -9 17 -4 17 15 14 -4 8
-¿Ordenado? 0
-Ordenando...
--18 -9 -9 -7 -6 -6 -4 -4 -1 4 8 12 14 15 15 17 17 18 19 19
+[ 17 -1 -16 20 9 20 8 17 -14 -3 12 -8 17 2 8 0 18 18 -3 13 ]
+¿Ordenado? 0 - Ordenando...
+[ -16 -14 -8 -3 -3 -1 0 2 8 8 9 12 13 17 17 17 18 18 20 20 ]
 ¿Ordenado? 1
-Ordenando...
 Ordenación con inicialización descendente
-20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
-¿Ordenado? 0
-Ordenando...
-1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+[ 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 ]
+¿Ordenado? 0 - Ordenando...
+[ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 ]
 ¿Ordenado? 1
+
 
 4) Tablas de tiempos:
 
-1. Presentación de resultados de Ordenación por inserción
+4.1 Presentación de resultados de Ordenación por inserción
 
-Ordenación por inserción con inicialización aleatoria
-n               t(n)     t(n)/n^1.8       t(n)/n^2     t(n)/n^2.2
-  500          0.895 0.000012407293 0.000003580000 0.000001032973 (*)
- 1000          1.774 0.000007062421 0.000001774000 0.000000445609 (*)
- 2000       1349.000 0.001542261288 0.000337250000 0.000073747272
- 4000       6464.000 0.002122234466 0.000404000000 0.000076907619
- 8000      16643.000 0.001569168700 0.000260046875 0.000043095670
-16000      67682.000 0.001832555831 0.000264382813 0.000038142506
-32000     301090.000 0.002341134531 0.000294033203 0.000036928901
-
-* tiempo promedio en 1000 ejecuciones del algoritmo
-
-Ordenación por inserción con inicialización ascendente
-n               t(n)     t(n)/n^1.8       t(n)/n^2     t(n)/n^2.2
-  500          0.758 0.000010508076 0.000003032000 0.000000874853 (*)
- 1000          1.931 0.000007687449 0.000001931000 0.000000485045 (*)
- 2000          3.924 0.000004486163 0.000000981000 0.000000214518 (*)
- 4000          6.808 0.000002235175 0.000000425500 0.000000081000 (*)
- 8000         12.230 0.000001153093 0.000000191094 0.000000031669 (*)
-16000         27.111 0.000000734057 0.000000105902 0.000000015279 (*)
-32000         55.799 0.000000433867 0.000000054491 0.000000006844 (*)
-
-* tiempo promedio en 1000 ejecuciones del algoritmo
+Ordenación por inserción con inicialización aleatorio
+n                 t(n)         t(n)/n     t(n)/n^2.0     t(n)/n^2.5
+(*)   500      136.792     0.27358400     0.00054717     0.00002447
+(*)  1000      486.109     0.48610900     0.00048611     0.00001537
+     2000     1899.000     0.94950000     0.00047475     0.00001062
+     4000     7459.000     1.86475000     0.00046619     0.00000737
+     8000    30330.000     3.79125000     0.00047391     0.00000530
+    16000   123664.000     7.72900000     0.00048306     0.00000382
+    32000   491716.000    15.36612500     0.00048019     0.00000268
+                        cota subestimada cota ajustada cota sobreestimada
+                                        cte: 0.00048734
 
 Ordenación por inserción con inicialización descendente
-n               t(n)     t(n)/n^1.8       t(n)/n^2     t(n)/n^2.2
-  500          1.046 0.000014500590 0.000004184000 0.000001207251 (*)
- 1000        720.000 0.002866371628 0.000720000000 0.000180855823
- 2000       1902.000 0.002174485522 0.000475500000 0.000103978733
- 4000       7744.000 0.002542478915 0.000484000000 0.000092136851
- 8000      35037.000 0.003303428692 0.000547453125 0.000090725410
-16000     133731.000 0.003620896602 0.000522386719 0.000075364727
-32000     547098.000 0.004253977281 0.000534275391 0.000067101955
+n                 t(n)         t(n)/n     t(n)/n^2.0     t(n)/n^2.5
+(*)   500      244.435     0.48887000     0.00097774     0.00004373
+     1000      936.000     0.93600000     0.00093600     0.00002960
+     2000     3785.000     1.89250000     0.00094625     0.00002116
+     4000    15422.000     3.85550000     0.00096387     0.00001524
+     8000    61386.000     7.67325000     0.00095916     0.00001072
+    16000   245231.000    15.32693750     0.00095793     0.00000757
+    32000   982801.000    30.71253125     0.00095977     0.00000537
+                        cota subestimada cota ajustada cota sobreestimada
+                                        cte: 0.00095724
 
-* tiempo promedio en 1000 ejecuciones del algoritmo
+(*) tiempo promedio en 1000 ejecuciones del algoritmo
 
+Podemos observar que ante un vector desordenado, iniciado aleatoriamente, la ordenación por inserción
+tiene una complejidad clara: Es cuadrática, con una constante clara que hemos indicado.
+Desde el principio descartamos una complejidad lineal, y vemos como la cota va creciendo siendo esta
+una cota subestimada. Por otro lado, si empleamos una cota superior, n^2.5 vemos como va descendiendo
+la cota haciendo a esta una cota sobreestimada.
 
+El análisis anterior es también aplicable a un vector inicializado descendentemente, donde vemos las mismas tendencias
+y una cota ajustada con una constante mucho más clara.
 
-1.1 Observaciones
+Ordenación por inserción con inicialización ascendente
+n                 t(n)    t(n)/log(n)         t(n)/n     t(n)/n^1.7
+(*)   500        1.340     0.21562100     0.00268000     0.00003458
+(*)  1000        2.637     0.38174485     0.00263700     0.00002095
+(*)  2000        5.277     0.69425967     0.00263850     0.00001290
+(*)  4000       10.462     1.26138623     0.00261550     0.00000787
+(*)  8000       21.088     2.34644911     0.00263600     0.00000488
+(*) 16000       40.870     4.22195740     0.00255437     0.00000291
+(*) 32000       85.853     8.27619154     0.00268291     0.00000188
+                        cota subestimada cota ajustada cota sobreestimada
+                                        cte: 0.00263489
 
-//Ordenación por inserción con inicialización aleatoria
+(*) tiempo promedio en 1000 ejecuciones del algoritmo
 
--Crecimiento cuadrático esperado: Los tiempos de ejecución (t(n)) crecen significativamente a medida que aumenta
-el tamaño de entrada n, lo que coincide con la complejidad teórica esperada del algoritmo de ordenación
-por inserción (𝑂(𝑛^2)).
+En este caso hemos tenido que cambiar las cotas. Cuando el algoritmo se enfrenta a un vector ya ordenado, su
+rendimiento es mucho mayor, pasando de una complejidad cuadrática a una complejidad lineal. La cota ajustada tiende
+una constante clara que así lo demuestra. Lo comparamos también con una complejidad logarítmica, aunque en vectores
+pequeños (<2000) podría parecer constante, según el tamaño del vector crece es claro que esta es una cota subestimada.
 
--Disminución de las cotas a medida que aumenta n:
-Para cotas teóricas como 𝑡(𝑛)/𝑛1.8t(n)/n 1 .8, 𝑡(𝑛)/𝑛2t(n)/n 2 , y 𝑡(𝑛)/𝑛2.2t(n)/n 2.2, se observa
-que los valores disminuyen a medida que n aumenta. Esto es coherente con la complejidad del
-algoritmo: a mayor tamaño, los tiempos se ajustan más a la complejidad cuadrática 𝑛^2, lo que hace
-que los cocientes se estabilicen en valores más pequeños.
-
-alores extremos: El tiempo de 1349.000 microsegundos para n = 2000 es considerablemente más alto que los
-de n = 500 y n = 1000, lo que indica un comportamiento no lineal para los tamaños pequeños. Sin embargo, a partir
-de n = 4000, el crecimiento de los tiempos parece más consistente.
-
-//Ordenación por inserción con inicialización ascendente
-
--Eficiencia máxima: Dado que el vector ya está ordenado, los tiempos son significativamente menores comparados
-con la inicialización aleatoria o descendente, lo que refleja el mejor caso para este algoritmo 𝑂(𝑛).
-Este es el escenario ideal para la ordenación por inserción.
-
--Estabilización rápida de las cotas: Las cotas t(n)/n^1.8, t(n)/n^2 y t(n)/n^2.2 son extremadamente pequeñas, mostrando
-que el tiempo real de ejecución es cercano a 𝑂(𝑛), como se esperaría en el caso de una lista ya ordenada.
-
--Tiempo lineal: A medida que n aumenta, el tiempo de ejecución sigue una tendencia casi lineal, lo cual es típico del
-mejor caso para este algoritmo.
-
-//Ordenación por inserción con inicialización descendente
-
-El peor caso del algoritmo: Como se esperaba, este es el peor caso para la ordenación por inserción, ya que el
-algoritmo debe mover todos los elementos al principio del vector. El crecimiento en los tiempos es exponencialmente
-mayor que en las otras dos inicializaciones.
-
-Tiempos extremadamente largos para tamaños grandes: Para n = 32000, el tiempo de ejecución es de 547098 microsegundos, lo
-que indica un crecimiento exponencialmente alto en comparación con los otros casos. Esto es consistente con el peor
-caso de 𝑂(𝑛^2), ya que el vector está en el orden completamente opuesto al que el algoritmo requiere.
-
-Las cotas t(n)/n^2 y t(n)/n^2.2 son significativamente mayores en los otros casos de inicalización, lo que subraya la
-ineficiencia del algoritmo para esta configuración
+Tratamos también de comprarlo con la cota ajustada de los otros escenarios, la cuadrática, pero sería una cota
+muy sobreestimada, con una elevación de 1.7 ya vemos una sobreestimación clara.
 
 
-2. Presentación de resultados de Ordenación rápida
+4.2 Presentación de resultados de Ordenación rápida
 
-Ordenación rápida con inicialización aleatoria
-n               t(n)     t(n)/n^1.8       t(n)/n^2     t(n)/n^2.2
-  500         52.754 0.000731323261 0.000211016000 0.000060886553 (*)
- 1000         38.314 0.000152530781 0.000038314000 0.000009624042 (*)
- 2000         85.701 0.000097978751 0.000021425250 0.000004685111 (*)
- 4000        174.782 0.000057383723 0.000010923875 0.000002079528 (*)
- 8000        729.000 0.000068733040 0.000011390625 0.000001887685
-16000       1613.000 0.000043673540 0.000006300781 0.000000909014
-32000       2834.000 0.000022035854 0.000002767578 0.000000347592
-
-* tiempo promedio en 1000 ejecuciones del algoritmo
-
-Ordenación rápida con inicialización ascendente
-n               t(n)     t(n)/n^1.8       t(n)/n^2     t(n)/n^2.2
-  500         18.326 0.000254051448 0.000073304000 0.000021151135 (*)
- 1000         38.133 0.000151810207 0.000038133000 0.000009578577 (*)
- 2000         83.024 0.000094918237 0.000020756000 0.000004538765 (*)
- 4000        156.441 0.000051362080 0.000009777563 0.000001861310 (*)
- 8000        326.122 0.000030748088 0.000005095656 0.000000844466 (*)
-16000        729.000 0.000019738382 0.000002847656 0.000000410831
-32000       1406.000 0.000010932396 0.000001373047 0.000000172447
-
-* tiempo promedio en 1000 ejecuciones del algoritmo
+Ordenación rápida con inicialización aleatorio
+n                 t(n)    t(n)/log(n)  t(n)/(n*log(n))       t(n)/n^2
+(*)   500       26.992        4.34332       0.00868663     0.00010797
+(*)  1000       61.509        8.90441       0.00890441     0.00006151
+(*)  2000      156.421       20.57921       0.01028961     0.00003911
+(*)  4000      310.261       37.40763       0.00935191     0.00001939
+     8000      676.000       75.21811       0.00940226     0.00001056
+    16000     1097.000      113.32242       0.00708265     0.00000429
+    32000     2428.000      234.05814       0.00731432     0.00000237
+                         cota subestimada cota ajustada cota sobreestimada
+                                         cte: 0.00871882
 
 Ordenación rápida con inicialización descendente
-n               t(n)     t(n)/n^1.8       t(n)/n^2     t(n)/n^2.2
-  500         16.147 0.000223844196 0.000064588000 0.000018636220 (*)
- 1000         38.483 0.000153203582 0.000038483000 0.000009666493 (*)
- 2000         85.716 0.000097995900 0.000021429000 0.000004685931 (*)
- 4000        162.211 0.000053256463 0.000010138188 0.000001929960 (*)
- 8000        334.261 0.000031515466 0.000005222828 0.000000865541 (*)
-16000        513.000 0.000013889973 0.000002003906 0.000000289104
-32000       1075.000 0.000008358695 0.000001049805 0.000000131850
+n                 t(n)    t(n)/log(n)  t(n)/(n*log(n))       t(n)/n^2
+(*)   500       14.496        2.33249       0.00466498     0.00005798
+(*)  1000       29.235        4.23217       0.00423217     0.00002923
+(*)  2000       61.600        8.10435       0.00405218     0.00001540
+(*)  4000      136.068       16.40549       0.00410137     0.00000850
+(*)  8000      301.504       33.54822       0.00419353     0.00000471
+    16000      843.000       87.08368       0.00544273     0.00000329
+    32000     1731.000      166.86764       0.00521461     0.00000169
+                         cota subestimada cota ajustada cota sobreestimada
+                                         cte: 0.00455736
 
-* tiempo promedio en 1000 ejecuciones del algoritmo
+(*) tiempo promedio en 1000 ejecuciones del algoritmo
 
+En estos escenarios podemos ver el verdadero potencial de Quicksort, y es que, para un vector
+inicializado aleatorio o descendente (ya ordenado) podemos afirmar con seguridad que tiene una
+complejidad n logarítmica. Lejos está de ser cuadrática como inserción, es una cota claramente
+sobreestimada. Mientras que un rendimiento logarítmico es una cota subestimada en sendos casos.
 
+Ordenación rápida con inicialización ascendente
+n                 t(n)    t(n)/log(n)           t(n)/n       t(n)/n^2
+(*)   500       13.962        2.24665       0.02792408     0.00005585
+(*)  1000       27.142        3.92919       0.02714186     0.00002714
+(*)  2000       59.358        7.80929       0.02967882     0.00001484
+(*)  4000      131.891       15.90190       0.03297278     0.00000824
+(*)  8000      272.847       30.35954       0.03410589     0.00000426
+    16000      526.000       54.33691       0.03287500     0.00000205
+    32000     1032.000       99.48435       0.03225000     0.00000101
+                         cota subestimada cota ajustada cota sobreestimada
+                                           cte: 0.0325
 
-2.1 Observaciones
+(*) tiempo promedio en 1000 ejecuciones del algoritmo
 
-//Ordenación rápida con inicialización aleatoria
+El rendimiento cambia cuando este algoritmo se enfrenta a un vector inicializado en el orden contrario
+al esperado. El rendimiento baja a una complejidad lineal con una constante que solo podemos apreciar
+con unos valores de n grandes. La complejidad logarítmica sigue siendo una cota subestimada, aunque algo
+menos que en los escenarios anteriores. Por otro lado, la complejidad cuadrática sigue siendo una cota
+sobreestimada.
 
-Crecimiento subcuadrático: A diferencia de la ordenación por inserción, QuickSort muestra
-un crecimiento mucho más suave. Los tiempos de ejecución ( t (n) ) aumentan de manera
-subcuadrática a medida que crece n, lo que es coherente con la complejidad promedio
-esperada de O(n logn).
-
-Estabilización de las cotas: Las cotas teóricas t(n) /n^1.8, t(n)/n^2, y t(n) /n^2.2 disminuyen
-gradualmente conforme n aumenta, lo que sugiere que el tiempo de ejecución tiende a
-seguir la curva de 𝑂(𝑛 log 𝑛) en lugar de 𝑂(𝑛) . Esto es un indicador positivo de la
-eficiencia de QuickSort en este escenario aleatorio
-
-Comportamiento consistente: Desde n = 500 hasta n = 32000, se observa una reducción constante
-en las cotas, lo que confirma que el algoritmo mantiene su eficiencia a lo largo de diferentes tamaños de entrada.
-
-//Ordenación rápida con inicialización ascendente
-
-Comportamiento similar al caso aleatorio: Aunque el vector ya está ordenado, los tiempos de ejecución y las cotas
-se comportan de manera muy similar al caso de inicialización aleatoria. Esto es porque QuickSort no es particularmente
-sensible a la ordenación previa del vector, siempre que se elija el pivote de forma aleatoria o adecuada.
-
-Tiempos de ejecución ligeramente menores: En comparación con la inicialización aleatoria, los tiempos de ejecución
-para la inicialización ascendente tienden a ser ligeramente menores. Esto podría deberse a una menor cantidad de
-intercambios o particiones durante la ordenación.
-
-Las cotas teóricas disminuyen: De manera consistente, las cotas t(n)/n^1.8, t(n)/n^2, y
-t(n) /n^2.2 se estabilizan a medida que aumenta el tamaño del vector, lo que confirma un
-comportamiento subcuadrático esperado.
 
 5) Conclusión
-La ordenación por inserción es muy eficiente cuando los datos están casi ordenados o en orden ascendente, alcanzando
-una complejidad cercana a 𝑂(𝑛), lo que la hace adecuada para conjuntos pequeños o medianos de datos ordenados. Sin
-embargo, su rendimiento se degrada rápidamente cuando los datos están completamente desordenados o en orden descendente,
-mostrando una complejidad cuadrática 𝑂(𝑛2) que la vuelve ineficaz para grandes volúmenes de datos no ordenados. Por otro
-lado, QuickSort ofrece un rendimiento mucho más robusto y versátil, con una complejidad promedio de 𝑂(𝑛 log 𝑛), siendo
-eficiente incluso en grandes conjuntos de datos, sin importar el estado inicial (ascendente, descendente o aleatorio).
-Aunque QuickSort tiene un peor caso teórico de 𝑂(𝑛^2), esto rara vez ocurre en la práctica si se usa un esquema adecuado
-de selección de pivote. En resumen, mientras la ordenación por inserción es adecuada para datos casi ordenados o de pequeño
-tamaño, QuickSort es generalmente superior por su capacidad para manejar grandes volúmenes de datos de forma rápida y consistente
-en la mayoría de los escenarios.
 
+Quick sort parece ser el claro vencedor para la mayoría de escenarios "reales". Ya sea enfrentándose a un
+vector en el orden inverso al esperado o desordenado (aleatoriamente) Quicksort tiene un rendimiento
+imbatible. Más aún si se compara con un algoritmo cuyo rendimiento en estos escenarios es cuadrático.
 
+Pero esto sería un análisis superficial si no mencionáramos que cuando nos enfrentamos a ordenar un vector
+que ya está ordenado, una ordenación que queda en una mera comprobación, la ordenación por inserción brilla.
+Donde QuickSort baja de un rendimiento n logarítmico a lineal, empatando con la ordenación por inserción que
+mejora sus resultados en este escenario. Ordenación por inserción realiza estas ordenaciónes a más de x10 veces
+el rendimiento de QuickSort.
 
-
-
-
-
-
+QuickSort sigue haciendo honor a su nombre, siempre que no se enfrente a ordenaciones "redundantes".
