@@ -14,6 +14,9 @@ Prácticas de la asignatura de Algoritmos, curso 2024/25, GEI-UDC. Por Pablo Por
 - [P3: Diccionario de datos (Hash Tables)](/P3/)
 - [P4: Montículos (Heapsort)](/P4/)
 
+>[!TIP]
+> - [Implementaciones de las estructuras de datos (Pilas, colas y listas)](/Implementaciones/)
+
 ---
 
 ### Como ejecutar las prácticas
